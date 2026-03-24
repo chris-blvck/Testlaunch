@@ -32,6 +32,9 @@ export interface RestaurantData {
   address?: string;
   city?: string;
   website?: string;
+  whatsapp?: string;
+  instagram?: string;
+  facebook?: string;
   hours?: OpeningHours;
   menu?: MenuSection[];
   heroImage?: string; // URL or base64

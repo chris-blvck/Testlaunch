@@ -1,5 +1,5 @@
 import { RestaurantData } from "@/lib/types";
-import { esc, renderHours } from "./utils";
+import { esc, renderHours, renderWhatsApp, renderSocialLinks } from "./utils";
 
 export function generateMinimal(r: RestaurantData): string {
   return `<!DOCTYPE html>
@@ -201,8 +201,12 @@ export function generateMinimal(r: RestaurantData): string {
 
   <footer>
     <span class="footer-name">${esc(r.name)}</span>
-    <span>${esc(r.cuisine)}${r.city ? ` · ${esc(r.city)}` : ""}</span>
+    <div style="display:flex;align-items:center;gap:1.5rem">
+      <span>${esc(r.cuisine)}${r.city ? ` · ${esc(r.city)}` : ""}</span>
+      ${renderSocialLinks(r, "#999")}
+    </div>
   </footer>
+  ${renderWhatsApp(r)}
 </body>
 </html>`;
 }

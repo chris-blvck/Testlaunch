@@ -34,9 +34,12 @@ export default function RestaurantForm({ initial }: Props) {
     cuisine: initial?.cuisine ?? "",
     description: initial?.description ?? "",
     phone: initial?.phone ?? "",
+    whatsapp: initial?.whatsapp ?? "",
     email: initial?.email ?? "",
     address: initial?.address ?? "",
     city: initial?.city ?? "",
+    instagram: initial?.instagram ?? "",
+    facebook: initial?.facebook ?? "",
     primaryColor: initial?.primaryColor ?? "#1a1a2e",
     accentColor: initial?.accentColor ?? "#d4a853",
     templateId: initial?.templateId ?? ("modern" as TemplateId),
@@ -255,6 +258,18 @@ export default function RestaurantForm({ initial }: Props) {
               />
             </div>
             <div>
+              <label className="text-xs font-medium text-gray-600 block mb-1">
+                WhatsApp
+                <span className="ml-1.5 text-green-600 font-normal">— floating CTA on site</span>
+              </label>
+              <input
+                value={form.whatsapp}
+                onChange={(e) => set("whatsapp", e.target.value)}
+                placeholder="+1 555 000 0000"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              />
+            </div>
+            <div>
               <label className="text-xs font-medium text-gray-600 block mb-1">Email</label>
               <input
                 value={form.email}
@@ -278,6 +293,29 @@ export default function RestaurantForm({ initial }: Props) {
                 value={form.city}
                 onChange={(e) => set("city", e.target.value)}
                 placeholder="New York"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-100">
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-1">Instagram</label>
+              <div className="flex items-center gap-1">
+                <span className="text-gray-400 text-sm">@</span>
+                <input
+                  value={form.instagram}
+                  onChange={(e) => set("instagram", e.target.value)}
+                  placeholder="yourrestaurant"
+                  className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-1">Facebook</label>
+              <input
+                value={form.facebook}
+                onChange={(e) => set("facebook", e.target.value)}
+                placeholder="facebook.com/yourrestaurant"
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
               />
             </div>

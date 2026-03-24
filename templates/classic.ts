@@ -1,5 +1,5 @@
 import { RestaurantData } from "@/lib/types";
-import { esc, renderHours } from "./utils";
+import { esc, renderHours, renderWhatsApp, renderSocialLinks } from "./utils";
 
 export function generateClassic(r: RestaurantData): string {
   return `<!DOCTYPE html>
@@ -211,7 +211,9 @@ export function generateClassic(r: RestaurantData): string {
   <footer>
     <div class="footer-logo">${esc(r.name)}</div>
     <p>${esc(r.cuisine)} Restaurant${r.city ? ` · ${esc(r.city)}` : ""}</p>
+    ${renderSocialLinks(r, "#666")}
   </footer>
+  ${renderWhatsApp(r)}
 </body>
 </html>`;
 }

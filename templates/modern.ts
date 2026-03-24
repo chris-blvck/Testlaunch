@@ -1,5 +1,5 @@
 import { RestaurantData } from "@/lib/types";
-import { esc, renderHours, renderMenu } from "./utils";
+import { esc, renderHours, renderMenu, renderWhatsApp, renderSocialLinks } from "./utils";
 
 export function generateModern(r: RestaurantData): string {
   return `<!DOCTYPE html>
@@ -213,7 +213,9 @@ export function generateModern(r: RestaurantData): string {
     <div class="footer-name">${esc(r.name)}</div>
     <p>${esc(r.cuisine)} Restaurant${r.city ? ` in ${esc(r.city)}` : ""}</p>
     ${r.address ? `<p style="margin-top:0.5rem">${esc(r.address)}</p>` : ""}
+    ${renderSocialLinks(r, "#888")}
   </footer>
+  ${renderWhatsApp(r)}
 </body>
 </html>`;
 }
