@@ -1,5 +1,16 @@
 import { MenuSection, OpeningHours } from "@/lib/types";
 
+/** Escape user-supplied strings before injecting into HTML templates. */
+export function esc(str: string | undefined | null): string {
+  if (!str) return "";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 const DAY_LABELS: Record<string, string> = {
   monday: "Monday",
   tuesday: "Tuesday",
@@ -17,25 +28,16 @@ export function renderHours(hours: OpeningHours, mode: "ul" | "table" | "div" = 
 
   if (mode === "table") {
     return entries
-      .map(
-        (d) => `<tr><td>${DAY_LABELS[d]}</td><td>${hours[d]}</td></tr>`
-      )
+      .map((d) => `<tr><td>${DAY_LABELS[d]}</td><td>${esc(hours[d])}</td></tr>`)
       .join("");
   }
   if (mode === "div") {
     return entries
-      .map(
-        (d) =>
-          `<div class="hour-row"><span>${DAY_LABELS[d]}</span><span>${hours[d]}</span></div>`
-      )
+      .map((d) => `<div class="hour-row"><span>${DAY_LABELS[d]}</span><span>${esc(hours[d])}</span></div>`)
       .join("");
   }
-  // default: ul li
   return entries
-    .map(
-      (d) =>
-        `<li><span>${DAY_LABELS[d]}</span><span>${hours[d]}</span></li>`
-    )
+    .map((d) => `<li><span>${DAY_LABELS[d]}</span><span>${esc(hours[d])}</span></li>`)
     .join("");
 }
 
@@ -44,16 +46,16 @@ export function renderMenu(sections: MenuSection[]): string {
     .map(
       (section) => `
     <div class="menu-section">
-      <h3>${section.name}</h3>
+      <h3>${esc(section.name)}</h3>
       ${section.items
         .map(
           (item) => `
         <div class="menu-item">
           <div class="menu-item-info">
-            <h4>${item.name}</h4>
-            ${item.description ? `<p>${item.description}</p>` : ""}
+            <h4>${esc(item.name)}</h4>
+            ${item.description ? `<p>${esc(item.description)}</p>` : ""}
           </div>
-          ${item.price ? `<span class="menu-item-price">${item.price}</span>` : ""}
+          ${item.price ? `<span class="menu-item-price">${esc(item.price)}</span>` : ""}
         </div>`
         )
         .join("")}

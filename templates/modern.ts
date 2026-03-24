@@ -1,5 +1,5 @@
 import { RestaurantData } from "@/lib/types";
-import { renderHours, renderMenu } from "./utils";
+import { esc, renderHours, renderMenu } from "./utils";
 
 export function generateModern(r: RestaurantData): string {
   return `<!DOCTYPE html>
@@ -7,15 +7,15 @@ export function generateModern(r: RestaurantData): string {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${r.name}${r.city ? ` — ${r.city}` : ""}</title>
-  <meta name="description" content="${r.description}" />
+  <title>${esc(r.name)}${r.city ? ` — ${esc(r.city)}` : ""}</title>
+  <meta name="description" content="${esc(r.description)}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --primary: ${r.primaryColor};
-      --accent: ${r.accentColor};
+      --primary: ${esc(r.primaryColor)};
+      --accent: ${esc(r.accentColor)};
       --dark: #111111;
       --light: #f9f7f4;
     }
@@ -40,7 +40,7 @@ export function generateModern(r: RestaurantData): string {
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       text-align: center;
-      background: ${r.heroImage ? `url('${r.heroImage}') center/cover no-repeat` : `linear-gradient(135deg, #1a0a00 0%, #2d1200 50%, #1a0a00 100%)`};
+      background: ${r.heroImage ? `url('${esc(r.heroImage)}') center/cover no-repeat` : `linear-gradient(135deg, #1a0a00 0%, #2d1200 50%, #1a0a00 100%)`};
       position: relative;
     }
     .hero::before {
@@ -140,7 +140,7 @@ export function generateModern(r: RestaurantData): string {
 </head>
 <body>
   <nav>
-    <div class="nav-logo">${r.logoText || r.name}</div>
+    <div class="nav-logo">${esc(r.logoText || r.name)}</div>
     <div class="nav-links">
       <a href="#about">About</a>
       ${r.menu?.length ? `<a href="#menu">Menu</a>` : ""}
@@ -150,11 +150,11 @@ export function generateModern(r: RestaurantData): string {
 
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge">${r.cuisine}</div>
-      <h1>${r.name}</h1>
-      <p>${r.tagline || r.description}</p>
+      <div class="hero-badge">${esc(r.cuisine)}</div>
+      <h1>${esc(r.name)}</h1>
+      <p>${esc(r.tagline || r.description)}</p>
       <a href="#menu" class="btn">View Menu</a>
-      ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-outline">Reserve a Table</a>` : ""}
+      ${r.phone ? `<a href="tel:${esc(r.phone)}" class="btn btn-outline">Reserve a Table</a>` : ""}
     </div>
   </section>
 
@@ -164,8 +164,8 @@ export function generateModern(r: RestaurantData): string {
         <div class="about-text">
           <p class="section-label">Our Story</p>
           <h2 class="section-title">A Taste of Passion</h2>
-          <p>${r.description}</p>
-          ${r.address ? `<p style="color:#666">📍 ${r.address}${r.city ? `, ${r.city}` : ""}</p>` : ""}
+          <p>${esc(r.description)}</p>
+          ${r.address ? `<p style="color:#666">📍 ${esc(r.address)}${r.city ? `, ${esc(r.city)}` : ""}</p>` : ""}
         </div>
         <div class="about-stats">
           <div class="about-stat"><div class="number">★</div><div class="label">Premium Quality</div></div>
@@ -200,19 +200,19 @@ export function generateModern(r: RestaurantData): string {
         </div>` : ""}
         <div class="info-block">
           <h3>Find Us</h3>
-          ${r.address ? `<div class="contact-item"><span class="icon">📍</span><span>${r.address}${r.city ? `, ${r.city}` : ""}</span></div>` : ""}
-          ${r.phone ? `<div class="contact-item"><span class="icon">📞</span><a href="tel:${r.phone}" style="color:inherit">${r.phone}</a></div>` : ""}
-          ${r.email ? `<div class="contact-item"><span class="icon">✉️</span><a href="mailto:${r.email}" style="color:inherit">${r.email}</a></div>` : ""}
-          ${r.phone ? `<a href="tel:${r.phone}" class="btn" style="margin-top:2rem">Reserve Now</a>` : ""}
+          ${r.address ? `<div class="contact-item"><span class="icon">📍</span><span>${esc(r.address)}${r.city ? `, ${esc(r.city)}` : ""}</span></div>` : ""}
+          ${r.phone ? `<div class="contact-item"><span class="icon">📞</span><a href="tel:${esc(r.phone)}" style="color:inherit">${esc(r.phone)}</a></div>` : ""}
+          ${r.email ? `<div class="contact-item"><span class="icon">✉️</span><a href="mailto:${esc(r.email)}" style="color:inherit">${esc(r.email)}</a></div>` : ""}
+          ${r.phone ? `<a href="tel:${esc(r.phone)}" class="btn" style="margin-top:2rem">Reserve Now</a>` : ""}
         </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-name">${r.name}</div>
-    <p>${r.cuisine} Restaurant${r.city ? ` in ${r.city}` : ""}</p>
-    ${r.address ? `<p style="margin-top:0.5rem">${r.address}</p>` : ""}
+    <div class="footer-name">${esc(r.name)}</div>
+    <p>${esc(r.cuisine)} Restaurant${r.city ? ` in ${esc(r.city)}` : ""}</p>
+    ${r.address ? `<p style="margin-top:0.5rem">${esc(r.address)}</p>` : ""}
   </footer>
 </body>
 </html>`;

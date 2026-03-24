@@ -1,5 +1,5 @@
 import { RestaurantData } from "@/lib/types";
-import { renderHours, renderMenu } from "./utils";
+import { esc, renderHours } from "./utils";
 
 export function generateClassic(r: RestaurantData): string {
   return `<!DOCTYPE html>
@@ -7,14 +7,14 @@ export function generateClassic(r: RestaurantData): string {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${r.name}${r.city ? ` — ${r.city}` : ""}</title>
-  <meta name="description" content="${r.description}" />
+  <title>${esc(r.name)}${r.city ? ` — ${esc(r.city)}` : ""}</title>
+  <meta name="description" content="${esc(r.description)}" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --primary: ${r.primaryColor};
-      --accent: ${r.accentColor};
+      --primary: ${esc(r.primaryColor)};
+      --accent: ${esc(r.accentColor)};
       --bg: #faf8f5;
       --text: #2c2416;
     }
@@ -36,7 +36,7 @@ export function generateClassic(r: RestaurantData): string {
     .nav-links a:hover { color: var(--primary); }
 
     .hero {
-      background: ${r.heroImage ? `url('${r.heroImage}') center/cover no-repeat` : `var(--primary)`};
+      background: ${r.heroImage ? `url('${esc(r.heroImage)}') center/cover no-repeat` : `var(--primary)`};
       height: 85vh; display: flex; align-items: center; justify-content: center;
       text-align: center; position: relative;
     }
@@ -118,7 +118,7 @@ export function generateClassic(r: RestaurantData): string {
 </head>
 <body>
   <nav>
-    <div class="nav-logo">${r.logoText || r.name}</div>
+    <div class="nav-logo">${esc(r.logoText || r.name)}</div>
     <div class="nav-links">
       <a href="#about">About</a>
       ${r.menu?.length ? `<a href="#menu">Menu</a>` : ""}
@@ -128,11 +128,11 @@ export function generateClassic(r: RestaurantData): string {
 
   <div class="hero">
     <div class="hero-content">
-      <p class="hero-pre">✦ ${r.cuisine} ✦</p>
-      <h1>${r.name}</h1>
+      <p class="hero-pre">✦ ${esc(r.cuisine)} ✦</p>
+      <h1>${esc(r.name)}</h1>
       <div class="hero-divider"></div>
-      <p class="hero-sub">${r.tagline || r.description}</p>
-      ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-primary">Reserve a Table</a>` : ""}
+      <p class="hero-sub">${esc(r.tagline || r.description)}</p>
+      ${r.phone ? `<a href="tel:${esc(r.phone)}" class="btn btn-primary">Reserve a Table</a>` : ""}
       <a href="#menu" class="btn btn-outline">Discover Menu</a>
     </div>
   </div>
@@ -141,12 +141,12 @@ export function generateClassic(r: RestaurantData): string {
     <div class="container">
       <div class="section-header">
         <span class="section-pre">Our Story</span>
-        <h2 class="section-title">Welcome to ${r.name}</h2>
+        <h2 class="section-title">Welcome to ${esc(r.name)}</h2>
         <div class="section-divider"></div>
       </div>
       <div class="about-content">
-        <p>${r.description}</p>
-        ${r.address ? `<p style="margin-top:1rem;color:#999">📍 ${r.address}${r.city ? `, ${r.city}` : ""}</p>` : ""}
+        <p>${esc(r.description)}</p>
+        ${r.address ? `<p style="margin-top:1rem;color:#999">📍 ${esc(r.address)}${r.city ? `, ${esc(r.city)}` : ""}</p>` : ""}
       </div>
       <div class="about-features">
         <div class="feature"><div class="feature-icon">🌿</div><h4>Fresh Ingredients</h4></div>
@@ -168,14 +168,14 @@ export function generateClassic(r: RestaurantData): string {
       <div class="menu-grid">
         ${r.menu.map((section) => `
           <div class="menu-section">
-            <h3>${section.name}</h3>
+            <h3>${esc(section.name)}</h3>
             ${section.items.map((item) => `
               <div class="menu-item">
                 <div class="menu-item-row">
-                  <span class="menu-item-name">${item.name}</span>
-                  ${item.price ? `<span class="menu-item-price">${item.price}</span>` : ""}
+                  <span class="menu-item-name">${esc(item.name)}</span>
+                  ${item.price ? `<span class="menu-item-price">${esc(item.price)}</span>` : ""}
                 </div>
-                ${item.description ? `<p class="menu-item-desc">${item.description}</p>` : ""}
+                ${item.description ? `<p class="menu-item-desc">${esc(item.description)}</p>` : ""}
               </div>`).join("")}
           </div>`).join("")}
       </div>
@@ -186,7 +186,7 @@ export function generateClassic(r: RestaurantData): string {
     <div class="container">
       <div class="section-header">
         <span class="section-pre">Visit Us</span>
-        <h2 class="section-title">Find & Contact Us</h2>
+        <h2 class="section-title">Find &amp; Contact Us</h2>
         <div class="section-divider"></div>
       </div>
       <div class="info-grid">
@@ -199,18 +199,18 @@ export function generateClassic(r: RestaurantData): string {
         </div>` : ""}
         <div class="info-block">
           <h3>Get in Touch</h3>
-          ${r.address ? `<div class="contact-line">📍 <span>${r.address}${r.city ? `, ${r.city}` : ""}</span></div>` : ""}
-          ${r.phone ? `<div class="contact-line">📞 <a href="tel:${r.phone}">${r.phone}</a></div>` : ""}
-          ${r.email ? `<div class="contact-line">✉️ <a href="mailto:${r.email}">${r.email}</a></div>` : ""}
-          ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-primary" style="margin-top:2rem;display:inline-block">Call to Reserve</a>` : ""}
+          ${r.address ? `<div class="contact-line">📍 <span>${esc(r.address)}${r.city ? `, ${esc(r.city)}` : ""}</span></div>` : ""}
+          ${r.phone ? `<div class="contact-line">📞 <a href="tel:${esc(r.phone)}">${esc(r.phone)}</a></div>` : ""}
+          ${r.email ? `<div class="contact-line">✉️ <a href="mailto:${esc(r.email)}">${esc(r.email)}</a></div>` : ""}
+          ${r.phone ? `<a href="tel:${esc(r.phone)}" class="btn btn-primary" style="margin-top:2rem;display:inline-block">Call to Reserve</a>` : ""}
         </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-logo">${r.name}</div>
-    <p>${r.cuisine} Restaurant${r.city ? ` · ${r.city}` : ""}</p>
+    <div class="footer-logo">${esc(r.name)}</div>
+    <p>${esc(r.cuisine)} Restaurant${r.city ? ` · ${esc(r.city)}` : ""}</p>
   </footer>
 </body>
 </html>`;

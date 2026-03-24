@@ -36,12 +36,20 @@ export default function Dashboard() {
             <h1 className="text-xl font-bold text-gray-900">🍽 Restaurant Builder</h1>
             <p className="text-sm text-gray-500">Deploy beautiful sites in seconds</p>
           </div>
-          <Link
-            href="/new"
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-          >
-            + New Site
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/roadmap"
+              className="text-sm text-gray-500 hover:text-gray-800 px-3 py-2 rounded-lg transition-colors"
+            >
+              Roadmap
+            </Link>
+            <Link
+              href="/new"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            >
+              + New Site
+            </Link>
+          </div>
         </div>
       </header>
 

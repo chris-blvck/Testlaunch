@@ -1,5 +1,5 @@
 import { RestaurantData } from "@/lib/types";
-import { renderHours } from "./utils";
+import { esc, renderHours } from "./utils";
 
 export function generateMinimal(r: RestaurantData): string {
   return `<!DOCTYPE html>
@@ -7,12 +7,12 @@ export function generateMinimal(r: RestaurantData): string {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${r.name}${r.city ? ` — ${r.city}` : ""}</title>
-  <meta name="description" content="${r.description}" />
+  <title>${esc(r.name)}${r.city ? ` — ${esc(r.city)}` : ""}</title>
+  <meta name="description" content="${esc(r.description)}" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --primary: ${r.primaryColor}; --accent: ${r.accentColor}; }
+    :root { --primary: ${esc(r.primaryColor)}; --accent: ${esc(r.accentColor)}; }
     body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1a1a1a; }
     a { color: var(--primary); text-decoration: none; }
 
@@ -59,7 +59,7 @@ export function generateMinimal(r: RestaurantData): string {
     }
     .btn-ghost:hover { border-color: #999; color: #1a1a1a; }
     .hero-right {
-      background: ${r.heroImage ? `url('${r.heroImage}') center/cover no-repeat` : `var(--primary)`};
+      background: ${r.heroImage ? `url('${esc(r.heroImage)}') center/cover no-repeat` : `var(--primary)`};
       position: relative;
     }
     .hero-right::after {
@@ -126,17 +126,17 @@ export function generateMinimal(r: RestaurantData): string {
 </head>
 <body>
   <nav>
-    <div class="nav-logo">${r.logoText || r.name}</div>
-    ${r.phone ? `<a href="tel:${r.phone}" class="nav-cta">Reserve</a>` : `<a href="#contact" class="nav-cta">Contact</a>`}
+    <div class="nav-logo">${esc(r.logoText || r.name)}</div>
+    ${r.phone ? `<a href="tel:${esc(r.phone)}" class="nav-cta">Reserve</a>` : `<a href="#contact" class="nav-cta">Contact</a>`}
   </nav>
 
   <div class="hero">
     <div class="hero-left">
-      <span class="hero-tag">${r.cuisine}</span>
-      <h1>${r.name}</h1>
-      <p class="hero-desc">${r.tagline || r.description}</p>
+      <span class="hero-tag">${esc(r.cuisine)}</span>
+      <h1>${esc(r.name)}</h1>
+      <p class="hero-desc">${esc(r.tagline || r.description)}</p>
       <div class="hero-actions">
-        ${r.phone ? `<a href="tel:${r.phone}" class="btn-main">Call Us</a>` : ""}
+        ${r.phone ? `<a href="tel:${esc(r.phone)}" class="btn-main">Call Us</a>` : ""}
         <a href="#about" class="btn-ghost">Learn More</a>
       </div>
     </div>
@@ -146,14 +146,14 @@ export function generateMinimal(r: RestaurantData): string {
   <div class="features">
     <div class="feat"><div class="feat-icon">🌿</div><h3>Fresh Daily</h3><p>Only the finest ingredients sourced fresh every day.</p></div>
     <div class="feat"><div class="feat-icon">👨‍🍳</div><h3>Expert Chefs</h3><p>Passionate culinary team with years of experience.</p></div>
-    <div class="feat"><div class="feat-icon">🍽</div><h3>${r.cuisine} Cuisine</h3><p>Authentic flavors and traditional recipes.</p></div>
+    <div class="feat"><div class="feat-icon">🍽</div><h3>${esc(r.cuisine)} Cuisine</h3><p>Authentic flavors and traditional recipes.</p></div>
     <div class="feat"><div class="feat-icon">❤️</div><h3>Made with Love</h3><p>Every dish crafted with care and attention.</p></div>
   </div>
 
   <div class="about-section" id="about">
     <span class="label">About Us</span>
-    <h2>Welcome to ${r.name}</h2>
-    <p>${r.description}</p>
+    <h2>Welcome to ${esc(r.name)}</h2>
+    <p>${esc(r.description)}</p>
   </div>
 
   ${r.menu?.length ? `
@@ -165,14 +165,14 @@ export function generateMinimal(r: RestaurantData): string {
     <div class="menu-tabs">
       ${r.menu.map((section) => `
         <div class="menu-group">
-          <h3>${section.name}</h3>
+          <h3>${esc(section.name)}</h3>
           ${section.items.map((item) => `
             <div class="mi">
               <div class="mi-left">
-                <h4>${item.name}</h4>
-                ${item.description ? `<p>${item.description}</p>` : ""}
+                <h4>${esc(item.name)}</h4>
+                ${item.description ? `<p>${esc(item.description)}</p>` : ""}
               </div>
-              ${item.price ? `<span class="mi-price">${item.price}</span>` : ""}
+              ${item.price ? `<span class="mi-price">${esc(item.price)}</span>` : ""}
             </div>`).join("")}
         </div>`).join("")}
     </div>
@@ -182,12 +182,12 @@ export function generateMinimal(r: RestaurantData): string {
     <div class="contact-inner">
       <div>
         <span class="label">Visit Us</span>
-        <h2>Come & Dine</h2>
-        <p style="color:#aaa;margin-bottom:2rem;font-weight:300">${r.cuisine} dining${r.city ? ` in ${r.city}` : ""}.</p>
-        ${r.address ? `<div class="contact-detail">📍 <span>${r.address}${r.city ? `, ${r.city}` : ""}</span></div>` : ""}
-        ${r.phone ? `<div class="contact-detail">📞 <a href="tel:${r.phone}">${r.phone}</a></div>` : ""}
-        ${r.email ? `<div class="contact-detail">✉️ <a href="mailto:${r.email}">${r.email}</a></div>` : ""}
-        ${r.phone ? `<a href="tel:${r.phone}" class="btn-main" style="display:inline-block;margin-top:2rem">Reserve a Table</a>` : ""}
+        <h2>Come &amp; Dine</h2>
+        <p style="color:#aaa;margin-bottom:2rem;font-weight:300">${esc(r.cuisine)} dining${r.city ? ` in ${esc(r.city)}` : ""}.</p>
+        ${r.address ? `<div class="contact-detail">📍 <span>${esc(r.address)}${r.city ? `, ${esc(r.city)}` : ""}</span></div>` : ""}
+        ${r.phone ? `<div class="contact-detail">📞 <a href="tel:${esc(r.phone)}">${esc(r.phone)}</a></div>` : ""}
+        ${r.email ? `<div class="contact-detail">✉️ <a href="mailto:${esc(r.email)}">${esc(r.email)}</a></div>` : ""}
+        ${r.phone ? `<a href="tel:${esc(r.phone)}" class="btn-main" style="display:inline-block;margin-top:2rem">Reserve a Table</a>` : ""}
       </div>
       ${r.hours ? `
       <div>
@@ -200,8 +200,8 @@ export function generateMinimal(r: RestaurantData): string {
   </div>
 
   <footer>
-    <span class="footer-name">${r.name}</span>
-    <span>${r.cuisine}${r.city ? ` · ${r.city}` : ""}</span>
+    <span class="footer-name">${esc(r.name)}</span>
+    <span>${esc(r.cuisine)}${r.city ? ` · ${esc(r.city)}` : ""}</span>
   </footer>
 </body>
 </html>`;
