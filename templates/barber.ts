@@ -29,7 +29,7 @@ function renderServices(sections: RestaurantData["menu"]): string {
 
 export function generateBarber(r: RestaurantData): string {
   const whatsappNum = r.whatsapp?.replace(/\D/g, "") || r.phone?.replace(/\D/g, "") || "";
-  const bookingMsg = encodeURIComponent(`Bonjour ${r.name}, je souhaite prendre rendez-vous.`);
+  const bookingMsg = encodeURIComponent(`Hello ${r.name}, I'd like to book an appointment.`);
   const bookingLink = whatsappNum
     ? `https://wa.me/${whatsappNum}?text=${bookingMsg}`
     : r.phone
@@ -37,7 +37,7 @@ export function generateBarber(r: RestaurantData): string {
     : "#contact";
 
   return `<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -330,10 +330,10 @@ export function generateBarber(r: RestaurantData): string {
   <nav>
     <div class="nav-logo">${esc(r.logoText || r.name).split(" ").map((w, i) => i === 0 ? `<span>${w}</span>` : ` ${w}`).join("")}</div>
     <div class="nav-links">
-      <a href="#about">À Propos</a>
+      <a href="#about">About</a>
       ${r.menu?.length ? `<a href="#services">Services</a>` : ""}
       <a href="#contact">Contact</a>
-      <a href="${bookingLink}" class="nav-cta" target="_blank" rel="noopener">Réserver</a>
+      <a href="${bookingLink}" class="nav-cta" target="_blank" rel="noopener">Book Now</a>
     </div>
   </nav>
 
@@ -348,13 +348,13 @@ export function generateBarber(r: RestaurantData): string {
       <h1>${esc(r.name).includes(" ") ? esc(r.name).replace(/\s+/, "<br><em>") + "</em>" : `<em>${esc(r.name)}</em>`}</h1>
       <p class="hero-tagline">${esc(r.tagline || r.description)}</p>
       <div class="hero-buttons">
-        <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Prendre Rendez-vous</a>
-        ${r.menu?.length ? `<a href="#services" class="btn btn-ghost">Nos Services</a>` : ""}
+        <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Book an Appointment</a>
+        ${r.menu?.length ? `<a href="#services" class="btn btn-ghost">Our Services</a>` : ""}
       </div>
     </div>
     <div class="hero-scroll">
       <div class="hero-scroll-line"></div>
-      Découvrir
+      Discover
     </div>
   </section>
 
@@ -363,38 +363,38 @@ export function generateBarber(r: RestaurantData): string {
     <div class="container">
       <div class="about-grid">
         <div>
-          <p class="section-eyebrow">Notre Savoir-Faire</p>
-          <h2 class="section-title">L'Art du Soin<br><em style="font-style:italic;color:var(--gold)">à Domicile</em></h2>
+          <p class="section-eyebrow">Our Craft</p>
+          <h2 class="section-title">The Art of Grooming<br><em style="font-style:italic;color:var(--gold)">At Your Door</em></h2>
           <div class="section-divider"></div>
           <div class="about-text">
             <p>${esc(r.description)}</p>
-            <p>Nous nous déplaçons directement chez vous ou à votre hôtel${r.city ? ` à ${esc(r.city)}` : ""}, apportant tout l'équipement professionnel nécessaire pour une expérience irréprochable.</p>
+            <p>We come directly to your villa, residence or hotel${r.city ? ` in ${esc(r.city)}` : ""}, bringing all professional equipment for a flawless, five-star experience.</p>
           </div>
           ${r.address || r.city ? `
           <div class="zone-badge">
             <span>📍</span>
-            <span>Zone de déplacement : ${r.city ? esc(r.city) : ""}${r.address ? ` · ${esc(r.address)}` : ""}</span>
+            <span>Service area: ${r.city ? esc(r.city) : ""}${r.address ? ` · ${esc(r.address)}` : ""}</span>
           </div>` : ""}
           <div class="about-cta">
-            <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Réserver une Séance</a>
+            <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Book a Session</a>
           </div>
         </div>
         <div class="about-stats">
           <div class="stat-box">
             <div class="stat-number">✦</div>
-            <div class="stat-label">Qualité Premium</div>
+            <div class="stat-label">Premium Quality</div>
           </div>
           <div class="stat-box">
             <div class="stat-number">5★</div>
-            <div class="stat-label">Service d'Exception</div>
+            <div class="stat-label">Exceptional Service</div>
           </div>
           <div class="stat-box">
             <div class="stat-number">100%</div>
-            <div class="stat-label">À Domicile</div>
+            <div class="stat-label">Mobile Service</div>
           </div>
           <div class="stat-box">
             <div class="stat-number">∞</div>
-            <div class="stat-label">Discrétion</div>
+            <div class="stat-label">Discretion</div>
           </div>
         </div>
       </div>
@@ -405,35 +405,35 @@ export function generateBarber(r: RestaurantData): string {
   <section class="how" id="how">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Le Processus</p>
-        <h2 class="section-title">Comment Ça Marche</h2>
+        <p class="section-eyebrow">The Process</p>
+        <h2 class="section-title">How It Works</h2>
         <div class="section-divider"></div>
-        <p class="section-lead">Une expérience pensée pour votre confort — sans déplacement, sans attente.</p>
+        <p class="section-lead">A seamless experience designed around your comfort — no travel, no waiting.</p>
       </div>
       <div class="steps">
         <div class="step">
           <div class="step-num">01</div>
           <div class="step-icon">💬</div>
-          <h3>Réservez</h3>
-          <p>Contactez-nous via WhatsApp ou téléphone. Choisissez votre créneau, votre lieu et vos services.</p>
+          <h3>Book</h3>
+          <p>Reach us via WhatsApp or phone. Pick your time slot, location and desired services.</p>
         </div>
         <div class="step">
           <div class="step-num">02</div>
           <div class="step-icon">🚗</div>
-          <h3>On se Déplace</h3>
-          <p>Nous arrivons chez vous à l'heure prévue avec tout l'équipement professionnel — rasoirs, tondeuses, produits haut de gamme.</p>
+          <h3>We Come to You</h3>
+          <p>We arrive at your door on time with full professional kit — straight razors, clippers and premium grooming products.</p>
         </div>
         <div class="step">
           <div class="step-num">03</div>
           <div class="step-icon">✂️</div>
-          <h3>On Prend Soin de Vous</h3>
-          <p>Installez-vous confortablement. Nous vous offrons un service sur-mesure digne des plus grands salons.</p>
+          <h3>Sit Back & Relax</h3>
+          <p>Get comfortable. We deliver a bespoke service worthy of the finest barbershops, right where you are.</p>
         </div>
         <div class="step">
           <div class="step-num">04</div>
           <div class="step-icon">🪞</div>
-          <h3>Résultat Parfait</h3>
-          <p>Vous ressortez impeccable, sans avoir quitté votre domicile ou votre hôtel.</p>
+          <h3>Perfect Finish</h3>
+          <p>You look immaculate — without ever leaving your home or hotel.</p>
         </div>
       </div>
     </div>
@@ -444,16 +444,16 @@ export function generateBarber(r: RestaurantData): string {
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Nos Prestations</p>
-        <h2 class="section-title">Services & Tarifs</h2>
+        <p class="section-eyebrow">Our Offerings</p>
+        <h2 class="section-title">Services & Pricing</h2>
         <div class="section-divider"></div>
-        <p class="section-lead">Tous nos services incluent les produits, le déplacement et un résultat garanti.</p>
+        <p class="section-lead">All services include products, travel and a guaranteed result.</p>
       </div>
       <div class="services-grid">
         ${renderServices(r.menu)}
       </div>
       <div style="text-align:center;margin-top:4rem">
-        <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Réserver Maintenant</a>
+        <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Book Now</a>
       </div>
     </div>
   </section>` : ""}
@@ -463,12 +463,12 @@ export function generateBarber(r: RestaurantData): string {
     <div class="container">
       <div class="contact-grid">
         <div>
-          <p class="section-eyebrow">Nous Contacter</p>
-          <h2 class="section-title">Réservations<br>&amp; Informations</h2>
+          <p class="section-eyebrow">Get in Touch</p>
+          <h2 class="section-title">Bookings<br>&amp; Enquiries</h2>
           <div class="section-divider"></div>
           ${r.phone ? `
           <div class="contact-info-block">
-            <div class="label">Téléphone</div>
+            <div class="label">Phone</div>
             <div class="value"><a href="tel:${esc(r.phone)}">${esc(r.phone)}</a></div>
           </div>` : ""}
           ${r.whatsapp ? `
@@ -483,7 +483,7 @@ export function generateBarber(r: RestaurantData): string {
           </div>` : ""}
           ${r.address || r.city ? `
           <div class="contact-info-block">
-            <div class="label">Zone de Service</div>
+            <div class="label">Service Area</div>
             <div class="value">${r.address ? esc(r.address) + (r.city ? `, ` : '') : ''}${r.city ? esc(r.city) : ''}</div>
           </div>` : ""}
           ${r.instagram ? `
@@ -493,14 +493,14 @@ export function generateBarber(r: RestaurantData): string {
           </div>` : ""}
 
           <div class="booking-cta">
-            <p>Disponible 7j/7 sur rendez-vous. Réservez votre créneau dès maintenant.</p>
-            <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Réserver par WhatsApp</a>
+            <p>Available 7 days a week by appointment. Book your slot now.</p>
+            <a href="${bookingLink}" class="btn btn-primary" target="_blank" rel="noopener">Book via WhatsApp</a>
           </div>
         </div>
         ${r.hours ? `
         <div>
           <div class="hours-block">
-            <h4>Horaires de Disponibilité</h4>
+            <h4>Available Hours</h4>
             ${renderHours(r.hours, "div")}
           </div>
         </div>` : "<div></div>"}
@@ -514,7 +514,7 @@ export function generateBarber(r: RestaurantData): string {
     <p class="footer-tagline">${esc(r.cuisine)}${r.city ? ` · ${esc(r.city)}` : ""}</p>
     ${renderSocialLinks(r, "var(--muted)")}
     <div class="divider"></div>
-    <p class="copy">&copy; ${new Date().getFullYear()} ${esc(r.name)} — Tous droits réservés</p>
+    <p class="copy">&copy; ${new Date().getFullYear()} ${esc(r.name)} — All rights reserved</p>
   </footer>
 
   ${renderWhatsApp(r)}
