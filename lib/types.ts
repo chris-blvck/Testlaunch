@@ -19,7 +19,7 @@ export interface OpeningHours {
   sunday?: string;
 }
 
-export type TemplateId = "modern" | "classic" | "minimal";
+export type TemplateId = "modern" | "classic" | "minimal" | "barber";
 
 export interface RestaurantData {
   id: string;
@@ -32,6 +32,9 @@ export interface RestaurantData {
   address?: string;
   city?: string;
   website?: string;
+  whatsapp?: string;
+  instagram?: string;
+  facebook?: string;
   hours?: OpeningHours;
   menu?: MenuSection[];
   heroImage?: string; // URL or base64
