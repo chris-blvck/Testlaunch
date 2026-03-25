@@ -19,7 +19,7 @@ export interface OpeningHours {
   sunday?: string;
 }
 
-export type TemplateId = "modern" | "classic" | "minimal";
+export type TemplateId = "modern" | "classic" | "minimal" | "barber";
 
 export interface RestaurantData {
   id: string;
