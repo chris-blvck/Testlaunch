@@ -72,6 +72,7 @@ export default function LePalaisPage() {
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #d97706; }
+        .playfair { font-family: var(--font-playfair), 'Playfair Display', Georgia, serif; }
         @keyframes shimmer { 0%,100% { text-shadow: 0 0 30px rgba(217,119,6,.3); } 50% { text-shadow: 0 0 60px rgba(217,119,6,.7), 0 0 120px rgba(217,119,6,.2); } }
         .gold-shimmer { animation: shimmer 4s ease-in-out infinite; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

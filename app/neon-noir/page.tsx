@@ -169,6 +169,7 @@ export default function NeonNoirPage() {
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: ${BG}; }
         ::-webkit-scrollbar-thumb { background: ${ACCENT}; }
+        .bebas { font-family: var(--font-bebas), 'Bebas Neue', Impact, sans-serif; letter-spacing: 0.04em; }
         @keyframes purpleglow {
           0%, 100% { text-shadow: 0 0 20px rgba(124,58,237,.35); }
           50% { text-shadow: 0 0 80px rgba(124,58,237,.9), 0 0 140px rgba(124,58,237,.3); }
