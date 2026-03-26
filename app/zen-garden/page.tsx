@@ -62,13 +62,12 @@ export default function ZenGardenPage() {
   return (
     <div style={{ backgroundColor: "#000", minHeight: "100vh", color: "#e7e5e4", fontFamily: "system-ui, sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 2px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #292524; }
-        .zen-heading { font-family: 'Cormorant Garamond', Georgia, serif; }
+        .zen-heading { font-family: var(--font-cormorant), Georgia, serif; }
         .gallery-img {
           transition: filter 0.45s ease;
           filter: brightness(0.78);

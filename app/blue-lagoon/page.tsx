@@ -27,13 +27,11 @@ export default function BlueLagoonPage() {
   return (
     <div style={{ backgroundColor: "#050e12", minHeight: "100vh", color: "#e0f7fa", fontFamily: "system-ui, sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #050e12; }
         ::-webkit-scrollbar-thumb { background: #0891b2; }
-        .righteous { font-family: 'Righteous', system-ui, sans-serif; }
         .fade-up { transition: opacity 0.8s ease, transform 0.8s ease; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
         .fade-up.hidden-state { opacity: 0; transform: translateY(30px); }
