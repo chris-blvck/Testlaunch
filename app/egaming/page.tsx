@@ -139,6 +139,7 @@ const BRANDS = ["ASUS ROG", "Logitech G", "HyperX", "TTRacing", "NVIDIA", "BenQ 
 
 export default function EgamingPage() {
   const [locale, setLocale] = useState<Locale>("en");
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   const t = COPY[locale];
   const experiences = useMemo(() => ([
     {
@@ -186,13 +187,13 @@ export default function EgamingPage() {
         @keyframes pulse-glow { 0%,100% { text-shadow: 0 0 20px rgba(239,68,68,.4);} 50% {text-shadow:0 0 70px rgba(239,68,68,.9);} }
         .pulse-glow { animation: pulse-glow 3.3s ease-in-out infinite; }
       `}</style>
-      <Navbar t={t} locale={locale} setLocale={setLocale} />
+      <Navbar t={t} locale={locale} setLocale={setLocale} mode={mode} setMode={setMode} />
       <Hero t={t} />
       <Stats t={t} />
       <Experience t={t} experiences={experiences} />
-      <Gallery locale={locale} t={t} />
+      {mode === "full" && <Gallery locale={locale} t={t} />}
       <Pricing t={t} />
-      <Brands t={t} />
+      {mode === "full" && <Brands t={t} />}
       <Location t={t} />
       <Booking t={t} />
       <Footer t={t} />
@@ -209,7 +210,7 @@ function Logo() {
   );
 }
 
-function Navbar({ t, locale, setLocale }: { t: CopyContent; locale: Locale; setLocale: (x: Locale) => void }) {
+function Navbar({ t, locale, setLocale, mode, setMode }: { t: CopyContent; locale: Locale; setLocale: (x: Locale) => void; mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
@@ -228,7 +229,16 @@ function Navbar({ t, locale, setLocale }: { t: CopyContent; locale: Locale; setL
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center overflow-hidden border border-zinc-800">
+            {(["compact", "full"] as const).map((m) => (
+              <button key={m} onClick={() => setMode(m)}
+                className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
+                style={{ background: mode === m ? "#dc2626" : "transparent", color: mode === m ? "#fff" : "#52525b" }}>
+                {m}
+              </button>
+            ))}
+          </div>
           <button onClick={() => setLocale(locale === "en" ? "ru" : "en")} className="text-xs uppercase tracking-wider px-3 py-2 border border-zinc-700 hover:border-zinc-400">
             {t.localeButton}
           </button>

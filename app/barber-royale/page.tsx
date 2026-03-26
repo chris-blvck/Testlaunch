@@ -130,6 +130,7 @@ const PRICING_PLANS = [
 ];
 
 export default function BarberRoyalePage() {
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
     <div className="bg-black min-h-screen">
       <style>{`
@@ -144,11 +145,11 @@ export default function BarberRoyalePage() {
         }
         .gold-glow { animation: goldglow 3.5s ease-in-out infinite; }
       `}</style>
-      <Navbar />
+      <Navbar mode={mode} setMode={setMode} />
       <Hero />
       <Stats />
       <Services />
-      <Gallery />
+      {mode === "full" && <Gallery />}
       <Pricing />
       <Location />
       <Footer />
@@ -156,7 +157,7 @@ export default function BarberRoyalePage() {
   );
 }
 
-function Navbar() {
+function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -200,16 +201,27 @@ function Navbar() {
             </button>
           ))}
         </div>
-        {/* CTA */}
-        <a
-          href="https://wa.me/66812345678"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bebas text-black text-sm px-5 py-2 tracking-widest uppercase transition-all hover:opacity-80"
-          style={{ background: "#ca8a04" }}
-        >
-          Book Now
-        </a>
+        {/* Mode toggle + CTA */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center overflow-hidden" style={{ border: "1px solid #ca8a0444" }}>
+            {(["compact", "full"] as const).map((m) => (
+              <button key={m} onClick={() => setMode(m)}
+                className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
+                style={{ background: mode === m ? "#ca8a04" : "transparent", color: mode === m ? "#000" : "#52400a" }}>
+                {m}
+              </button>
+            ))}
+          </div>
+          <a
+            href="https://wa.me/66812345678"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bebas text-black text-sm px-5 py-2 tracking-widest uppercase transition-all hover:opacity-80"
+            style={{ background: "#ca8a04" }}
+          >
+            Book Now
+          </a>
+        </div>
       </div>
     </nav>
   );
