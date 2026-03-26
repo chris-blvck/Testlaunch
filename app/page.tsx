@@ -238,13 +238,14 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <KabalLogo />
         <div className="hidden md:flex items-center gap-8">
-          {[{ label: "Projects", id: "projets" }, { label: "Services", id: "services" }, { label: "Contact", id: "contact" }].map((l) => (
+          {[{ label: "Projects", id: "projets" }, { label: "Contact", id: "contact" }].map((l) => (
             <button key={l.label}
               onClick={() => document.getElementById(l.id)?.scrollIntoView({ behavior: "smooth" })}
               className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
               {l.label}
             </button>
           ))}
+          <Link href="/services" className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">Services</Link>
         </div>
         <a href="mailto:junglekabal@gmail.com"
           className="border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300">
