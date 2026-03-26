@@ -27,6 +27,14 @@ type CopyContent = {
   find: string;
   allRights: string;
   localeButton: string;
+  bookLabel: string;
+  bookTitle: string;
+  bookDesc: string;
+  bookTelegram: string;
+  bookWhatsapp: string;
+  bookLine: string;
+  bookPhone: string;
+  bookStickyLabel: string;
 };
 
 function useInView(threshold = 0.1) {
@@ -48,7 +56,7 @@ function useInView(threshold = 0.1) {
 
 const COPY: Record<Locale, CopyContent> = {
   en: {
-    nav: ["Experience", "Gallery", "Pricing", "Location"],
+    nav: ["Experience", "Gallery", "Pricing", "Book"],
     ctaMap: "Find us",
     heroTop: "Pattaya · Thailand",
     heroSub: "E-Sport Gaming Club",
@@ -71,9 +79,17 @@ const COPY: Record<Locale, CopyContent> = {
     find: "Find us",
     allRights: "© 2026 33X28 E-Sport Club · Pattaya",
     localeButton: "Русский",
+    bookLabel: "Book a session",
+    bookTitle: "Come play with us",
+    bookDesc: "Message us directly to book a PC, PS5 or billiards session. We reply fast.",
+    bookTelegram: "Telegram",
+    bookWhatsapp: "WhatsApp",
+    bookLine: "Line",
+    bookPhone: "Call us",
+    bookStickyLabel: "Book now",
   },
   ru: {
-    nav: ["Зона", "Галерея", "Цены", "Локация"],
+    nav: ["Зона", "Галерея", "Цены", "Бронь"],
     ctaMap: "Как добраться",
     heroTop: "Паттайя · Таиланд",
     heroSub: "Киберспортивный клуб",
@@ -96,6 +112,14 @@ const COPY: Record<Locale, CopyContent> = {
     find: "Как найти",
     allRights: "© 2026 33X28 E-Sport Club · Паттайя",
     localeButton: "English",
+    bookLabel: "Бронирование",
+    bookTitle: "Приходите играть",
+    bookDesc: "Напишите нам напрямую, чтобы забронировать место за ПК, PS5 или бильярд. Отвечаем быстро.",
+    bookTelegram: "Telegram",
+    bookWhatsapp: "WhatsApp",
+    bookLine: "Line",
+    bookPhone: "Позвонить",
+    bookStickyLabel: "Забронировать",
   },
 };
 
@@ -170,7 +194,9 @@ export default function EgamingPage() {
       <Pricing t={t} />
       <Brands t={t} />
       <Location t={t} />
+      <Booking t={t} />
       <Footer t={t} />
+      <StickyBook t={t} />
     </div>
   );
 }
@@ -197,7 +223,7 @@ function Navbar({ t, locale, setLocale }: { t: CopyContent; locale: Locale; setL
         <Logo />
         <div className="hidden md:flex gap-8 justify-center flex-1">
           {t.nav.map((item, idx) => (
-            <button key={item} onClick={() => document.getElementById(["experience", "gallery", "pricing", "location"][idx])?.scrollIntoView({ behavior: "smooth" })} className="text-xs uppercase tracking-[0.2em] text-zinc-400 hover:text-white">
+            <button key={item} onClick={() => document.getElementById(["experience", "gallery", "pricing", "booking"][idx])?.scrollIntoView({ behavior: "smooth" })} className="text-xs uppercase tracking-[0.2em] text-zinc-400 hover:text-white">
               {item}
             </button>
           ))}
@@ -395,6 +421,56 @@ function Location({ t }: { t: CopyContent }) {
         </div>
       </div>
     </section>
+  );
+}
+
+const CONTACT_LINKS = {
+  telegram: "https://t.me/cyberclub33X28",
+  whatsapp: "https://wa.me/66647315217",
+  line: "https://line.me/ti/p/~0647315217",
+  phone: "tel:0647315217",
+};
+
+function Booking({ t }: { t: CopyContent }) {
+  const { ref, inView } = useInView();
+  const buttons = [
+    { href: CONTACT_LINKS.telegram, label: t.bookTelegram, bg: "bg-[#229ED9] hover:bg-[#1a8bc4]", icon: "✈" },
+    { href: CONTACT_LINKS.whatsapp, label: t.bookWhatsapp, bg: "bg-[#25D366] hover:bg-[#1db954]", icon: "💬" },
+    { href: CONTACT_LINKS.line, label: t.bookLine, bg: "bg-[#06C755] hover:bg-[#05a847]", icon: "💚" },
+    { href: CONTACT_LINKS.phone, label: `${t.bookPhone} · 064 731 5217`, bg: "bg-zinc-800 hover:bg-zinc-700", icon: "📞" },
+  ];
+  return (
+    <section id="booking" className="bg-zinc-950 py-28 px-6 border-t border-zinc-900">
+      <div ref={ref} className={`max-w-2xl mx-auto text-center transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <p className="text-red-500 text-xs uppercase tracking-[0.35em] mb-3">{t.bookLabel}</p>
+        <h2 className="font-russo text-4xl md:text-5xl text-white mb-4">{t.bookTitle}</h2>
+        <p className="text-zinc-400 mb-12 leading-relaxed">{t.bookDesc}</p>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
+          {buttons.map((b) => (
+            <a key={b.href} href={b.href} target="_blank" rel="noopener noreferrer"
+              className={`${b.bg} text-white font-bold px-7 py-4 text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 active:scale-95`}>
+              <span>{b.icon}</span>{b.label}
+            </a>
+          ))}
+        </div>
+        <p className="mt-10 text-zinc-600 text-xs">Open daily · 14:00 – 00:00</p>
+      </div>
+    </section>
+  );
+}
+
+function StickyBook({ t }: { t: CopyContent }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const fn = () => setVisible(window.scrollY > 600);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  return (
+    <a href={CONTACT_LINKS.telegram} target="_blank" rel="noopener noreferrer"
+      className={`fixed bottom-6 right-6 z-50 bg-[#229ED9] hover:bg-[#1a8bc4] text-white font-bold px-6 py-3 text-sm tracking-wide flex items-center gap-2 shadow-2xl transition-all duration-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}>
+      ✈ {t.bookStickyLabel}
+    </a>
   );
 }
 

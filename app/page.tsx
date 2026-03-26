@@ -27,6 +27,7 @@ const PROJECTS = [
     gradient: "from-red-950 via-zinc-950 to-black",
     accent: "#dc2626",
     accentText: "text-red-500",
+    photo: "https://images.pexels.com/photos/7897479/pexels-photo-7897479.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/egaming",
     status: "Live",
   },
@@ -36,13 +37,14 @@ const PROJECTS = [
     category: "Fine Dining",
     location: "Bangkok, Thailand",
     year: "2025",
-    desc: "Elegant showcase website for a high-end French restaurant. Classic template with a gold palette, gastronomic menu and online reservation.",
+    desc: "Elegant showcase website for a high-end French restaurant. Gold palette, gastronomic menu, Playfair Display typography and online reservation.",
     tags: ["Restaurant", "Luxury", "French"],
     gradient: "from-amber-950 via-stone-950 to-black",
     accent: "#d97706",
     accentText: "text-amber-500",
-    liveUrl: "/portfolio/le-palais",
-    status: "Preview",
+    photo: "https://images.pexels.com/photos/3859234/pexels-photo-3859234.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/le-palais",
+    status: "Live",
   },
   {
     slug: "barber-royale",
@@ -50,13 +52,14 @@ const PROJECTS = [
     category: "Luxury Barbershop",
     location: "Phuket, Thailand",
     year: "2025",
-    desc: "Prestige web identity for a luxury barbershop. Dark template with gold accents, photo gallery, pricing and WhatsApp booking.",
+    desc: "Prestige web identity for a luxury barbershop. Dark design with gold accents, photo gallery, pricing grid and WhatsApp booking.",
     tags: ["Barbershop", "Gold", "Premium"],
     gradient: "from-yellow-950 via-zinc-900 to-black",
     accent: "#ca8a04",
     accentText: "text-yellow-500",
-    liveUrl: "/portfolio/barber-royale",
-    status: "Preview",
+    photo: "https://images.pexels.com/photos/7697329/pexels-photo-7697329.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/barber-royale",
+    status: "Live",
   },
   {
     slug: "blue-lagoon",
@@ -64,13 +67,14 @@ const PROJECTS = [
     category: "Beach Bar & Restaurant",
     location: "Koh Samui, Thailand",
     year: "2026",
-    desc: "One-page site for a tropical beach bar. Fresh design with blue-turquoise gradients, cocktail menu, sunset gallery and Google Maps.",
+    desc: "Vibrant one-page site for a tropical beach bar. Cyan gradients, cocktail menu, live events section and beachfront location.",
     tags: ["Beach Bar", "Tropical", "Cocktails"],
     gradient: "from-cyan-950 via-blue-950 to-black",
     accent: "#0891b2",
     accentText: "text-cyan-500",
-    liveUrl: "/portfolio/blue-lagoon",
-    status: "Preview",
+    photo: "https://images.pexels.com/photos/6181098/pexels-photo-6181098.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/blue-lagoon",
+    status: "Live",
   },
   {
     slug: "zen-garden",
@@ -78,13 +82,59 @@ const PROJECTS = [
     category: "Japanese Restaurant",
     location: "Chiang Mai, Thailand",
     year: "2026",
-    desc: "Minimalist web experience for an authentic Japanese restaurant. Clean design, omakase menu, serene atmosphere with premium typography.",
+    desc: "Ultra-minimal omakase restaurant website. Cormorant Garamond serif, 12-course tasting menu, exclusive reservation system.",
     tags: ["Japanese", "Minimal", "Omakase"],
     gradient: "from-stone-900 via-zinc-900 to-black",
     accent: "#84cc16",
     accentText: "text-lime-500",
-    liveUrl: "/portfolio/zen-garden",
-    status: "Preview",
+    photo: "https://images.pexels.com/photos/6025655/pexels-photo-6025655.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/zen-garden",
+    status: "Live",
+  },
+  {
+    slug: "jungle-kabal",
+    name: "Jungle Kabal",
+    category: "NFT & Web3",
+    location: "Online",
+    year: "2026",
+    desc: "Immersive NFT & meme community hub with lush jungle aesthetics, token integration and viral social features.",
+    tags: ["NFT", "Web3", "Meme"],
+    gradient: "from-green-950 via-emerald-950 to-black",
+    accent: "#10b981",
+    accentText: "text-emerald-500",
+    photo: "https://images.pexels.com/photos/7708407/pexels-photo-7708407.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "https://www.junglekabal.meme/",
+    status: "Live",
+  },
+  {
+    slug: "pokestoned",
+    name: "PokeStoned",
+    category: "Gaming & Fun",
+    location: "Online",
+    year: "2026",
+    desc: "Fun gaming website with vibrant design, interactive community features and collectible mechanics.",
+    tags: ["Gaming", "Fun", "Community"],
+    gradient: "from-yellow-950 via-orange-950 to-black",
+    accent: "#f59e0b",
+    accentText: "text-yellow-400",
+    photo: "https://images.pexels.com/photos/5584204/pexels-photo-5584204.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "https://www.pokestoned.fun/",
+    status: "Live",
+  },
+  {
+    slug: "die-jungle",
+    name: "Die Jungle",
+    category: "Browser Mini Game",
+    location: "Online",
+    year: "2026",
+    desc: "Addictive browser mini game with jungle theme, global leaderboards and daily challenges. Built for speed and engagement.",
+    tags: ["Mini Game", "Browser", "Leaderboard"],
+    gradient: "from-teal-950 via-green-950 to-black",
+    accent: "#14b8a6",
+    accentText: "text-teal-400",
+    photo: "https://images.pexels.com/photos/7708409/pexels-photo-7708409.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "https://www.diejungle.fun/",
+    status: "Live",
   },
 ];
 
@@ -215,7 +265,7 @@ function Hero({ mounted }: { mounted: boolean }) {
 function Stats() {
   const { ref, inView } = useInView();
   const items = [
-    { v: "5+", l: "Sites delivered" },
+    { v: "8+", l: "Sites delivered" },
     { v: "100%", l: "Happy clients" },
     { v: "48h", l: "Average turnaround" },
     { v: "TH", l: "Based in Thailand" },
@@ -257,35 +307,44 @@ function Projects() {
 }
 
 function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index: number }) {
+  const isExternal = p.liveUrl.startsWith("http");
+  const cardProps = isExternal
+    ? { href: p.liveUrl, target: "_blank", rel: "noopener noreferrer" }
+    : { href: p.liveUrl };
+
   return (
-    <Link href={p.liveUrl}
+    <Link {...cardProps}
       className="group card-hover block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700"
       style={{ transitionDelay: `${index * 60}ms` }}>
 
-      <div className={`relative h-52 bg-gradient-to-br ${p.gradient} flex items-end p-6 overflow-hidden`}>
-        <div className="absolute top-6 right-6 w-24 h-24 rounded-full opacity-20"
-          style={{ background: p.accent, filter: "blur(20px)" }} />
-        <div className="absolute -bottom-4 -left-4 w-32 h-32 rounded-full opacity-10"
-          style={{ background: p.accent, filter: "blur(30px)" }} />
+      {/* Photo header */}
+      <div className="relative h-52 overflow-hidden">
+        {p.photo && (
+          <img src={p.photo} alt={p.name}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+        )}
+        <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} ${p.photo ? "opacity-70" : "opacity-100"}`} />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
 
-        <div className="relative z-10">
+        <div className="absolute bottom-0 left-0 p-5 z-10">
           <span className={`text-xs font-bold tracking-widest uppercase ${p.accentText}`}>{p.category}</span>
           <h3 className="text-white font-black text-2xl tracking-tight mt-1 leading-none">{p.name}</h3>
         </div>
 
-        <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 tracking-widest uppercase ${p.status === "Live" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-zinc-800 text-zinc-400 border border-zinc-700"}`}>
+        <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 tracking-widest uppercase z-10 ${p.status === "Live" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-zinc-800 text-zinc-400 border border-zinc-700"}`}>
           {p.status}
         </span>
       </div>
 
       <div className="p-6">
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-3">
           <span className="text-zinc-600 text-xs tracking-widest">{p.location}</span>
           <span className="w-1 h-1 bg-zinc-700 rounded-full" />
           <span className="text-zinc-600 text-xs">{p.year}</span>
         </div>
-        <p className="text-zinc-400 text-sm leading-relaxed mb-5">{p.desc}</p>
-        <div className="flex flex-wrap gap-2 mb-5">
+        <p className="text-zinc-400 text-sm leading-relaxed mb-4">{p.desc}</p>
+        <div className="flex flex-wrap gap-2 mb-4">
           {p.tags.map((t) => (
             <span key={t} className="text-xs px-2 py-1 border border-zinc-800 text-zinc-500 tracking-wide">{t}</span>
           ))}
