@@ -15,7 +15,7 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
-const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3"];
+const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3", "Health & Beauty", "Sports & Fitness"];
 
 const PROJECTS = [
   {
@@ -175,6 +175,38 @@ const PROJECTS = [
     accentText: "text-rose-300",
     photo: "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/aura-spa",
+    status: "Preview",
+    cardType: "photo",
+  },
+  {
+    slug: "clinic",
+    name: "Aestha Clinic",
+    category: "Health & Beauty",
+    location: "Bangkok, Thailand",
+    year: "2026",
+    desc: "Elegant aesthetics clinic website. Light sage & gold palette, service menu, before/after gallery, online consultation booking.",
+    tags: ["Clinic", "Beauty", "Light Theme"],
+    gradient: "from-emerald-950 via-stone-950 to-black",
+    accent: "#b8923a",
+    accentText: "text-amber-400",
+    photo: "https://images.pexels.com/photos/3985360/pexels-photo-3985360.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/clinic",
+    status: "Preview",
+    cardType: "photo",
+  },
+  {
+    slug: "muaythai",
+    name: "Tiger Muay Thai",
+    category: "Sports & Fitness",
+    location: "Pattaya, Thailand",
+    year: "2026",
+    desc: "Raw and powerful gym website. Muay Thai training programs, DTV visa services, class schedule and WhatsApp booking. Dark gold palette.",
+    tags: ["Gym", "Muay Thai", "DTV Visa"],
+    gradient: "from-yellow-950 via-zinc-950 to-black",
+    accent: "#c9a84c",
+    accentText: "text-yellow-400",
+    photo: "https://images.pexels.com/photos/4754146/pexels-photo-4754146.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/muaythai",
     status: "Preview",
     cardType: "photo",
   },
@@ -347,10 +379,41 @@ function Hero({ mounted }: { mounted: boolean }) {
   );
 }
 
+function useCounter(target: number, inView: boolean) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    let start: number;
+    const tick = (ts: number) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / 1200, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setN(Math.floor(eased * target));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [inView, target]);
+  return n;
+}
+
+function StatItem({ v, l, inView, delay }: { v: string; l: string; inView: boolean; delay: number }) {
+  const num = parseInt(v.replace(/\D/g, ""));
+  const suffix = v.replace(/[0-9]/g, "");
+  const count = useCounter(num || 0, inView);
+  const display = isNaN(num) || num === 0 ? v : `${count}${suffix}`;
+  return (
+    <div className={`flex flex-col items-center py-8 border-r border-zinc-900 last:border-r-0 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+      style={{ transitionDelay: `${delay}ms` }}>
+      <span className="text-white font-black text-2xl md:text-3xl tracking-tight">{display}</span>
+      <span className="text-zinc-600 text-xs tracking-widest uppercase mt-1 text-center">{l}</span>
+    </div>
+  );
+}
+
 function Stats() {
   const { ref, inView } = useInView();
   const items = [
-    { v: "8+", l: "Sites delivered" },
+    { v: "10+", l: "Sites delivered" },
     { v: "100%", l: "Happy clients" },
     { v: "48h", l: "Average turnaround" },
     { v: "TH", l: "Based in Thailand" },
@@ -358,14 +421,7 @@ function Stats() {
   return (
     <section ref={ref} className="border-y border-zinc-900 bg-zinc-950">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4">
-        {items.map((s, i) => (
-          <div key={s.l}
-            className={`flex flex-col items-center py-8 border-r border-zinc-900 last:border-r-0 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{ transitionDelay: `${i * 80}ms` }}>
-            <span className="text-white font-black text-2xl md:text-3xl tracking-tight">{s.v}</span>
-            <span className="text-zinc-600 text-xs tracking-widest uppercase mt-1 text-center">{s.l}</span>
-          </div>
-        ))}
+        {items.map((s, i) => <StatItem key={s.l} v={s.v} l={s.l} inView={inView} delay={i * 80} />)}
       </div>
     </section>
   );

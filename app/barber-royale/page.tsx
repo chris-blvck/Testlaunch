@@ -181,12 +181,15 @@ function Marquee() {
 
 function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+  const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
   return (
+    <>
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""
@@ -234,18 +237,26 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
               </button>
             ))}
           </div>
-          <a
-            href="https://wa.me/66812345678"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bebas text-black text-sm px-5 py-2 tracking-widest uppercase transition-all hover:opacity-80"
-            style={{ background: "#ca8a04" }}
-          >
+          <a href="https://wa.me/66812345678" target="_blank" rel="noopener noreferrer"
+            className="hidden md:block bebas text-black text-sm px-5 py-2 tracking-widest uppercase transition-all hover:opacity-80"
+            style={{ background: "#ca8a04" }}>
             Book Now
           </a>
+          <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+            <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
         </div>
       </div>
     </nav>
+    <div className={`fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+      {NAV_LINKS.map((l) => (
+        <button key={l} onClick={() => go(l.toLowerCase())}
+          className="bebas text-white text-4xl tracking-widest">{l}</button>
+      ))}
+    </div>
+    </>
   );
 }
 

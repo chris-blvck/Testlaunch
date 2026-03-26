@@ -200,13 +200,16 @@ export default function NeonNoirPage() {
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+  const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
 
   return (
+    <>
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled ? "backdrop-blur-md border-b border-purple-900/30" : ""
@@ -269,9 +272,22 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
           >
             {COPY.en.nav.cta}
           </a>
+          <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+            <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
         </div>
       </div>
     </nav>
+    <div className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      style={{ background: BG }}>
+      {NAV_LINKS.map((l) => (
+        <button key={l} onClick={() => go(l.toLowerCase())}
+          className="bebas text-white text-4xl tracking-widest hover:opacity-70 transition-opacity">{l}</button>
+      ))}
+    </div>
+    </>
   );
 }
 

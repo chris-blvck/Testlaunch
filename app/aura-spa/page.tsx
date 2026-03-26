@@ -103,12 +103,16 @@ export default function AuraSpaPage() {
 
 function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+  const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
+  const LINKS = ["Treatments", "Gallery", "Packages", "Location"];
   return (
+    <>
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md border-b" : ""}`}
       style={{ background: scrolled ? "rgba(13,8,6,0.95)" : "transparent", borderColor: `${ACCENT}33` }}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -117,9 +121,8 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
           <span className="text-[8px] tracking-[0.4em] uppercase" style={{ color: "#a09080" }}>Spa & Wellness</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          {["Treatments", "Gallery", "Packages", "Location"].map((l) => (
-            <button key={l}
-              onClick={() => document.getElementById(l.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
+          {LINKS.map((l) => (
+            <button key={l} onClick={() => go(l.toLowerCase())}
               className="text-xs font-semibold tracking-[0.2em] uppercase transition-colors"
               style={{ color: "#a09080" }}
               onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
@@ -129,7 +132,7 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center overflow-hidden border" style={{ borderColor: `${ACCENT}44` }}>
+          <div className="hidden md:flex items-center overflow-hidden border" style={{ borderColor: `${ACCENT}44` }}>
             {(["compact", "full"] as const).map((m) => (
               <button key={m} onClick={() => setMode(m)}
                 className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
@@ -138,17 +141,27 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
               </button>
             ))}
           </div>
-          <button
-            onClick={() => document.getElementById("packages")?.scrollIntoView({ behavior: "smooth" })}
-            className="text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300"
-            style={{ background: ACCENT, color: "#0d0806" }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
+          <button onClick={() => go("packages")}
+            className="hidden md:block text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300"
+            style={{ background: ACCENT, color: "#0d0806" }}>
             Book Now
+          </button>
+          <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+            <span className={`block w-5 h-px transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} style={{ background: ACCENT }} />
+            <span className={`block w-5 h-px transition-all duration-300 ${open ? "opacity-0" : ""}`} style={{ background: ACCENT }} />
+            <span className={`block w-5 h-px transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: ACCENT }} />
           </button>
         </div>
       </div>
     </nav>
+    <div className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      style={{ background: BG }}>
+      {LINKS.map((l) => (
+        <button key={l} onClick={() => go(l.toLowerCase())}
+          className="cormorant italic font-bold text-3xl" style={{ color: ACCENT }}>{l}</button>
+      ))}
+    </div>
+    </>
   );
 }
 

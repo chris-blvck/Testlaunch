@@ -121,42 +121,55 @@ function Logo() {
 
 function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+  const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Logo />
-        <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((l) => (
-            <button key={l}
-              onClick={() => document.getElementById(l.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
-              className="text-zinc-400 hover:text-amber-400 text-xs font-semibold tracking-[0.2em] uppercase transition-colors">
-              {l}
-            </button>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center border border-zinc-800 overflow-hidden">
-            {(["compact", "full"] as const).map((m) => (
-              <button key={m} onClick={() => setMode(m)}
-                className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
-                style={{ background: mode === m ? "#d97706" : "transparent", color: mode === m ? "#000" : "#52525b" }}>
-                {m}
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Logo />
+          <div className="hidden md:flex items-center gap-8">
+            {NAV_LINKS.map((l) => (
+              <button key={l} onClick={() => go(l.toLowerCase())}
+                className="text-zinc-400 hover:text-amber-400 text-xs font-semibold tracking-[0.2em] uppercase transition-colors">
+                {l}
               </button>
             ))}
           </div>
-          <button
-            onClick={() => document.getElementById("reservations")?.scrollIntoView({ behavior: "smooth" })}
-            className="bg-amber-600 hover:bg-amber-500 text-black text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-colors">
-            Book a Table
-          </button>
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center border border-zinc-800 overflow-hidden">
+              {(["compact", "full"] as const).map((m) => (
+                <button key={m} onClick={() => setMode(m)}
+                  className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
+                  style={{ background: mode === m ? "#d97706" : "transparent", color: mode === m ? "#000" : "#52525b" }}>
+                  {m}
+                </button>
+              ))}
+            </div>
+            <button onClick={() => go("reservations")}
+              className="hidden md:block bg-amber-600 hover:bg-amber-500 text-black text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-colors">
+              Book a Table
+            </button>
+            <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+            </button>
+          </div>
         </div>
+      </nav>
+      <div className={`fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+        {NAV_LINKS.map((l) => (
+          <button key={l} onClick={() => go(l.toLowerCase())}
+            className="playfair text-white italic font-bold text-3xl tracking-wide">{l}</button>
+        ))}
       </div>
-    </nav>
+    </>
   );
 }
 
