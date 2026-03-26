@@ -66,13 +66,11 @@ export default function LePalaisPage() {
   return (
     <div className="bg-black min-h-screen text-center">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #d97706; }
-        .playfair { font-family: 'Playfair Display', Georgia, serif; }
         @keyframes shimmer { 0%,100% { text-shadow: 0 0 30px rgba(217,119,6,.3); } 50% { text-shadow: 0 0 60px rgba(217,119,6,.7), 0 0 120px rgba(217,119,6,.2); } }
         .gold-shimmer { animation: shimmer 4s ease-in-out infinite; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -234,14 +232,14 @@ function DishBlock({ dish, flip }: { dish: typeof DISHES[0]; flip: boolean }) {
         <span className="absolute top-4 left-4 text-black text-xs font-bold px-3 py-1 tracking-widest uppercase"
           style={{ background: "#d97706" }}>{dish.tag}</span>
       </div>
-      <div className={`text-center ${flip ? "md:order-1" : ""}`}>
+      <div className={`flex flex-col items-center text-center ${flip ? "md:order-1" : ""}`}>
         <h3 className="playfair text-white font-bold text-3xl md:text-4xl mb-1" style={{ fontStyle: "italic" }}>{dish.title}</h3>
         {dish.subtitle && (
           <p className="text-amber-600/70 text-xs tracking-widest uppercase mb-5">{dish.subtitle}</p>
         )}
         {!dish.subtitle && <div className="mb-5" />}
-        <p className="text-zinc-400 leading-relaxed mb-8">{dish.desc}</p>
-        <div className="flex flex-col items-center space-y-3">
+        <p className="text-zinc-400 leading-relaxed mb-8 max-w-md">{dish.desc}</p>
+        <div className="flex flex-col items-start space-y-3 border-l-2 pl-5" style={{ borderColor: "#d97706" }}>
           {dish.details.map((d) => (
             <div key={d} className="flex items-center gap-3">
               <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#d97706" }} />

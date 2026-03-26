@@ -15,6 +15,8 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
+const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3"];
+
 const PROJECTS = [
   {
     slug: "3328-esport",
@@ -30,11 +32,12 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/7897479/pexels-photo-7897479.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/egaming",
     status: "Live",
+    cardType: "photo",
   },
   {
     slug: "le-palais",
     name: "Le Palais",
-    category: "Fine Dining",
+    category: "Restaurant & Dining",
     location: "Bangkok, Thailand",
     year: "2025",
     desc: "Elegant showcase website for a high-end French restaurant. Gold palette, gastronomic menu, Playfair Display typography and online reservation.",
@@ -45,11 +48,12 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/3859234/pexels-photo-3859234.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/le-palais",
     status: "Live",
+    cardType: "photo",
   },
   {
     slug: "barber-royale",
     name: "Barber Royale",
-    category: "Luxury Barbershop",
+    category: "Restaurant & Dining",
     location: "Phuket, Thailand",
     year: "2025",
     desc: "Prestige web identity for a luxury barbershop. Dark design with gold accents, photo gallery, pricing grid and WhatsApp booking.",
@@ -60,11 +64,12 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/7697329/pexels-photo-7697329.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/barber-royale",
     status: "Live",
+    cardType: "photo",
   },
   {
     slug: "blue-lagoon",
     name: "Blue Lagoon Beach Bar",
-    category: "Beach Bar & Restaurant",
+    category: "Restaurant & Dining",
     location: "Koh Samui, Thailand",
     year: "2026",
     desc: "Vibrant one-page site for a tropical beach bar. Cyan gradients, cocktail menu, live events section and beachfront location.",
@@ -75,11 +80,12 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/6181098/pexels-photo-6181098.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/blue-lagoon",
     status: "Live",
+    cardType: "photo",
   },
   {
     slug: "zen-garden",
     name: "Zen Garden",
-    category: "Japanese Restaurant",
+    category: "Restaurant & Dining",
     location: "Chiang Mai, Thailand",
     year: "2026",
     desc: "Ultra-minimal omakase restaurant website. Cormorant Garamond serif, 12-course tasting menu, exclusive reservation system.",
@@ -90,6 +96,7 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/6025655/pexels-photo-6025655.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/zen-garden",
     status: "Live",
+    cardType: "photo",
   },
   {
     slug: "jungle-kabal",
@@ -105,26 +112,28 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/7708407/pexels-photo-7708407.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "https://www.junglekabal.meme/",
     status: "Live",
+    cardType: "photo",
   },
   {
     slug: "pokestoned",
     name: "PokeStoned",
-    category: "Gaming & Fun",
+    category: "NFT & Web3",
     location: "Online",
     year: "2026",
-    desc: "Fun gaming website with vibrant design, interactive community features and collectible mechanics.",
-    tags: ["Gaming", "Fun", "Community"],
+    desc: "Browser mini-game with Pokémon card collecting mechanics. Trade, battle and collect in a vibrant community. Built for speed and viral engagement.",
+    tags: ["Cards", "Mini Game", "Community"],
     gradient: "from-yellow-950 via-orange-950 to-black",
     accent: "#f59e0b",
     accentText: "text-yellow-400",
-    photo: "https://images.pexels.com/photos/5584204/pexels-photo-5584204.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    photo: null,
     liveUrl: "https://www.pokestoned.fun/",
     status: "Live",
+    cardType: "cards",
   },
   {
     slug: "die-jungle",
     name: "Die Jungle",
-    category: "Browser Mini Game",
+    category: "Gaming & Entertainment",
     location: "Online",
     year: "2026",
     desc: "Addictive browser mini game with jungle theme, global leaderboards and daily challenges. Built for speed and engagement.",
@@ -135,12 +144,16 @@ const PROJECTS = [
     photo: "https://images.pexels.com/photos/7708409/pexels-photo-7708409.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "https://www.diejungle.fun/",
     status: "Live",
+    cardType: "photo",
   },
 ];
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
   useEffect(() => { setTimeout(() => setMounted(true), 60); }, []);
+
+  const filtered = activeCategory === "All" ? PROJECTS : PROJECTS.filter(p => p.category === activeCategory);
 
   return (
     <div className="bg-black min-h-screen">
@@ -164,12 +177,17 @@ export default function HomePage() {
         }
         .card-hover { transition: transform 0.4s cubic-bezier(.23,1,.32,1), box-shadow 0.4s ease; }
         .card-hover:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,.6); }
+        @keyframes float-card {
+          0%, 100% { transform: translateY(0px) rotate(var(--r)); }
+          50% { transform: translateY(-6px) rotate(var(--r)); }
+        }
+        .float-card { animation: float-card 3s ease-in-out infinite; }
       `}</style>
 
       <Navbar />
       <Hero mounted={mounted} />
       <Stats />
-      <Projects />
+      <Projects filtered={filtered} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       <CTA />
       <Footer />
     </div>
@@ -286,23 +304,82 @@ function Stats() {
   );
 }
 
-function Projects() {
+function Projects({ filtered, activeCategory, setActiveCategory }: {
+  filtered: typeof PROJECTS;
+  activeCategory: string;
+  setActiveCategory: (c: string) => void;
+}) {
   const { ref, inView } = useInView(0.05);
   return (
     <section id="projets" className="py-28 md:py-36 bg-black">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
+        <div className="mb-12">
           <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-3">Portfolio</p>
           <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight leading-none">Our work</h2>
         </div>
 
-        <div ref={ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-5 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          {PROJECTS.map((p, i) => (
+        {/* Category filters */}
+        <div className="flex flex-wrap gap-2 mb-14">
+          {CATEGORIES.map((cat) => (
+            <button key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`text-xs font-bold px-4 py-2 tracking-widest uppercase transition-all duration-200 border ${
+                activeCategory === cat
+                  ? "bg-white text-black border-white"
+                  : "border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300"
+              }`}>
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div ref={ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-5 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          {filtered.map((p, i) => (
             <ProjectCard key={p.slug} project={p} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function CardsHeader({ accent }: { accent: string }) {
+  const cards = [
+    { r: "-8deg", delay: "0s", z: 1, x: "-30px" },
+    { r: "-3deg", delay: "0.3s", z: 2, x: "-10px" },
+    { r: "3deg", delay: "0.6s", z: 3, x: "10px" },
+    { r: "10deg", delay: "0.9s", z: 2, x: "28px" },
+    { r: "16deg", delay: "1.2s", z: 1, x: "44px" },
+  ];
+  return (
+    <div className="relative h-full flex items-center justify-center">
+      <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, ${accent}22 0%, transparent 70%)` }} />
+      {cards.map((c, i) => (
+        <div key={i}
+          className="absolute float-card"
+          style={{
+            width: 56, height: 80,
+            transform: `translateX(${c.x}) rotate(${c.r})`,
+            zIndex: c.z,
+            animationDelay: c.delay,
+            "--r": c.r,
+          } as React.CSSProperties}>
+          <div className="w-full h-full rounded-lg border-2 overflow-hidden"
+            style={{ borderColor: accent, background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)" }}>
+            <div className="w-full h-[55%] flex items-center justify-center" style={{ background: `${accent}18` }}>
+              <div className="w-7 h-7 rounded-full border" style={{ borderColor: accent, opacity: 0.8 }} />
+            </div>
+            <div className="px-1.5 pt-1">
+              <div className="h-1 rounded mb-1" style={{ background: accent, opacity: 0.7, width: "70%" }} />
+              <div className="h-0.5 rounded" style={{ background: "#ffffff33", width: "50%" }} />
+            </div>
+          </div>
+        </div>
+      ))}
+      <div className="relative z-10 mt-24 text-center">
+        <span className="text-xs font-bold tracking-widest uppercase" style={{ color: accent }}>Browser Mini Game</span>
+      </div>
+    </div>
   );
 }
 
@@ -317,14 +394,20 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
       className="group card-hover block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700"
       style={{ transitionDelay: `${index * 60}ms` }}>
 
-      {/* Photo header */}
+      {/* Header */}
       <div className="relative h-52 overflow-hidden">
-        {p.photo && (
-          <img src={p.photo} alt={p.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60"
-            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+        {p.cardType === "cards" ? (
+          <CardsHeader accent={p.accent} />
+        ) : (
+          <>
+            {p.photo && (
+              <img src={p.photo} alt={p.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+            )}
+            <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} ${p.photo ? "opacity-70" : "opacity-100"}`} />
+          </>
         )}
-        <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} ${p.photo ? "opacity-70" : "opacity-100"}`} />
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
 
         <div className="absolute bottom-0 left-0 p-5 z-10">
@@ -385,7 +468,6 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <KabalLogo />
         <p className="text-zinc-700 text-xs tracking-widest">© 2026 Kabal Website Agency · Bangkok & Pattaya</p>
-
         <a href="mailto:hello@kabal.website" className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest transition-colors">
           hello@kabal.website
         </a>

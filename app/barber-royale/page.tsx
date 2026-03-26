@@ -133,13 +133,11 @@ export default function BarberRoyalePage() {
   return (
     <div className="bg-black min-h-screen">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #ca8a04; }
-        .bebas { font-family: 'Bebas Neue', sans-serif; }
         @keyframes goldglow {
           0%, 100% { text-shadow: 0 0 20px rgba(202,138,4,.3); }
           50% { text-shadow: 0 0 70px rgba(202,138,4,.85), 0 0 120px rgba(202,138,4,.25); }
