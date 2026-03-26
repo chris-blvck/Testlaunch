@@ -246,6 +246,12 @@ export default function HomePage() {
           50% { transform: translateY(-6px) rotate(var(--r)); }
         }
         .float-card { animation: float-card 3s ease-in-out infinite; }
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.15s ease, box-shadow 0.4s ease; }
+        @keyframes live-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.4; transform: scale(1.4); }
+        }
+        .live-dot { animation: live-pulse 1.8s ease-in-out infinite; }
       `}</style>
 
       <Navbar />
@@ -511,10 +517,29 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
   const cardProps = isExternal
     ? { href: p.liveUrl, target: "_blank", rel: "noopener noreferrer" }
     : { href: p.liveUrl };
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const x = (e.clientX - left) / width - 0.5;
+    const y = (e.clientY - top) / height - 0.5;
+    el.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 10}deg) translateY(-4px)`;
+    el.style.boxShadow = `${-x * 20}px ${y * 20}px 40px rgba(0,0,0,.5)`;
+  };
+  const handleMouseLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.transform = "";
+    el.style.boxShadow = "";
+  };
 
   return (
-    <Link {...cardProps}
-      className="group card-hover block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700"
+    <Link {...cardProps} ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="group tilt-card block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700"
       style={{ transitionDelay: `${index * 60}ms` }}>
 
       {/* Header */}
@@ -538,7 +563,8 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
           <h3 className="text-white font-black text-2xl tracking-tight mt-1 leading-none">{p.name}</h3>
         </div>
 
-        <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 tracking-widest uppercase z-10 ${p.status === "Live" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-zinc-800 text-zinc-400 border border-zinc-700"}`}>
+        <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 tracking-widest uppercase z-10 flex items-center gap-1.5 ${p.status === "Live" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-zinc-800 text-zinc-400 border border-zinc-700"}`}>
+          {p.status === "Live" && <span className="live-dot w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />}
           {p.status}
         </span>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
@@ -476,7 +477,12 @@ function Footer() {
             </button>
           ))}
         </div>
-        <p className="text-zinc-700 text-xs">© 2026 Le Palais · Bangkok, Thailand</p>
+        <div className="flex items-center gap-4">
+          <Link href="/le-palais/story" className="text-zinc-600 hover:text-amber-400 text-xs tracking-widest uppercase transition-colors">
+            Case Study
+          </Link>
+          <p className="text-zinc-700 text-xs">© 2026 Le Palais · Bangkok, Thailand</p>
+        </div>
       </div>
     </footer>
   );
