@@ -300,10 +300,12 @@ function TreatmentBlock({ treatment: t, flip }: { treatment: typeof TREATMENTS[0
         </div>
         <h3 className="cormorant italic font-bold text-3xl md:text-4xl mb-4" style={{ color: "#f5f0e8" }}>{t.title}</h3>
         <p className="leading-relaxed mb-6 max-w-md mx-auto" style={{ color: "#a89078" }}>{t.desc}</p>
-        <div className="inline-block text-left space-y-2 mb-8 border-l-2 pl-4" style={{ borderColor: `${ACCENT}55` }}>
-          {t.details.map((d) => (
-            <div key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</div>
-          ))}
+        <div className="flex justify-center mb-8">
+          <div className="inline-block text-left space-y-2 border-l-2 pl-4" style={{ borderColor: `${ACCENT}55` }}>
+            {t.details.map((d) => (
+              <div key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</div>
+            ))}
+          </div>
         </div>
         <div>
           <button className="text-xs font-bold px-8 py-3 tracking-widest uppercase transition-all duration-300 border"
