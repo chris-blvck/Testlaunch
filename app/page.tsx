@@ -1,211 +1,335 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { RestaurantData } from "@/lib/types";
 
-export default function Dashboard() {
-  const [sites, setSites] = useState<RestaurantData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [cloning, setCloning] = useState<string | null>(null);
-  const [toast, setToast] = useState<string | null>(null);
+function useInView(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
 
-  const showToast = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), 3000);
-  };
+const PROJECTS = [
+  {
+    slug: "3328-esport",
+    name: "3328 E-Sport Club",
+    category: "Gaming & Entertainment",
+    location: "Pattaya, Thailand",
+    year: "2025",
+    desc: "Landing page premium pour un e-sport gaming club — PC gaming, PS5 lounge, billard & bar. Design dark avec effets néon et animations scroll.",
+    tags: ["Gaming", "Dark UI", "Animations"],
+    gradient: "from-red-950 via-zinc-950 to-black",
+    accent: "#dc2626",
+    accentText: "text-red-500",
+    liveUrl: "/egaming",
+    status: "Live",
+  },
+  {
+    slug: "le-palais",
+    name: "Le Palais",
+    category: "Fine Dining",
+    location: "Bangkok, Thailand",
+    year: "2025",
+    desc: "Site vitrine élégant pour un restaurant français haut de gamme. Template classique avec palette dorée, menu gastronomique et réservation en ligne.",
+    tags: ["Restaurant", "Luxury", "French"],
+    gradient: "from-amber-950 via-stone-950 to-black",
+    accent: "#d97706",
+    accentText: "text-amber-500",
+    liveUrl: "/portfolio/le-palais",
+    status: "Preview",
+  },
+  {
+    slug: "barber-royale",
+    name: "Barber Royale",
+    category: "Luxury Barbershop",
+    location: "Phuket, Thailand",
+    year: "2025",
+    desc: "Identité web prestige pour un barbershop de luxe. Template sombre avec accents or, galerie photos, tarifs et prise de RDV WhatsApp.",
+    tags: ["Barbershop", "Gold", "Premium"],
+    gradient: "from-yellow-950 via-zinc-900 to-black",
+    accent: "#ca8a04",
+    accentText: "text-yellow-500",
+    liveUrl: "/portfolio/barber-royale",
+    status: "Preview",
+  },
+  {
+    slug: "blue-lagoon",
+    name: "Blue Lagoon Beach Bar",
+    category: "Beach Bar & Restaurant",
+    location: "Koh Samui, Thailand",
+    year: "2026",
+    desc: "Site one-page pour un beach bar tropical. Design frais avec dégradés bleu-turquoise, menu cocktails, galerie coucher de soleil et carte Google Maps.",
+    tags: ["Beach Bar", "Tropical", "Cocktails"],
+    gradient: "from-cyan-950 via-blue-950 to-black",
+    accent: "#0891b2",
+    accentText: "text-cyan-500",
+    liveUrl: "/portfolio/blue-lagoon",
+    status: "Preview",
+  },
+  {
+    slug: "zen-garden",
+    name: "Zen Garden",
+    category: "Japanese Restaurant",
+    location: "Chiang Mai, Thailand",
+    year: "2026",
+    desc: "Expérience web minimaliste pour un restaurant japonais authentique. Design épuré, menu omakase, ambiance sereine avec typographie premium.",
+    tags: ["Japanese", "Minimal", "Omakase"],
+    gradient: "from-stone-900 via-zinc-900 to-black",
+    accent: "#84cc16",
+    accentText: "text-lime-500",
+    liveUrl: "/portfolio/zen-garden",
+    status: "Preview",
+  },
+];
 
-  const fetchSites = async () => {
-    try {
-      const res = await fetch("/api/sites");
-      if (!res.ok) throw new Error(`API error ${res.status}`);
-      setSites(await res.json());
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load sites");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { fetchSites(); }, []);
-
-  const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Delete "${name}"?`)) return;
-    await fetch(`/api/sites/${id}`, { method: "DELETE" });
-    setSites((s) => s.filter((r) => r.id !== id));
-    showToast("Site deleted");
-  };
-
-  const handleClone = async (site: RestaurantData) => {
-    setCloning(site.id);
-    try {
-      const { id, createdAt, updatedAt, ...rest } = site;
-      void id; void createdAt; void updatedAt;
-      const res = await fetch("/api/sites", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...rest, name: `Copy of ${site.name}` }),
-      });
-      if (!res.ok) throw new Error();
-      const cloned = await res.json();
-      setSites((s) => [cloned, ...s]);
-      showToast(`"${cloned.name}" created`);
-    } catch {
-      showToast("Clone failed — try again");
-    } finally {
-      setCloning(null);
-    }
-  };
-
-  const templateBadge: Record<string, string> = {
-    modern: "bg-gray-800 text-gray-200",
-    classic: "bg-amber-100 text-amber-800",
-    minimal: "bg-green-100 text-green-800",
-  };
+export default function HomePage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setTimeout(() => setMounted(true), 60); }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Toast */}
-      {toast && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white text-sm px-4 py-2 rounded-lg shadow-lg">
-          {toast}
-        </div>
-      )}
+    <div className="bg-black min-h-screen">
+      <style>{`
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .shimmer-text {
+          background: linear-gradient(90deg, #fff 0%, #aaa 40%, #fff 60%, #aaa 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmer 4s linear infinite;
+        }
+        .card-hover { transition: transform 0.4s cubic-bezier(.23,1,.32,1), box-shadow 0.4s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,.6); }
+      `}</style>
 
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">🍽 Restaurant Builder</h1>
-            <p className="text-sm text-gray-500">Deploy beautiful sites in seconds</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/roadmap"
-              className="text-sm text-gray-500 hover:text-gray-800 px-3 py-2 rounded-lg transition-colors"
-            >
-              Roadmap
-            </Link>
-            <Link
-              href="/new"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-            >
-              + New Site
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
+      <Hero mounted={mounted} />
+      <Stats />
+      <Projects />
+      <CTA />
+      <Footer />
+    </div>
+  );
+}
 
-      <main className="max-w-6xl mx-auto px-6 py-8">
-        {loading ? (
-          <div className="flex items-center justify-center py-20 text-gray-400">
-            <div className="animate-spin w-6 h-6 border-2 border-gray-300 border-t-indigo-600 rounded-full mr-3" />
-            Loading...
-          </div>
-        ) : error ? (
-          <div className="text-center py-20">
-            <div className="text-5xl mb-4">⚠️</div>
-            <h2 className="text-lg font-semibold text-gray-700 mb-2">Could not load sites</h2>
-            <p className="text-sm text-gray-500 mb-4">{error}</p>
-            <button
-              onClick={() => { setError(null); setLoading(true); fetchSites(); }}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-            >
-              Retry
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
+      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+        <KabalLogo />
+        <div className="hidden md:flex items-center gap-8">
+          {["Projets", "Services", "Contact"].map((l) => (
+            <button key={l}
+              onClick={() => document.getElementById(l.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
+              className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
+              {l}
             </button>
-          </div>
-        ) : sites.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">🍽</div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">No sites yet</h2>
-            <p className="text-gray-500 mb-6">Create your first restaurant website in under 60 seconds.</p>
-            <Link
-              href="/new"
-              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
-            >
-              Create First Site
-            </Link>
-          </div>
-        ) : (
-          <>
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-gray-600">{sites.length} site{sites.length !== 1 ? "s" : ""}</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {sites.map((site) => (
-                <div key={site.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-                  {/* Preview strip */}
-                  <div
-                    className="h-24 flex items-center justify-center text-3xl font-serif tracking-wide"
-                    style={{ background: site.primaryColor, color: site.accentColor }}
-                  >
-                    {site.name.slice(0, 2).toUpperCase()}
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 truncate">{site.name}</h3>
-                        <p className="text-sm text-gray-500">{site.cuisine}{site.city ? ` · ${site.city}` : ""}</p>
-                      </div>
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${templateBadge[site.templateId] ?? "bg-gray-100 text-gray-600"}`}>
-                        {site.templateId}
-                      </span>
-                    </div>
-                    {site.description && (
-                      <p className="text-xs text-gray-400 line-clamp-2 mb-3">{site.description}</p>
-                    )}
-                    <div className="flex gap-1.5 pt-2 border-t border-gray-100">
-                      <Link
-                        href={`/preview/${site.id}`}
-                        target="_blank"
-                        className="flex-1 text-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 py-1.5 rounded font-medium transition-colors"
-                      >
-                        Preview
-                      </Link>
-                      <Link
-                        href={`/edit/${site.id}`}
-                        className="flex-1 text-center text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 py-1.5 rounded font-medium transition-colors"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => handleClone(site)}
-                        disabled={cloning === site.id}
-                        className="flex-1 text-xs bg-violet-50 hover:bg-violet-100 text-violet-700 py-1.5 rounded font-medium transition-colors disabled:opacity-50"
-                      >
-                        {cloning === site.id ? "…" : "Clone"}
-                      </button>
-                      <button
-                        onClick={() => window.open(`/api/export/${site.id}`, "_blank")}
-                        className="flex-1 text-xs bg-green-50 hover:bg-green-100 text-green-700 py-1.5 rounded font-medium transition-colors"
-                      >
-                        ↓ HTML
-                      </button>
-                      <button
-                        onClick={() => handleDelete(site.id, site.name)}
-                        className="text-xs text-gray-300 hover:text-red-500 px-2 py-1.5 rounded transition-colors"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </main>
+          ))}
+        </div>
+        <a href="mailto:hello@kabal.website"
+          className="border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300">
+          Nous contacter
+        </a>
+      </div>
+    </nav>
+  );
+}
 
-      {/* API hint */}
-      <div className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="bg-gray-800 text-gray-300 rounded-xl p-4 text-sm font-mono">
-          <p className="text-gray-500 text-xs mb-2 font-sans font-normal">Agent API — create a site programmatically:</p>
-          <p><span className="text-green-400">POST</span> /api/sites</p>
-          <p className="text-gray-500 mt-1">{"{ name, cuisine, description, phone, whatsapp, address, city, instagram, facebook, templateId }"}</p>
-          <p className="mt-1"><span className="text-blue-400">GET</span> /api/preview/:id — render HTML</p>
-          <p className="mt-1"><span className="text-yellow-400">GET</span> /api/export/:id — download HTML</p>
+function KabalLogo() {
+  return (
+    <Link href="/" className="flex items-center gap-3">
+      <div className="w-7 h-7 bg-white flex items-center justify-center">
+        <span className="text-black font-black text-xs tracking-tighter">K</span>
+      </div>
+      <div className="flex flex-col leading-none">
+        <span className="text-white font-black tracking-[0.2em] uppercase text-sm">Kabal</span>
+        <span className="text-zinc-600 text-[9px] tracking-[0.3em] uppercase">Website Agency</span>
+      </div>
+    </Link>
+  );
+}
+
+function Hero({ mounted }: { mounted: boolean }) {
+  return (
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px)",
+          backgroundSize: "60px 60px",
+        }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className={`relative z-10 text-center px-6 max-w-5xl mx-auto transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <p className="text-zinc-500 text-xs font-bold tracking-[0.6em] uppercase mb-10">Website Agency · Bangkok & Pattaya</p>
+
+        <h1 className="font-black leading-none mb-8 select-none" style={{ fontSize: "clamp(4rem,14vw,12rem)", letterSpacing: "-0.05em" }}>
+          <span className="shimmer-text">Notre</span>
+          <br />
+          <span className="text-white">Travail.</span>
+        </h1>
+
+        <p className="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-14">
+          On construit des sites web qui convertissent — pour les restaurants, clubs, barbershops et commerces locaux en Thaïlande.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            onClick={() => document.getElementById("projets")?.scrollIntoView({ behavior: "smooth" })}
+            className="group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300 hover:bg-zinc-200">
+            Voir les projets
+          </button>
+          <a href="mailto:hello@kabal.website"
+            className="border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
+            Travailler ensemble
+          </a>
         </div>
       </div>
-    </div>
+
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+        <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent animate-pulse mx-auto" />
+      </div>
+    </section>
+  );
+}
+
+function Stats() {
+  const { ref, inView } = useInView();
+  const items = [
+    { v: "5+", l: "Sites livrés" },
+    { v: "100%", l: "Clients satisfaits" },
+    { v: "48h", l: "Délai moyen" },
+    { v: "TH", l: "Basé en Thaïlande" },
+  ];
+  return (
+    <section ref={ref} className="border-y border-zinc-900 bg-zinc-950">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4">
+        {items.map((s, i) => (
+          <div key={s.l}
+            className={`flex flex-col items-center py-8 border-r border-zinc-900 last:border-r-0 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ transitionDelay: `${i * 80}ms` }}>
+            <span className="text-white font-black text-2xl md:text-3xl tracking-tight">{s.v}</span>
+            <span className="text-zinc-600 text-xs tracking-widest uppercase mt-1 text-center">{s.l}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Projects() {
+  const { ref, inView } = useInView(0.05);
+  return (
+    <section id="projets" className="py-28 md:py-36 bg-black">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-16">
+          <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-3">Portfolio</p>
+          <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight leading-none">Nos réalisations</h2>
+        </div>
+
+        <div ref={ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-5 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          {PROJECTS.map((p, i) => (
+            <ProjectCard key={p.slug} project={p} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index: number }) {
+  return (
+    <Link href={p.liveUrl}
+      className="group card-hover block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700"
+      style={{ transitionDelay: `${index * 60}ms` }}>
+
+      <div className={`relative h-52 bg-gradient-to-br ${p.gradient} flex items-end p-6 overflow-hidden`}>
+        <div className="absolute top-6 right-6 w-24 h-24 rounded-full opacity-20"
+          style={{ background: p.accent, filter: "blur(20px)" }} />
+        <div className="absolute -bottom-4 -left-4 w-32 h-32 rounded-full opacity-10"
+          style={{ background: p.accent, filter: "blur(30px)" }} />
+
+        <div className="relative z-10">
+          <span className={`text-xs font-bold tracking-widest uppercase ${p.accentText}`}>{p.category}</span>
+          <h3 className="text-white font-black text-2xl tracking-tight mt-1 leading-none">{p.name}</h3>
+        </div>
+
+        <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 tracking-widest uppercase ${p.status === "Live" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-zinc-800 text-zinc-400 border border-zinc-700"}`}>
+          {p.status}
+        </span>
+      </div>
+
+      <div className="p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-zinc-600 text-xs tracking-widest">{p.location}</span>
+          <span className="w-1 h-1 bg-zinc-700 rounded-full" />
+          <span className="text-zinc-600 text-xs">{p.year}</span>
+        </div>
+        <p className="text-zinc-400 text-sm leading-relaxed mb-5">{p.desc}</p>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {p.tags.map((t) => (
+            <span key={t} className="text-xs px-2 py-1 border border-zinc-800 text-zinc-500 tracking-wide">{t}</span>
+          ))}
+        </div>
+        <div className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase ${p.accentText} group-hover:gap-3 transition-all duration-300`}>
+          <span>Voir le projet</span>
+          <span>→</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function CTA() {
+  const { ref, inView } = useInView();
+  return (
+    <section id="contact" className="py-28 md:py-36 bg-zinc-950 border-t border-zinc-900">
+      <div ref={ref} className={`max-w-4xl mx-auto px-6 text-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-4">Prêt à lancer ?</p>
+        <h2 className="text-white font-black text-4xl md:text-6xl tracking-tight leading-none mb-6">
+          Votre site en <br /><span className="text-zinc-400">48 heures.</span>
+        </h2>
+        <p className="text-zinc-500 text-lg font-light max-w-xl mx-auto mb-12 leading-relaxed">
+          Restaurant, bar, barbershop, club — on livre des sites performants, rapides et clé en main.
+        </p>
+        <a href="mailto:hello@kabal.website"
+          className="inline-block bg-white text-black font-black px-12 py-5 tracking-widest uppercase text-sm hover:bg-zinc-200 transition-colors duration-300">
+          Démarrer un projet
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-black border-t border-zinc-900 py-10">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <KabalLogo />
+        <p className="text-zinc-700 text-xs tracking-widest">© 2026 Kabal Website Agency · Bangkok & Pattaya</p>
+        <a href="mailto:hello@kabal.website" className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest transition-colors">
+          hello@kabal.website
+        </a>
+      </div>
+    </footer>
   );
 }

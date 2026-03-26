@@ -192,7 +192,7 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
         <div className={`relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-40 transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <Link href="/portfolio" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs font-bold tracking-widest uppercase mb-10 transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs font-bold tracking-widest uppercase mb-10 transition-colors">
             <span>←</span> Portfolio
           </Link>
           <p className={`text-xs font-bold tracking-[0.45em] uppercase mb-4 ${project.accentText}`}>{project.category}</p>
@@ -350,7 +350,7 @@ function NextProject({ current }: { current: string }) {
           </div>
         </Link>
         <div className="mt-8 text-center">
-          <Link href="/portfolio" className="text-zinc-600 hover:text-zinc-400 text-xs font-bold tracking-widest uppercase transition-colors">
+          <Link href="/" className="text-zinc-600 hover:text-zinc-400 text-xs font-bold tracking-widest uppercase transition-colors">
             ← Tous les projets
           </Link>
         </div>
@@ -369,15 +369,18 @@ function Navbar({ accentText }: { accentText: string }) {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        <Link href="/portfolio">
+        <Link href="/">
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 bg-white flex items-center justify-center">
               <span className="text-black font-black text-xs tracking-tighter">K</span>
             </div>
-            <span className="text-white font-black tracking-[0.2em] uppercase text-sm">Kabal</span>
+            <div className="flex flex-col leading-none">
+              <span className="text-white font-black tracking-[0.2em] uppercase text-sm">Kabal</span>
+              <span className="text-zinc-600 text-[9px] tracking-[0.3em] uppercase">Website Agency</span>
+            </div>
           </div>
         </Link>
-        <Link href="/portfolio"
+        <Link href="/"
           className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
           ← Portfolio
         </Link>
@@ -398,9 +401,12 @@ function Footer() {
           <div className="w-7 h-7 bg-white flex items-center justify-center">
             <span className="text-black font-black text-xs tracking-tighter">K</span>
           </div>
-          <span className="text-white font-black tracking-[0.2em] uppercase text-sm">Kabal</span>
+          <div className="flex flex-col leading-none">
+            <span className="text-white font-black tracking-[0.2em] uppercase text-sm">Kabal</span>
+            <span className="text-zinc-600 text-[9px] tracking-[0.3em] uppercase">Website Agency</span>
+          </div>
         </div>
-        <p className="text-zinc-700 text-xs tracking-widest">© 2026 Kabal Studio · Bangkok & Pattaya</p>
+        <p className="text-zinc-700 text-xs tracking-widest">© 2026 Kabal Website Agency · Bangkok & Pattaya</p>
         <a href="mailto:hello@kabal.website" className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest transition-colors">
           hello@kabal.website
         </a>
