@@ -1,72 +1,29 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ─── helpers ─────────────────────────────────────────────────── */
 function useInView(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const el = ref.current; if (!el) return;
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
-    obs.observe(el);
-    return () => obs.disconnect();
+    obs.observe(el); return () => obs.disconnect();
   }, [threshold]);
   return { ref, inView };
 }
 
-/* ─── data ─────────────────────────────────────────────────────── */
-const PROGRAMS = [
-  {
-    title: "Beginner",
-    tag: "ALL LEVELS WELCOME",
-    price: "4 500",
-    unit: "฿ / month",
-    desc: "Start your Muay Thai journey. Morning & evening sessions, technique drills, pad work and conditioning.",
-    features: ["10 sessions / month", "Group classes", "Gloves & wraps included", "Nutrition guidance"],
-    cta: "Start training",
-    highlight: false,
-  },
-  {
-    title: "Fighter",
-    tag: "MOST POPULAR",
-    price: "9 900",
-    unit: "฿ / month",
-    desc: "Train like a pro. Unlimited sessions, private pad work, sparring and fight preparation with our Kru.",
-    features: ["Unlimited sessions", "Private pad work 2×/week", "Sparring included", "Fight prep & strategy"],
-    cta: "Train like a fighter",
-    highlight: true,
-  },
-  {
-    title: "Retreat",
-    tag: "1 OR 2 WEEKS",
-    price: "15 000",
-    unit: "฿ / 2 weeks",
-    desc: "Full immersion. Training twice a day, accommodation, meals, Thai massage and cultural experiences.",
-    features: ["2× daily training", "Accommodation included", "Meals & smoothies", "Thai massage 3×/week"],
-    cta: "Book a retreat",
-    highlight: false,
-  },
-];
+const gold = "#c9a84c";
+const dark = "#080808";
 
-const DTV_POINTS = [
-  { icon: "🇹🇭", title: "5-Year Visa", body: "The Thailand DTV grants up to 5 years of validity — the longest long-stay option in Southeast Asia." },
-  { icon: "📅", title: "180 Days / Entry", body: "Each entry allows a 180-day stay with multiple re-entries, giving full flexibility to travel the region." },
-  { icon: "💼", title: "Work Remotely — Legally", body: "Work for any employer or clients outside Thailand with zero legal restrictions." },
-  { icon: "📋", title: "We Handle the Paperwork", body: "Our visa team prepares, verifies and submits your full DTV application. We've done 200+ successful cases." },
-  { icon: "🏠", title: "Camp Address", body: "Use our official address as your Thailand base for your application — accepted by Thai Immigration." },
-  { icon: "⚡", title: "Fast Processing", body: "Most applications approved within 30 business days. We monitor your case and keep you updated." },
-];
-
-const SCHEDULE = [
-  { time: "06:30", label: "Morning run" },
-  { time: "07:00", label: "Pad work & technique" },
-  { time: "08:30", label: "Conditioning" },
-  { time: "09:30", label: "Breakfast break" },
-  { time: "16:00", label: "Evening session" },
-  { time: "17:30", label: "Clinch & sparring" },
-  { time: "19:00", label: "Cool down & stretch" },
-];
+const I = {
+  hero:     "https://images.pexels.com/photos/5750947/pexels-photo-5750947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  bags:     "https://images.pexels.com/photos/5750838/pexels-photo-5750838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  ring:     "https://images.pexels.com/photos/238636/pexels-photo-238636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  training: "https://images.pexels.com/photos/2628210/pexels-photo-2628210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  mono:     "https://images.pexels.com/photos/5750852/pexels-photo-5750852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  portrait: "https://images.pexels.com/photos/5750957/pexels-photo-5750957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  kick:     "https://images.pexels.com/photos/5424528/pexels-photo-5424528.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+};
 
 const CONTACT = {
   telegram: "https://t.me/tigermuaythai",
@@ -75,256 +32,396 @@ const CONTACT = {
   phone: "tel:+66800000000",
 };
 
-/* ─── page ─────────────────────────────────────────────────────── */
-export default function MuayThaiPage() {
+export default function MuaythaiPage() {
   return (
-    <div className="bg-[#080808] min-h-screen text-white overflow-x-hidden">
+    <div style={{ background: dark, color: "#fff" }} className="min-h-screen overflow-x-hidden">
       <style>{`
         html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-track { background: #080808; }
-        ::-webkit-scrollbar-thumb { background: #c9a84c; }
-        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes shimmer { 0%,100% { opacity:.6; } 50% { opacity:1; } }
-        @keyframes spin-slow { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-        .gold { color: #c9a84c; }
-        .gold-border { border-color: #c9a84c; }
-        .gold-bg { background: #c9a84c; }
-        .gold-glow { box-shadow: 0 0 30px rgba(201,168,76,.25); }
-        .fade-up { animation: fadeUp .8s ease forwards; }
-        .shimmer { animation: shimmer 2.5s ease-in-out infinite; }
+        ::-webkit-scrollbar { width: 2px; }
+        ::-webkit-scrollbar-thumb { background: ${gold}; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)} }
+        @keyframes slideR { from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)} }
+        .fade-up { animation: fadeUp .9s cubic-bezier(.4,0,.2,1) forwards; }
+        .slide-r { animation: slideR .8s cubic-bezier(.4,0,.2,1) forwards; }
       `}</style>
-
-      <Navbar />
+      <Nav />
       <Hero />
-      <Stats />
+      <Manifesto />
       <Programs />
-      <DTV />
+      <FullBleed />
       <Schedule />
-      <Gallery />
-      <Contact />
+      <DTV />
+      <Booking />
       <Footer />
-      <StickyContact />
     </div>
   );
 }
 
-/* ─── navbar ───────────────────────────────────────────────────── */
-function Navbar() {
+/* ─────────────────────────── NAV ─────────────────────────────── */
+function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
+    const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
-  const links = [
-    { label: "Training", id: "programs" },
-    { label: "DTV Visa", id: "dtv" },
-    { label: "Schedule", id: "schedule" },
-    { label: "Contact", id: "contact" },
-  ];
   return (
-    <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* logo */}
-        <div className="flex flex-col leading-none">
-          <span className="font-russo text-xl tracking-widest text-white uppercase">Tiger</span>
-          <span className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "#c9a84c" }}>Muay Thai · Pattaya</span>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md border-b border-white/5" : ""}`}
+      style={{ background: scrolled ? "rgba(8,8,8,0.92)" : "transparent", padding: "1.5rem 3rem" }}>
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <div className="flex flex-col">
+          <p className="font-russo text-base tracking-[0.25em] uppercase" style={{ color: gold }}>TIGER</p>
+          <p className="text-[10px] tracking-[0.35em] uppercase" style={{ color: "#555" }}>Muay Thai · Pattaya</p>
         </div>
-        {/* links */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <button key={l.id} onClick={() => document.getElementById(l.id)?.scrollIntoView({ behavior: "smooth" })}
-              className="text-xs uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-colors">
-              {l.label}
-            </button>
+        <div className="hidden md:flex gap-10 items-center">
+          {[["Training", "#programs"], ["Schedule", "#schedule"], ["DTV Visa", "#dtv"], ["Book", "#book"]].map(([l, h]) => (
+            <a key={l} href={h} className="text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition-colors">{l}</a>
           ))}
         </div>
-        {/* cta */}
-        <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer"
-          className="gold-bg text-black text-xs font-black px-5 py-2.5 tracking-widest uppercase hover:opacity-90 transition-opacity">
-          Book trial class
+        <a href="#book" className="text-[11px] uppercase tracking-widest px-5 py-2.5 border transition-colors hover:bg-white hover:text-black"
+          style={{ color: gold, borderColor: gold }}>
+          Book now
         </a>
       </div>
     </nav>
   );
 }
 
-/* ─── hero ─────────────────────────────────────────────────────── */
+/* ─────────────────────────── HERO — SPLIT ─────────────────────── */
 function Hero() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setTimeout(() => setMounted(true), 60); }, []);
   return (
-    <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
-      {/* BG gradient */}
-      <div className="absolute inset-0" style={{
-        background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,.07) 0%, transparent 70%), #080808",
-      }} />
-      {/* decorative rings */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-zinc-900 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full border border-zinc-900/50 pointer-events-none" />
-      {/* horizontal rule accent */}
-      <div className="absolute left-0 right-0" style={{ top: "50%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(201,168,76,.15), transparent)" }} />
+    <section className="relative min-h-screen flex overflow-hidden">
+      {/* full-bleed background image */}
+      <div className="absolute inset-0">
+        <img src={I.hero} alt="Muay Thai" className="w-full h-full object-cover"
+          style={{ filter: "brightness(0.45)", objectPosition: "center 20%" }} />
+        <div className="absolute inset-0 hidden md:block"
+          style={{ background: `linear-gradient(100deg, ${dark} 45%, transparent 75%)` }} />
+        <div className="absolute inset-0 md:hidden" style={{ background: "rgba(8,8,8,0.7)" }} />
+      </div>
 
-      <div className={`relative z-10 px-6 max-w-4xl mx-auto transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        <p className="text-xs tracking-[0.6em] uppercase mb-6 shimmer" style={{ color: "#c9a84c" }}>Pattaya · Thailand · Est. 2016</p>
-
-        {/* big headline */}
-        <h1 className="font-russo text-white leading-none mb-2" style={{ fontSize: "clamp(3.5rem,12vw,10rem)" }}>
-          MUAY THAI
+      {/* content left */}
+      <div className="relative z-10 flex flex-col justify-end pb-24 pt-40 pl-[8vw] pr-8 max-w-3xl">
+        <p className="text-[10px] tracking-[0.5em] uppercase mb-8 slide-r"
+          style={{ color: gold, animationDelay: "0.3s" }}>
+          Est. Pattaya · Thailand · The Art of Eight Limbs
+        </p>
+        <h1 className="font-russo leading-[0.88] mb-8 fade-up"
+          style={{ fontSize: "clamp(5.5rem, 16vw, 13rem)", letterSpacing: "-0.03em", animationDelay: "0.45s" }}>
+          MUAY<br />
+          <span style={{ WebkitTextStroke: `2px ${gold}`, color: "transparent" }}>THAI</span>
         </h1>
-        <h2 className="font-russo leading-none mb-8" style={{ fontSize: "clamp(1.8rem,6vw,4.5rem)", color: "#c9a84c" }}>
-          TRAINING CAMP
-        </h2>
-
-        <p className="text-zinc-400 text-lg mb-4 max-w-xl mx-auto leading-relaxed">
-          Train with world-class <em className="not-italic gold">Kru</em> in Thailand's most vibrant city.<br />
-          Beginners welcome. Fighters made here.
+        <p className="text-zinc-400 text-lg max-w-sm leading-relaxed mb-12 fade-up" style={{ animationDelay: "0.65s" }}>
+          Train with Kru. Fight with purpose.<br />Transform in Pattaya.
         </p>
-        <p className="text-xs tracking-widest uppercase text-zinc-600 mb-12">
-          Muay Thai · Kickboxing · Fitness · <span style={{ color: "#c9a84c" }}>DTV Visa Services</span>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <button onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
-            className="gold-bg text-black font-black px-10 py-4 text-sm tracking-widest uppercase hover:opacity-90 transition-opacity">
+        <div className="flex gap-4 fade-up" style={{ animationDelay: "0.8s" }}>
+          <a href="#book" className="px-8 py-4 font-russo text-sm uppercase tracking-widest transition-opacity hover:opacity-90"
+            style={{ background: gold, color: dark }}>
+            Start training
+          </a>
+          <a href="#programs" className="px-8 py-4 font-russo text-sm uppercase tracking-widest border border-white/25 hover:border-white transition-colors">
             View programs
-          </button>
-          <button onClick={() => document.getElementById("dtv")?.scrollIntoView({ behavior: "smooth" })}
-            className="border text-sm font-bold px-10 py-4 tracking-widest uppercase text-zinc-300 hover:text-white transition-all"
-            style={{ borderColor: "rgba(201,168,76,.4)" }}>
-            DTV Visa info
-          </button>
-        </div>
-      </div>
-
-      {/* scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <div className="w-px h-14 animate-pulse" style={{ background: "linear-gradient(to bottom, #c9a84c60, transparent)" }} />
-      </div>
-    </section>
-  );
-}
-
-/* ─── stats ────────────────────────────────────────────────────── */
-function Stats() {
-  const { ref, inView } = useInView();
-  const items = [
-    { v: "8+", l: "Years in Pattaya" },
-    { v: "200+", l: "DTV visas processed" },
-    { v: "3×", l: "Daily sessions" },
-    { v: "All", l: "Levels welcome" },
-  ];
-  return (
-    <section ref={ref} className="border-y border-zinc-900 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 text-center">
-        {items.map((s, i) => (
-          <div key={s.l} className={`py-8 border-r border-zinc-900 last:border-r-0 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{ transitionDelay: `${i * 80}ms` }}>
-            <p className="font-russo text-3xl gold">{s.v}</p>
-            <p className="text-zinc-500 text-xs uppercase tracking-widest mt-1">{s.l}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─── programs ─────────────────────────────────────────────────── */
-function Programs() {
-  const { ref, inView } = useInView();
-  return (
-    <section id="programs" className="py-28 md:py-36 px-6 bg-[#080808]">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel label="Training programs" title="Find your level" />
-        <div ref={ref} className={`mt-16 grid md:grid-cols-3 gap-6 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          {PROGRAMS.map((p, i) => (
-            <article key={p.title}
-              className={`relative flex flex-col p-8 border transition-all duration-300 hover:translate-y-[-4px] ${p.highlight ? "border-[#c9a84c] gold-glow bg-gradient-to-b from-[#c9a84c08] to-transparent" : "border-zinc-800 hover:border-zinc-600"}`}
-              style={{ transitionDelay: `${i * 80}ms` }}>
-              {p.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 gold-bg text-black text-xs font-black px-5 py-1 tracking-widest uppercase whitespace-nowrap">
-                  {p.tag}
-                </span>
-              )}
-              {!p.highlight && (
-                <span className="text-xs uppercase tracking-widest text-zinc-600 mb-2">{p.tag}</span>
-              )}
-              <h3 className={`font-russo text-3xl mb-1 ${p.highlight ? "gold" : "text-white"}`}>{p.title}</h3>
-              <div className="flex items-end gap-1 mb-6 mt-3">
-                <span className="font-russo text-4xl text-white">{p.price}</span>
-                <span className="text-zinc-500 text-sm mb-1">{p.unit}</span>
-              </div>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6">{p.desc}</p>
-              <ul className="space-y-2.5 mb-8 flex-1">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-zinc-300">
-                    <span style={{ color: "#c9a84c" }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer"
-                className={`text-center py-3.5 text-xs font-black tracking-widest uppercase transition-all ${p.highlight ? "gold-bg text-black hover:opacity-90" : "border border-zinc-700 hover:border-zinc-400 text-zinc-300 hover:text-white"}`}>
-                {p.cta}
-              </a>
-            </article>
-          ))}
-        </div>
-        {/* free trial cta */}
-        <div className="mt-10 text-center">
-          <p className="text-zinc-600 text-sm">Not sure where to start?</p>
-          <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer"
-            className="inline-block mt-2 text-sm underline underline-offset-4 transition-colors hover:text-white" style={{ color: "#c9a84c" }}>
-            Book a free trial class →
           </a>
         </div>
+        <div className="absolute bottom-10 left-[8vw] flex items-center gap-4">
+          <div className="w-10 h-px" style={{ background: gold }} />
+          <p className="text-[10px] tracking-[0.4em] uppercase text-zinc-600">Scroll to explore</p>
+        </div>
+      </div>
+
+      {/* vertical text right */}
+      <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-3 z-20">
+        <div className="h-14 w-px" style={{ background: `linear-gradient(transparent, ${gold})` }} />
+        <p className="text-[10px] tracking-[0.35em] uppercase" style={{ writingMode: "vertical-rl", color: gold }}>
+          Thailand · 2026
+        </p>
+        <div className="h-14 w-px" style={{ background: `linear-gradient(${gold}, transparent)` }} />
       </div>
     </section>
   );
 }
 
-/* ─── DTV visa ─────────────────────────────────────────────────── */
-function DTV() {
-  const { ref, inView } = useInView();
+/* ─────────────────────────── MANIFESTO ─────────────────────────── */
+function Manifesto() {
+  const { ref, inView } = useInView(0.15);
   return (
-    <section id="dtv" className="py-28 md:py-36 px-6 bg-zinc-950 border-t border-b border-zinc-900">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel label="Digital Nomad Visa" title={<>Stay in Thailand<br /><span style={{ color: "#c9a84c" }}>legally & long-term</span></>} />
+    <div ref={ref} className="relative overflow-hidden flex items-center" style={{ height: "75vh" }}>
+      <img src={I.bags} alt="Training" className="absolute inset-0 w-full h-full object-cover"
+        style={{ filter: "brightness(0.28)", objectPosition: "center 40%" }} />
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 100%, black 0%, transparent 70%)" }} />
 
-        <div className="mt-8 max-w-2xl mx-auto text-center">
-          <p className="text-zinc-400 leading-relaxed">
-            The Thai <strong className="text-white">DTV — Digital Nomad Visa</strong> lets you live and work remotely in Thailand for up to 5 years.
-            Our team has processed over 200 successful applications. Train in the morning. Work remotely. Live your best life.
+      <div className="relative z-10 w-full flex flex-col items-center text-center px-8">
+        <p className={`text-[10px] tracking-[0.5em] uppercase mb-8 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}
+          style={{ color: gold, transitionDelay: "0.1s" }}>
+          Our philosophy
+        </p>
+        <h2 className={`font-russo leading-[1.05] transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          style={{ fontSize: "clamp(2.8rem, 6vw, 5.5rem)", transitionDelay: "0.25s", maxWidth: "16ch" }}>
+          {"\"This is not a gym. "}
+          <span style={{ color: gold }}>{"This is a temple.\""}</span>
+        </h2>
+        <p className={`mt-8 text-zinc-500 max-w-xl leading-relaxed text-sm transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}
+          style={{ transitionDelay: "0.45s" }}>
+          We train fighters, professionals, tourists and seekers. Every session is a step closer to the best version of yourself.
+        </p>
+        <div className={`mt-16 flex gap-16 md:gap-24 flex-wrap justify-center transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          style={{ transitionDelay: "0.6s" }}>
+          {[["500+", "fighters trained"], ["15+", "years in Pattaya"], ["EN · RU · TH", "languages"]].map(([v, l]) => (
+            <div key={l} className="text-center">
+              <p className="font-russo text-3xl md:text-4xl" style={{ color: gold }}>{v}</p>
+              <p className="text-[10px] tracking-widest uppercase text-zinc-600 mt-2">{l}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────── PROGRAMS ─────────────────────────── */
+function Programs() {
+  const { ref, inView } = useInView(0.08);
+  return (
+    <section id="programs" className="py-28 md:py-40" style={{ background: "#0d0d0d" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-16">
+
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+          <div>
+            <p className="text-[10px] tracking-[0.5em] uppercase mb-4" style={{ color: gold }}>Training programs</p>
+            <h2 className="font-russo leading-[0.9]" style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)" }}>
+              Choose<br />your path.
+            </h2>
+          </div>
+          <p className="text-zinc-600 text-sm max-w-xs leading-relaxed md:text-right">
+            Three levels of commitment, one transformation. Beginners welcome. Fighters preferred.
           </p>
         </div>
 
-        <div ref={ref} className={`mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          {DTV_POINTS.map((d, i) => (
-            <div key={d.title}
-              className="border border-zinc-800 hover:border-zinc-700 p-6 transition-all duration-300 hover:bg-zinc-900/50 group"
-              style={{ transitionDelay: `${i * 60}ms` }}>
-              <span className="text-2xl block mb-3">{d.icon}</span>
-              <h4 className="font-russo text-lg text-white mb-2 group-hover:text-[#c9a84c] transition-colors">{d.title}</h4>
-              <p className="text-zinc-500 text-sm leading-relaxed">{d.body}</p>
+        {/* editorial grid: FEATURED 3/5 + STACK 2/5 */}
+        <div ref={ref} className={`grid md:grid-cols-5 gap-4 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+
+          {/* FEATURED */}
+          <div className="md:col-span-3 border border-zinc-800 group hover:border-zinc-600 transition-colors duration-500 overflow-hidden">
+            <div className="relative h-64 overflow-hidden">
+              <img src={I.training} alt="Fighter program" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, #0d0d0d 100%)" }} />
+              <span className="absolute top-5 left-5 px-3 py-1 text-[10px] uppercase tracking-widest font-bold"
+                style={{ background: gold, color: dark }}>Most popular</span>
             </div>
-          ))}
+            <div className="p-8 md:p-10">
+              <div className="flex items-start justify-between mb-5">
+                <div>
+                  <p className="text-[10px] text-zinc-600 uppercase tracking-widest mb-2">Fighter Program</p>
+                  <h3 className="font-russo text-4xl">Fighter</h3>
+                </div>
+                <div className="text-right">
+                  <p className="font-russo text-4xl" style={{ color: gold }}>9 900</p>
+                  <p className="text-xs text-zinc-700 mt-1">฿ / month</p>
+                </div>
+              </div>
+              <p className="text-zinc-500 text-sm leading-relaxed mb-7">
+                Train like a professional. Unlimited sessions, private pad work 2× per week, sparring and full fight preparation with our Kru.
+              </p>
+              <ul className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm text-zinc-400 mb-8">
+                {["Unlimited sessions", "Pad work 2×/week", "Sparring included", "Fight prep & strategy"].map(f => (
+                  <li key={f} className="flex items-center gap-2"><span style={{ color: gold }}>—</span> {f}</li>
+                ))}
+              </ul>
+              <a href="#book" className="block text-center py-4 font-russo text-sm uppercase tracking-widest transition-opacity hover:opacity-80"
+                style={{ background: gold, color: dark }}>
+                Train like a fighter →
+              </a>
+            </div>
+          </div>
+
+          {/* STACK */}
+          <div className="md:col-span-2 flex flex-col gap-4">
+            <div className="flex-1 border border-zinc-800 hover:border-zinc-600 transition-colors duration-500 overflow-hidden">
+              <div className="h-36 overflow-hidden">
+                <img src={I.bags} alt="Beginner" className="w-full h-full object-cover opacity-50" />
+              </div>
+              <div className="p-7">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="text-[10px] text-zinc-600 uppercase tracking-widest mb-1">All levels</p>
+                    <h3 className="font-russo text-3xl">Beginner</h3>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-russo text-2xl" style={{ color: gold }}>4 500</p>
+                    <p className="text-[10px] text-zinc-700">฿/month</p>
+                  </div>
+                </div>
+                <p className="text-zinc-600 text-xs leading-relaxed mb-5">Morning & evening sessions, technique drills, pad work and conditioning.</p>
+                <a href="#book" className="block text-center py-3 text-[10px] uppercase tracking-widest border border-zinc-800 text-zinc-500 hover:border-white hover:text-white transition-colors">
+                  Start training →
+                </a>
+              </div>
+            </div>
+
+            <div className="flex-1 border border-zinc-800 hover:border-zinc-600 transition-colors duration-500 p-7">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-[10px] text-zinc-600 uppercase tracking-widest mb-1">1–2 weeks</p>
+                  <h3 className="font-russo text-3xl">Retreat</h3>
+                </div>
+                <div className="text-right">
+                  <p className="font-russo text-2xl" style={{ color: gold }}>15 000</p>
+                  <p className="text-[10px] text-zinc-700">฿/2wks</p>
+                </div>
+              </div>
+              <p className="text-zinc-600 text-xs leading-relaxed mb-5">Full immersion — twice-daily training, accommodation, meals and Thai massage.</p>
+              <ul className="space-y-1 text-[11px] text-zinc-700 mb-5">
+                {["2× daily training", "Accommodation included", "Meals & smoothies", "Thai massage 3×/week"].map(f => (
+                  <li key={f}>— {f}</li>
+                ))}
+              </ul>
+              <a href="#book" className="block text-center py-3 text-[10px] uppercase tracking-widest border border-zinc-800 text-zinc-500 hover:border-white hover:text-white transition-colors">
+                Book retreat →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────── FULL-BLEED BREAK ──────────────────── */
+function FullBleed() {
+  const { ref, inView } = useInView(0.2);
+  return (
+    <div ref={ref} className="relative overflow-hidden flex items-center justify-center" style={{ height: "55vh" }}>
+      <img src={I.ring} alt="Fight night" className="absolute inset-0 w-full h-full object-cover"
+        style={{ filter: "brightness(0.25)", objectPosition: "center 30%" }} />
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse at center, transparent 30%, black 100%)" }} />
+      <div className="relative z-10 text-center px-6">
+        <p className={`font-russo transition-all duration-1000 leading-none ${inView ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
+          style={{ fontSize: "clamp(5rem, 16vw, 13rem)", WebkitTextStroke: `1px ${gold}`, color: "transparent" }}>
+          20+ YEARS
+        </p>
+        <p className={`mt-4 text-zinc-500 tracking-[0.45em] uppercase text-xs transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}
+          style={{ transitionDelay: "0.4s" }}>
+          of excellence in Pattaya
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────── SCHEDULE ─────────────────────────── */
+function Schedule() {
+  const { ref, inView } = useInView(0.08);
+  const slots = [
+    { time: "06:30", label: "Morning run", desc: "Beach conditioning warm-up — 5 km" },
+    { time: "07:00", label: "Technique drills", desc: "Footwork, jabs, teeps, kicks and defensive movement" },
+    { time: "08:30", label: "Pad work", desc: "Private sessions with Kru for fighter program members" },
+    { time: "09:30", label: "Sparring", desc: "Controlled contact for intermediate and advanced levels" },
+    { time: "11:00", label: "Strength & conditioning", desc: "Weights, resistance bands and functional fitness" },
+    { time: "17:00", label: "Evening session", desc: "Full repeat for retreat guests and dedicated fighters" },
+    { time: "19:00", label: "Recovery", desc: "Thai massage and stretch — included in retreat package" },
+  ];
+  return (
+    <section id="schedule" className="py-28 md:py-40" style={{ background: dark }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-16">
+        <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
+
+          {/* LEFT — sticky visual block */}
+          <div className="md:sticky md:top-28 space-y-6">
+            <div>
+              <p className="text-[10px] tracking-[0.5em] uppercase mb-4" style={{ color: gold }}>Daily program</p>
+              <h2 className="font-russo leading-[0.9] mb-8" style={{ fontSize: "clamp(3.5rem, 7vw, 6rem)" }}>
+                A day<br />at camp.
+              </h2>
+            </div>
+            <div className="relative">
+              <img src={I.portrait} alt="Training" className="w-full object-cover"
+                style={{ aspectRatio: "3/4", objectPosition: "center 15%" }} />
+              <div className="absolute -bottom-5 -right-5 p-5" style={{ background: gold }}>
+                <p className="font-russo text-4xl leading-none" style={{ color: dark }}>6:30</p>
+                <p className="text-[10px] uppercase tracking-wider mt-1" style={{ color: dark }}>AM Start</p>
+              </div>
+            </div>
+            <div className="mt-10 ml-auto w-3/4">
+              <img src={I.kick} alt="Kickboxing" className="w-full object-cover" style={{ aspectRatio: "4/3" }} />
+            </div>
+          </div>
+
+          {/* RIGHT — timeline */}
+          <div ref={ref} className="pt-4 md:pt-20">
+            {slots.map((s, i) => (
+              <div key={s.time}
+                className={`relative pl-8 pb-10 border-l transition-all duration-500 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"}`}
+                style={{ borderColor: "#1f1f1f", transitionDelay: `${i * 90}ms` }}>
+                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full border"
+                  style={{ background: i === 0 ? gold : dark, borderColor: i === 0 ? gold : "#2a2a2a" }} />
+                <p className="font-russo text-xl mb-0.5" style={{ color: gold }}>{s.time}</p>
+                <p className="font-russo text-white text-base mb-1">{s.label}</p>
+                <p className="text-zinc-600 text-sm leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────── DTV VISA ─────────────────────────── */
+function DTV() {
+  const { ref, inView } = useInView(0.1);
+  const steps = [
+    { n: "01", title: "Choose your visa", body: "60-day or 180-day DTV. We explain every option, no jargon." },
+    { n: "02", title: "Documents", body: "We prepare your full application — proof of training, financials, photos." },
+    { n: "03", title: "Submission", body: "Filed at the Thai consulate of your choice. We track everything." },
+    { n: "04", title: "Land & train", body: "We pick you up from the airport. Training starts day one." },
+  ];
+  return (
+    <section id="dtv" style={{ background: "#0a0a0a" }} className="overflow-hidden">
+      <div className="grid md:grid-cols-2 min-h-[85vh]">
+
+        {/* LEFT — full image */}
+        <div className="relative min-h-[50vh] md:min-h-full overflow-hidden">
+          <img src={I.mono} alt="DTV Visa" className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: "brightness(0.4) contrast(1.1)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, transparent 55%, #0a0a0a 100%)" }} />
+          <div className="absolute bottom-12 left-10 md:left-14">
+            <div className="p-6 border border-zinc-700 inline-block" style={{ background: "rgba(8,8,8,0.8)" }}>
+              <p className="font-russo text-5xl mb-1" style={{ color: gold }}>25 000</p>
+              <p className="text-xs text-zinc-500 tracking-widest uppercase">฿ · Full DTV service</p>
+            </div>
+          </div>
         </div>
 
-        {/* DTV pricing */}
-        <div className="mt-12 border border-zinc-800 p-8 max-w-2xl mx-auto text-center" style={{ borderColor: "rgba(201,168,76,.25)" }}>
-          <p className="text-xs uppercase tracking-widest mb-3 text-zinc-500">DTV Visa Package</p>
-          <p className="font-russo text-5xl text-white mb-1">25 000 <span className="text-2xl text-zinc-500">฿</span></p>
-          <p className="text-zinc-500 text-sm mb-6">Full-service — document prep, submission & follow-up</p>
-          <ul className="space-y-2 mb-8 text-left max-w-xs mx-auto">
-            {["Document checklist & preparation", "Application review & submission", "Thai immigration liaison", "Status updates throughout", "1 free revision if required"].map((f) => (
-              <li key={f} className="flex items-center gap-2.5 text-sm text-zinc-300">
-                <span style={{ color: "#c9a84c" }}>✓</span>{f}
-              </li>
+        {/* RIGHT — editorial content */}
+        <div ref={ref}
+          className={`flex flex-col justify-center px-10 md:px-16 py-20 transition-all duration-700 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+          style={{ transitionDelay: "0.15s" }}>
+          <p className="text-[10px] tracking-[0.5em] uppercase mb-5" style={{ color: gold }}>Visa services</p>
+          <h2 className="font-russo leading-[0.9] mb-4" style={{ fontSize: "clamp(4rem, 8vw, 7rem)" }}>
+            DTV<br />Visa
+          </h2>
+          <p className="text-zinc-500 text-sm leading-relaxed mb-14 max-w-xs">
+            Stay and train legally in Thailand for 60 to 180 days. We handle your Destination Thailand Visa, start to finish.
+          </p>
+          <div className="space-y-10">
+            {steps.map((s, i) => (
+              <div key={s.n}
+                className={`flex gap-7 transition-all duration-500 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ transitionDelay: `${0.3 + i * 0.1}s` }}>
+                <p className="font-russo text-5xl leading-none shrink-0 select-none"
+                  style={{ color: gold, opacity: 0.18 }}>{s.n}</p>
+                <div className="pt-1">
+                  <p className="font-russo text-white text-xl mb-1">{s.title}</p>
+                  <p className="text-zinc-600 text-sm leading-relaxed">{s.body}</p>
+                </div>
+              </div>
             ))}
-          </ul>
-          <a href={CONTACT.telegram} target="_blank" rel="noopener noreferrer"
-            className="inline-block gold-bg text-black font-black px-10 py-4 text-sm tracking-widest uppercase hover:opacity-90 transition-opacity">
-            Ask about DTV →
+          </div>
+          <a href="#book" className="mt-14 self-start px-8 py-4 font-russo text-sm uppercase tracking-widest border transition-colors hover:bg-white hover:text-black"
+            style={{ borderColor: gold, color: gold }}>
+            Get your DTV →
           </a>
         </div>
       </div>
@@ -332,149 +429,61 @@ function DTV() {
   );
 }
 
-/* ─── schedule ─────────────────────────────────────────────────── */
-function Schedule() {
-  const { ref, inView } = useInView();
-  return (
-    <section id="schedule" className="py-28 md:py-36 px-6 bg-[#080808]">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel label="Daily schedule" title="A day at the camp" />
-        <div ref={ref} className={`mt-16 max-w-xl mx-auto space-y-0 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          {SCHEDULE.map((s, i) => (
-            <div key={s.time} className={`flex items-center gap-6 py-4 border-b border-zinc-900 transition-all duration-500 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
-              style={{ transitionDelay: `${i * 70}ms` }}>
-              <span className="font-russo text-sm w-14 text-right flex-shrink-0" style={{ color: "#c9a84c" }}>{s.time}</span>
-              <div className="w-px h-6 flex-shrink-0" style={{ background: "#c9a84c40" }} />
-              <span className="text-zinc-300 text-sm">{s.label}</span>
-            </div>
-          ))}
-          <p className="text-zinc-600 text-xs text-center pt-4 tracking-widest uppercase">Mon – Sat · Sunday rest & recovery</p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── gallery ──────────────────────────────────────────────────── */
-function Gallery() {
-  const { ref, inView } = useInView(0.05);
-  const imgs = [
-    { src: "https://images.pexels.com/photos/5750947/pexels-photo-5750947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Muay Thai sparring bout", span: "col-span-2 row-span-2" },
-    { src: "https://images.pexels.com/photos/2628210/pexels-photo-2628210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Dynamic training session", span: "" },
-    { src: "https://images.pexels.com/photos/5750838/pexels-photo-5750838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Heavy bag work", span: "" },
-    { src: "https://images.pexels.com/photos/238636/pexels-photo-238636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Fight night in the ring", span: "" },
-    { src: "https://images.pexels.com/photos/5485616/pexels-photo-5485616.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Sparring session", span: "" },
-    { src: "https://images.pexels.com/photos/5750852/pexels-photo-5750852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Conditioning workout", span: "col-span-2" },
+/* ─────────────────────────── BOOKING ──────────────────────────── */
+function Booking() {
+  const { ref, inView } = useInView(0.15);
+  const channels = [
+    { href: CONTACT.telegram, label: "Telegram", sub: "@tigermuaythai",   bg: "#229ED9" },
+    { href: CONTACT.whatsapp, label: "WhatsApp", sub: "+66 80 000 0000", bg: "#25D366" },
+    { href: CONTACT.line,     label: "Line",      sub: "@tigermuaythai",  bg: "#06C755" },
+    { href: CONTACT.phone,    label: "Call us",   sub: "+66 80 000 0000", bg: "#1c1c1c" },
   ];
   return (
-    <section className="py-28 md:py-36 px-6 bg-zinc-950 border-t border-zinc-900">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel label="The camp" title="Your new home" />
-        <div ref={ref} className={`mt-16 grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[240px] gap-1.5 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
-          {imgs.map((img, i) => (
-            <div key={img.src}
-              className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-              style={{ transitionDelay: `${i * 60}ms` }}>
-              <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
-              <div className="absolute top-0 left-0 w-1 h-full bg-[#c9a84c] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <p className="absolute bottom-0 left-0 right-0 px-5 py-4 text-sm text-white font-russo uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-500">{img.alt}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── contact ──────────────────────────────────────────────────── */
-function Contact() {
-  const { ref, inView } = useInView();
-  const buttons = [
-    { href: CONTACT.telegram, label: "Telegram", sub: "@tigermuaythai", bg: "bg-[#229ED9] hover:bg-[#1a8bc4]", icon: "✈" },
-    { href: CONTACT.whatsapp, label: "WhatsApp", sub: "+66 80 000 0000", bg: "bg-[#25D366] hover:bg-[#1db954]", icon: "💬" },
-    { href: CONTACT.line, label: "Line", sub: "@tigermuaythai", bg: "bg-[#06C755] hover:bg-[#05a847]", icon: "💚" },
-    { href: CONTACT.phone, label: "Call us", sub: "+66 80 000 0000", bg: "bg-zinc-800 hover:bg-zinc-700", icon: "📞" },
-  ];
-  return (
-    <section id="contact" className="py-28 md:py-36 px-6 bg-[#080808]">
-      <div ref={ref} className={`max-w-2xl mx-auto text-center transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        <SectionLabel label="Get in touch" title="Come train with us" />
-        <p className="text-zinc-400 mt-6 mb-12 leading-relaxed">
-          Book a trial class, ask about DTV visa services, or just come by the camp.<br />
-          We reply within the hour.
+    <section id="book" className="relative py-44 px-6 overflow-hidden" style={{ background: "#050505" }}>
+      <p className="absolute inset-0 flex items-center justify-center font-russo text-center pointer-events-none select-none whitespace-nowrap"
+        style={{ fontSize: "clamp(5rem, 18vw, 16rem)", color: "white", opacity: 0.025, letterSpacing: "-0.04em" }}>
+        BOOK NOW
+      </p>
+      <div ref={ref} className="max-w-3xl mx-auto text-center relative z-10">
+        <p className={`text-[10px] tracking-[0.5em] uppercase mb-8 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}
+          style={{ color: gold }}>
+          Start your journey
         </p>
-        <div className="grid grid-cols-2 gap-4">
-          {buttons.map((b) => (
-            <a key={b.href} href={b.href} target="_blank" rel="noopener noreferrer"
-              className={`${b.bg} text-white font-bold py-5 px-4 flex flex-col items-center gap-1 transition-all duration-200 active:scale-95`}>
-              <span className="text-xl">{b.icon}</span>
-              <span className="text-sm tracking-wide">{b.label}</span>
-              <span className="text-xs opacity-70">{b.sub}</span>
+        <h2 className={`font-russo leading-[0.95] mb-8 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", transitionDelay: "0.15s" }}>
+          Ready to fight<br />for yourself?
+        </h2>
+        <p className={`text-zinc-600 text-sm mb-16 max-w-sm mx-auto leading-relaxed transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}
+          style={{ transitionDelay: "0.3s" }}>
+          We reply within the hour. Same-day sessions available. English, Russian and Thai spoken.
+        </p>
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-2 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          style={{ transitionDelay: "0.45s" }}>
+          {channels.map(c => (
+            <a key={c.href} href={c.href} target="_blank" rel="noopener noreferrer"
+              className="flex flex-col items-center gap-2 py-7 px-4 transition-all hover:opacity-90 active:scale-[0.97]"
+              style={{ background: c.bg }}>
+              <span className="font-russo text-white text-sm uppercase tracking-widest">{c.label}</span>
+              <span className="text-[10px] text-white/60">{c.sub}</span>
             </a>
           ))}
         </div>
-        <div className="mt-10 border border-zinc-900 p-6">
-          <p className="text-zinc-500 text-xs uppercase tracking-widest mb-3">Location</p>
-          <p className="text-white font-russo text-lg">Tiger Muay Thai Camp</p>
-          <p className="text-zinc-400 text-sm mt-1">Pattaya, Chonburi · Thailand</p>
-          <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
-            className="inline-block mt-3 text-sm transition-colors hover:text-white" style={{ color: "#c9a84c" }}>
-            View on Google Maps →
-          </a>
-        </div>
       </div>
     </section>
   );
 }
 
-/* ─── footer ───────────────────────────────────────────────────── */
+/* ─────────────────────────── FOOTER ───────────────────────────── */
 function Footer() {
-  const links = ["Training", "DTV Visa", "Schedule", "Contact"];
-  const ids = ["programs", "dtv", "schedule", "contact"];
   return (
-    <footer className="border-t border-zinc-900 py-10 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="py-10 border-t px-6 md:px-16" style={{ borderColor: "#141414", background: dark }}>
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
-          <p className="font-russo text-lg tracking-widest text-white uppercase">Tiger Muay Thai</p>
-          <p className="text-xs tracking-[0.3em] uppercase mt-0.5" style={{ color: "#c9a84c" }}>Pattaya · Thailand</p>
+          <p className="font-russo tracking-[0.25em] uppercase" style={{ color: gold }}>TIGER MUAY THAI</p>
+          <p className="text-[11px] text-zinc-700 mt-1">Pattaya, Thailand · Est. 2008</p>
         </div>
-        <div className="flex gap-6">
-          {links.map((l, i) => (
-            <button key={l} onClick={() => document.getElementById(ids[i])?.scrollIntoView({ behavior: "smooth" })}
-              className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest uppercase transition-colors">
-              {l}
-            </button>
-          ))}
-        </div>
-        <p className="text-zinc-700 text-xs">© 2026 Tiger Muay Thai Camp · Pattaya</p>
+        <p className="text-[11px] text-zinc-800">© 2026 Tiger Muay Thai · All rights reserved</p>
       </div>
     </footer>
-  );
-}
-
-/* ─── sticky cta ───────────────────────────────────────────────── */
-function StickyContact() {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const fn = () => setVisible(window.scrollY > 500);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-  return (
-    <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer"
-      className={`fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1db954] text-white font-bold px-6 py-3 text-sm tracking-wide flex items-center gap-2 shadow-2xl transition-all duration-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}>
-      💬 Book a class
-    </a>
-  );
-}
-
-/* ─── shared ────────────────────────────────────────────────────── */
-function SectionLabel({ label, title }: { label: string; title: React.ReactNode }) {
-  return (
-    <div className="text-center">
-      <p className="text-xs uppercase tracking-[0.4em] mb-3" style={{ color: "#c9a84c" }}>{label}</p>
-      <h2 className="font-russo text-4xl md:text-5xl text-white leading-tight">{title}</h2>
-    </div>
   );
 }
