@@ -19,6 +19,7 @@ const NAV_LINKS = ["Menu", "Gallery", "Reservations", "Location"];
 const DISHES = [
   {
     title: "Foie Gras Poêlé",
+    subtitle: "",
     tag: "SIGNATURE",
     desc: "Pan-seared duck foie gras resting on a delicate brioche toast, accompanied by a caramelized fig compote and a port wine reduction. A timeless French classic elevated to perfection.",
     details: ["Duck foie gras", "Caramelised fig compote", "Port wine reduction", "Toasted brioche"],
@@ -26,13 +27,15 @@ const DISHES = [
   },
   {
     title: "Homard Breton",
+    subtitle: "Breton Lobster",
     tag: "CHEF'S SELECTION",
-    desc: "Brittany lobster poached in a saffron-infused bisque, served with a velvety cauliflower mousseline, caviar pearls and chervil oil. The essence of the Atlantic, brought to Bangkok.",
-    details: ["Brittany lobster", "Saffron bisque", "Cauliflower mousseline", "Oscietra caviar"],
+    desc: "Whole Breton lobster poached à la nage with aromatic vegetables, finished with a cognac-infused bisque, cauliflower mousseline and Oscietra caviar. The jewel of the Atlantic, brought to the heart of Bangkok.",
+    details: ["Live Breton lobster — imported daily", "Cognac lobster bisque", "Cauliflower mousseline", "Oscietra caviar garnish"],
     img: "https://images.pexels.com/photos/5555878/pexels-photo-5555878.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   },
   {
     title: "Crème Brûlée Vanille",
+    subtitle: "",
     tag: "DESSERT",
     desc: "A quivering vanilla custard made with Madagascan Bourbon vanilla, crowned with a gossamer layer of caramelised raw cane sugar. Served with a shortbread tuile and fresh seasonal berries.",
     details: ["Madagascan Bourbon vanilla", "Raw cane sugar crust", "Shortbread tuile", "Fresh seasonal berries"],
@@ -232,7 +235,11 @@ function DishBlock({ dish, flip }: { dish: typeof DISHES[0]; flip: boolean }) {
           style={{ background: "#d97706" }}>{dish.tag}</span>
       </div>
       <div className={`text-center ${flip ? "md:order-1" : ""}`}>
-        <h3 className="playfair text-white font-bold text-3xl md:text-4xl mb-5" style={{ fontStyle: "italic" }}>{dish.title}</h3>
+        <h3 className="playfair text-white font-bold text-3xl md:text-4xl mb-1" style={{ fontStyle: "italic" }}>{dish.title}</h3>
+        {dish.subtitle && (
+          <p className="text-amber-600/70 text-xs tracking-widest uppercase mb-5">{dish.subtitle}</p>
+        )}
+        {!dish.subtitle && <div className="mb-5" />}
         <p className="text-zinc-400 leading-relaxed mb-8">{dish.desc}</p>
         <div className="flex flex-col items-center space-y-3">
           {dish.details.map((d) => (
