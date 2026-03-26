@@ -76,15 +76,37 @@ export default function LePalaisPage() {
         @keyframes shimmer { 0%,100% { text-shadow: 0 0 30px rgba(217,119,6,.3); } 50% { text-shadow: 0 0 60px rgba(217,119,6,.7), 0 0 120px rgba(217,119,6,.2); } }
         .gold-shimmer { animation: shimmer 4s ease-in-out infinite; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes img-glow { 0%,100% { box-shadow: 0 0 0 0 rgba(217,119,6,0); } 50% { box-shadow: 0 0 40px 4px rgba(217,119,6,.15); } }
+        .dish-img:hover { transform: scale(1.03); }
+        .dish-img { transition: transform .7s cubic-bezier(.16,1,.3,1); }
       `}</style>
       <Navbar mode={mode} setMode={setMode} />
       <Hero />
+      <Marquee />
       <StatsBar />
       <SignatureDishes />
       {mode === "full" && <Gallery />}
       {mode === "full" && <TastingMenu />}
       <Location />
       <Footer />
+    </div>
+  );
+}
+
+function Marquee() {
+  const items = ["Fine Dining", "Paris · Bangkok", "3 Michelin Stars", "Chef Laurent Dubois", "Wine Cellar", "Private Dining", "Tasting Menu", "French Excellence"];
+  const all = [...items, ...items];
+  return (
+    <div className="overflow-hidden border-y py-3" style={{ borderColor: "#d9770622", background: "#050300" }}>
+      <div style={{ display: "flex", gap: "3rem", width: "max-content", animation: "marquee 30s linear infinite" }}>
+        {all.map((item, i) => (
+          <span key={i} className="text-[10px] font-bold tracking-[0.45em] uppercase whitespace-nowrap flex items-center gap-3"
+            style={{ color: i % 2 === 0 ? "#d97706" : "#78400a" }}>
+            {item}{i % 2 === 0 && <span style={{ color: "#d97706", opacity: 0.4 }}>◆</span>}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -147,11 +169,11 @@ function Hero() {
         <img
           src="https://images.pexels.com/photos/3859234/pexels-photo-3859234.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
           alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.3 }}
+          className="w-full h-full object-cover scale-105"
+          style={{ opacity: 0.45 }}
           onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 30%, black 80%), linear-gradient(to bottom, black/30, transparent 40%, black)" }} />
       </div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[120px] pointer-events-none"
         style={{ background: "rgba(217,119,6,0.08)" }} />
@@ -237,11 +259,14 @@ function DishBlock({ dish, flip }: { dish: typeof DISHES[0]; flip: boolean }) {
   return (
     <div ref={ref}
       className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-      <div className={`relative aspect-[4/3] overflow-hidden bg-zinc-900 ${flip ? "md:order-2" : ""}`}>
+      <div className={`relative aspect-[4/3] overflow-hidden bg-zinc-900 group ${flip ? "md:order-2" : ""}`}
+        style={{ boxShadow: "0 0 0 1px #d9770618" }}>
         <img src={dish.img} alt={dish.title}
-          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+          className="dish-img w-full h-full object-cover"
           onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-        <div className="absolute inset-0 bg-gradient-to-tr from-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent transition-opacity duration-500 group-hover:opacity-60" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ boxShadow: "inset 0 0 40px rgba(217,119,6,.2)" }} />
         <span className="absolute top-4 left-4 text-black text-xs font-bold px-3 py-1 tracking-widest uppercase"
           style={{ background: "#d97706" }}>{dish.tag}</span>
       </div>
@@ -408,10 +433,18 @@ function Location() {
 function SectionLabel({ label, title }: { label: string; title: string }) {
   return (
     <div className="text-center">
-      <p className="text-amber-500 text-xs font-bold tracking-[0.45em] uppercase mb-3">{label}</p>
-      <h2 className="playfair text-white font-bold text-4xl md:text-5xl leading-tight"
+      <div className="flex items-center justify-center gap-4 mb-5">
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, #d97706aa)" }} />
+        <p className="text-amber-500 text-[10px] font-bold tracking-[0.55em] uppercase">{label}</p>
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to left, transparent, #d97706aa)" }} />
+      </div>
+      <h2 className="playfair text-white font-bold text-5xl md:text-6xl leading-tight"
         style={{ fontStyle: "italic" }}>{title}</h2>
-      <div className="w-12 h-px mx-auto mt-5" style={{ background: "#d97706" }} />
+      <div className="flex items-center justify-center gap-3 mt-6">
+        <div className="h-px w-20" style={{ background: "linear-gradient(to right, transparent, #d97706)" }} />
+        <span style={{ color: "#d97706", fontSize: "7px" }}>◆</span>
+        <div className="h-px w-20" style={{ background: "linear-gradient(to left, transparent, #d97706)" }} />
+      </div>
     </div>
   );
 }

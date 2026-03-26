@@ -145,15 +145,36 @@ export default function BarberRoyalePage() {
           50% { text-shadow: 0 0 70px rgba(202,138,4,.85), 0 0 120px rgba(202,138,4,.25); }
         }
         .gold-glow { animation: goldglow 3.5s ease-in-out infinite; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .svc-img { transition: transform .7s cubic-bezier(.16,1,.3,1); }
+        .svc-img:hover { transform: scale(1.04); }
       `}</style>
       <Navbar mode={mode} setMode={setMode} />
       <Hero />
+      <Marquee />
       <Stats />
       <Services />
       {mode === "full" && <Gallery />}
       <Pricing />
       <Location />
       <Footer />
+    </div>
+  );
+}
+
+function Marquee() {
+  const items = ["Premium Haircut", "Hot Shave", "Beard Sculpt", "Walk-ins Welcome", "Phuket Thailand", "Master Barbers", "Since 2023", "The Royal Treatment"];
+  const all = [...items, ...items];
+  return (
+    <div className="overflow-hidden border-y py-3" style={{ borderColor: "#ca8a0422", background: "#050400" }}>
+      <div style={{ display: "flex", gap: "3rem", width: "max-content", animation: "marquee 22s linear infinite" }}>
+        {all.map((item, i) => (
+          <span key={i} className="bebas text-xs tracking-[0.35em] uppercase whitespace-nowrap"
+            style={{ color: i % 2 === 0 ? "#ca8a04" : "#5a3e00" }}>
+            {item}{i % 2 !== 0 && <span style={{ color: "#ca8a04", opacity: 0.5, marginLeft: "1.5rem" }}>✦</span>}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -736,19 +757,17 @@ function Location() {
 function SectionLabel({ label, title }: { label: string; title: string }) {
   return (
     <div className="text-center">
-      <p
-        className="text-xs font-bold tracking-[0.45em] uppercase mb-3"
-        style={{ color: "#ca8a04" }}
-      >
-        {label}
-      </p>
-      <h2 className="bebas text-5xl md:text-6xl text-white tracking-widest leading-none">
-        {title}
-      </h2>
-      <div
-        className="w-16 h-px mx-auto mt-4"
-        style={{ background: "#ca8a04" }}
-      />
+      <div className="flex items-center justify-center gap-4 mb-4">
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, #ca8a04aa)" }} />
+        <p className="text-[10px] font-bold tracking-[0.55em] uppercase" style={{ color: "#ca8a04" }}>{label}</p>
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to left, transparent, #ca8a04aa)" }} />
+      </div>
+      <h2 className="bebas text-6xl md:text-7xl text-white tracking-widest leading-none">{title}</h2>
+      <div className="flex items-center justify-center gap-3 mt-4">
+        <div className="h-px w-16" style={{ background: "linear-gradient(to right, transparent, #ca8a04)" }} />
+        <span style={{ color: "#ca8a04", fontSize: "7px" }}>✦</span>
+        <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, #ca8a04)" }} />
+      </div>
     </div>
   );
 }

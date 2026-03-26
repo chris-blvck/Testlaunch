@@ -81,11 +81,15 @@ export default function AuraSpaPage() {
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .marquee-track { animation: marquee 28s linear infinite; white-space: nowrap; display: inline-flex; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes floatA { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-18px) scale(1.08); } }
+        @keyframes floatB { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.05); } }
+        .orb-a { animation: floatA 7s ease-in-out infinite; }
+        .orb-b { animation: floatB 9s ease-in-out infinite 1.5s; }
       `}</style>
 
       <Navbar mode={mode} setMode={setMode} />
       <Hero />
-      {mode === "full" && <Marquee />}
+      <Marquee />
       <Stats />
       <Treatments />
       {mode === "full" && <Philosophy />}
@@ -155,11 +159,16 @@ function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden text-center">
       <div className="absolute inset-0">
         <img src="https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1600"
-          alt="" className="w-full h-full object-cover" style={{ opacity: 0.2 }} />
-        <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${BG}60, ${BG}40, ${BG})` }} />
+          alt="" className="w-full h-full object-cover scale-105" style={{ opacity: 0.32 }} />
+        <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, transparent 20%, ${BG}99 70%), linear-gradient(to bottom, transparent 50%, ${BG})` }} />
       </div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: `${ACCENT}12` }} />
+      {/* Floating ambient orbs */}
+      <div className="orb-a absolute w-48 h-48 rounded-full blur-[80px] pointer-events-none"
+        style={{ top: "25%", left: "10%", background: `${ACCENT}14` }} />
+      <div className="orb-b absolute w-36 h-36 rounded-full blur-[60px] pointer-events-none"
+        style={{ top: "55%", right: "12%", background: `${ACCENT}10` }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full blur-[120px] pointer-events-none"
+        style={{ background: `${ACCENT}0e` }} />
 
       <div className={`relative z-10 px-6 transition-all duration-1200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <p className="text-xs font-bold tracking-[0.6em] uppercase mb-8" style={{ color: ACCENT }}>KOH SAMUI · THAILAND</p>
@@ -237,8 +246,17 @@ function Treatments() {
     <section id="treatments" className="py-28 md:py-36">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <p className="text-xs font-bold tracking-[0.45em] uppercase mb-3" style={{ color: `${ACCENT}99` }}>Our Services</p>
-          <h2 className="cormorant italic font-bold text-4xl md:text-5xl" style={{ color: "#f5f0e8" }}>Signature Treatments</h2>
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to right, transparent, ${ACCENT}88)` }} />
+            <p className="text-[10px] font-bold tracking-[0.55em] uppercase" style={{ color: `${ACCENT}99` }}>Our Services</p>
+            <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to left, transparent, ${ACCENT}88)` }} />
+          </div>
+          <h2 className="cormorant italic font-bold text-5xl md:text-6xl" style={{ color: "#f5f0e8" }}>Signature Treatments</h2>
+          <div className="flex items-center justify-center gap-3 mt-5">
+            <div className="h-px w-16" style={{ background: `linear-gradient(to right, transparent, ${ACCENT})` }} />
+            <span style={{ color: ACCENT, fontSize: "7px" }}>✦</span>
+            <div className="h-px w-16" style={{ background: `linear-gradient(to left, transparent, ${ACCENT})` }} />
+          </div>
         </div>
         <div className="space-y-28">
           {TREATMENTS.map((t, i) => <TreatmentBlock key={t.title} treatment={t} flip={i % 2 !== 0} />)}

@@ -180,9 +180,13 @@ export default function NeonNoirPage() {
           50% { transform: translate(-50%, -50%) scale(1.12); }
         }
         .float-orb { animation: floatOrb 6s ease-in-out infinite; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes scanpulse { 0%,100% { opacity:0.04; } 50% { opacity:0.08; } }
+        .scan-overlay { animation: scanpulse 4s ease-in-out infinite; }
       `}</style>
       <Navbar mode={mode} setMode={setMode} />
       <Hero />
+      <Marquee />
       <StatsBar />
       <Events />
       <VipTables />
@@ -756,23 +760,38 @@ function Location() {
   );
 }
 
+function Marquee() {
+  const items = ["Deep House", "Bangkok Nightlife", "VIP Tables", "Live DJs", "Neon Noir", "Thursday – Sunday", "Doors Open 10PM", "Dress to Kill"];
+  const all = [...items, ...items];
+  return (
+    <div className="overflow-hidden border-y py-3" style={{ borderColor: "#7c3aed22", background: "#06020f" }}>
+      <div style={{ display: "flex", gap: "3rem", width: "max-content", animation: "marquee 20s linear infinite" }}>
+        {all.map((item, i) => (
+          <span key={i} className="bebas text-xs tracking-[0.35em] uppercase whitespace-nowrap"
+            style={{ color: i % 2 === 0 ? ACCENT : "#3b1f70" }}>
+            {item}{i % 2 !== 0 && <span style={{ color: ACCENT, opacity: 0.4, marginLeft: "1.5rem" }}>◈</span>}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Section Label ────────────────────────────────────────────────────────────
 function SectionLabel({ label, title }: { label: string; title: string }) {
   return (
     <div className="text-center">
-      <p
-        className="text-xs font-bold tracking-[0.45em] uppercase mb-3"
-        style={{ color: ACCENT }}
-      >
-        {label}
-      </p>
-      <h2 className="bebas text-5xl md:text-6xl text-white tracking-widest leading-none">
-        {title}
-      </h2>
-      <div
-        className="w-16 h-px mx-auto mt-4"
-        style={{ background: ACCENT }}
-      />
+      <div className="flex items-center justify-center gap-4 mb-4">
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to right, transparent, ${ACCENT}aa)` }} />
+        <p className="text-[10px] font-bold tracking-[0.55em] uppercase" style={{ color: ACCENT }}>{label}</p>
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to left, transparent, ${ACCENT}aa)` }} />
+      </div>
+      <h2 className="bebas text-6xl md:text-7xl text-white tracking-widest leading-none">{title}</h2>
+      <div className="flex items-center justify-center gap-3 mt-4">
+        <div className="h-px w-16" style={{ background: `linear-gradient(to right, transparent, ${ACCENT})` }} />
+        <span style={{ color: ACCENT, fontSize: "7px" }}>◈</span>
+        <div className="h-px w-16" style={{ background: `linear-gradient(to left, transparent, ${ACCENT})` }} />
+      </div>
     </div>
   );
 }
