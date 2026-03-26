@@ -13,8 +13,8 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "Restaurant Builder — Deploy beautiful sites in seconds",
-  description: "Create and deploy stunning one-page restaurant websites instantly.",
+  title: "Kabal — Website Agency · Bangkok & Pattaya",
+  description: "On construit des sites web qui convertissent — restaurants, clubs, barbershops et commerces locaux en Thaïlande.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
