@@ -63,6 +63,7 @@ const TASTING_COURSES = [
 ];
 
 export default function LePalaisPage() {
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
     <div className="bg-black min-h-screen text-center">
       <style>{`
@@ -75,12 +76,12 @@ export default function LePalaisPage() {
         .gold-shimmer { animation: shimmer 4s ease-in-out infinite; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
-      <Navbar />
+      <Navbar mode={mode} setMode={setMode} />
       <Hero />
       <StatsBar />
       <SignatureDishes />
-      <Gallery />
-      <TastingMenu />
+      {mode === "full" && <Gallery />}
+      {mode === "full" && <TastingMenu />}
       <Location />
       <Footer />
     </div>
@@ -95,7 +96,7 @@ function Logo() {
   );
 }
 
-function Navbar() {
+function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -115,11 +116,22 @@ function Navbar() {
             </button>
           ))}
         </div>
-        <button
-          onClick={() => document.getElementById("reservations")?.scrollIntoView({ behavior: "smooth" })}
-          className="bg-amber-600 hover:bg-amber-500 text-black text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-colors">
-          Book a Table
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center border border-zinc-800 overflow-hidden">
+            {(["compact", "full"] as const).map((m) => (
+              <button key={m} onClick={() => setMode(m)}
+                className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
+                style={{ background: mode === m ? "#d97706" : "transparent", color: mode === m ? "#000" : "#52525b" }}>
+                {m}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => document.getElementById("reservations")?.scrollIntoView({ behavior: "smooth" })}
+            className="bg-amber-600 hover:bg-amber-500 text-black text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-colors">
+            Book a Table
+          </button>
+        </div>
       </div>
     </nav>
   );

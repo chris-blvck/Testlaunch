@@ -54,6 +54,7 @@ const GALLERY_IMGS = [
 
 export default function ZenGardenPage() {
   const [mounted, setMounted] = useState(false);
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
     return () => clearTimeout(t);
@@ -140,12 +141,12 @@ export default function ZenGardenPage() {
         .email-link:hover { border-color: #84cc16; }
       `}</style>
 
-      <Navbar />
+      <Navbar mode={mode} setMode={setMode} />
       <Hero mounted={mounted} />
       <PhilosophyStrip />
       <OmakaseMenu />
-      <GallerySection />
-      <TheExperience />
+      {mode === "full" && <GallerySection />}
+      {mode === "full" && <TheExperience />}
       <ReservationSection />
       <Footer />
     </div>
@@ -153,7 +154,7 @@ export default function ZenGardenPage() {
 }
 
 /* ── Navbar ─────────────────────────────────────────────────────── */
-function Navbar() {
+function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -212,6 +213,19 @@ function Navbar() {
           <button className="nav-link" onClick={() => scrollTo("gallery")}>
             Gallery
           </button>
+          <div style={{ display: "flex", overflow: "hidden", border: "1px solid rgba(168,149,106,0.25)" }}>
+            {(["compact", "full"] as const).map((m) => (
+              <button key={m} onClick={() => setMode(m)}
+                style={{
+                  fontSize: "9px", fontWeight: "bold", padding: "6px 10px", letterSpacing: "0.2em",
+                  textTransform: "uppercase", border: "none", cursor: "pointer", transition: "all 0.2s",
+                  background: mode === m ? "#a8956a" : "transparent",
+                  color: mode === m ? "#000" : "rgba(168,149,106,0.4)",
+                }}>
+                {m}
+              </button>
+            ))}
+          </div>
           <button className="reserve-nav" onClick={() => scrollTo("reserve")}>
             Reserve
           </button>

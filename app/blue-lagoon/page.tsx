@@ -19,6 +19,7 @@ function useInView(threshold = 0.12) {
 
 export default function BlueLagoonPage() {
   const [mounted, setMounted] = useState(false);
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
     return () => clearTimeout(t);
@@ -54,12 +55,12 @@ export default function BlueLagoonPage() {
         .hours-row:nth-child(even) { background: rgba(8,145,178,0.06); }
       `}</style>
 
-      <Navbar />
+      <Navbar mode={mode} setMode={setMode} />
       <Hero mounted={mounted} />
       <StatsBar />
       <SignatureCocktails />
-      <Gallery />
-      <Events />
+      {mode === "full" && <Gallery />}
+      {mode === "full" && <Events />}
       <Location />
       <Footer />
     </div>
@@ -67,7 +68,7 @@ export default function BlueLagoonPage() {
 }
 
 /* ── Navbar ──────────────────────────────────────────────────── */
-function Navbar() {
+function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -100,12 +101,25 @@ function Navbar() {
         </span>
       </button>
 
-      {/* Nav links */}
-      <div style={{ display: "flex", alignItems: "center", gap: "36px" }}>
+      {/* Nav links + toggle */}
+      <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
         <button className="nav-link" onClick={() => scrollTo("cocktails")}>Menu</button>
         <button className="nav-link" onClick={() => scrollTo("gallery")}>Gallery</button>
         <button className="nav-link" onClick={() => scrollTo("events")}>Events</button>
         <button className="nav-link" onClick={() => scrollTo("location")}>Location</button>
+        <div style={{ display: "flex", overflow: "hidden", border: "1px solid rgba(8,145,178,0.3)" }}>
+          {(["compact", "full"] as const).map((m) => (
+            <button key={m} onClick={() => setMode(m)}
+              style={{
+                fontSize: "9px", fontWeight: "bold", padding: "6px 10px", letterSpacing: "0.2em",
+                textTransform: "uppercase", border: "none", cursor: "pointer", transition: "all 0.2s",
+                background: mode === m ? "#0891b2" : "transparent",
+                color: mode === m ? "#fff" : "rgba(8,145,178,0.5)",
+              }}>
+              {m}
+            </button>
+          ))}
+        </div>
         <button className="btn-cyan" onClick={() => scrollTo("location")} style={{ fontSize: "11px", padding: "9px 22px" }}>
           Find Us
         </button>

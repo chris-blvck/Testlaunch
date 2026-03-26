@@ -160,7 +160,7 @@ function useInView(threshold = 0.1) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function NeonNoirPage() {
-  // const [locale, setLocale] = useState<"en">("en"); // prepared for i18n toggle
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
     <div className="bg-black min-h-screen" style={{ background: BG }}>
       <style>{`
@@ -180,12 +180,12 @@ export default function NeonNoirPage() {
         }
         .float-orb { animation: floatOrb 6s ease-in-out infinite; }
       `}</style>
-      <Navbar />
+      <Navbar mode={mode} setMode={setMode} />
       <Hero />
       <StatsBar />
       <Events />
       <VipTables />
-      <Gallery />
+      {mode === "full" && <Gallery />}
       <Location />
       <Footer />
     </div>
@@ -193,7 +193,7 @@ export default function NeonNoirPage() {
 }
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
-function Navbar() {
+function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -241,19 +241,30 @@ function Navbar() {
           ))}
         </div>
 
-        {/* CTA */}
-        <a
-          href="https://wa.me/66891234567"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bebas text-white text-sm px-5 py-2 tracking-widest uppercase transition-all hover:opacity-80"
-          style={{
-            background: "linear-gradient(135deg, #7c3aed, #5b21b6)",
-            boxShadow: `0 0 20px rgba(124,58,237,0.4)`,
-          }}
-        >
-          {COPY.en.nav.cta}
-        </a>
+        {/* Mode toggle + CTA */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center overflow-hidden border border-purple-900/40">
+            {(["compact", "full"] as const).map((m) => (
+              <button key={m} onClick={() => setMode(m)}
+                className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
+                style={{ background: mode === m ? ACCENT : "transparent", color: mode === m ? "#000" : "#6b21a8" }}>
+                {m}
+              </button>
+            ))}
+          </div>
+          <a
+            href="https://wa.me/66891234567"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bebas text-white text-sm px-5 py-2 tracking-widest uppercase transition-all hover:opacity-80"
+            style={{
+              background: "linear-gradient(135deg, #7c3aed, #5b21b6)",
+              boxShadow: `0 0 20px rgba(124,58,237,0.4)`,
+            }}
+          >
+            {COPY.en.nav.cta}
+          </a>
+        </div>
       </div>
     </nav>
   );
