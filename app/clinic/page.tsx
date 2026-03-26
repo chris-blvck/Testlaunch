@@ -79,7 +79,7 @@ const CONTACT = {
 /* ─── page ──────────────────────────────────────────────────────── */
 export default function ClinicPage() {
   return (
-    <div className="min-h-screen" style={{ background: G.bg, color: G.dark }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: G.bg, color: G.dark }}>
       <style>{`
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
@@ -246,7 +246,7 @@ function Services() {
 function ServiceInner({ s }: { s: typeof SERVICES[0] }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div className="text-center" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <span className="text-2xl block mb-5 transition-colors" style={{ color: hovered ? G.goldLight : G.gold }}>{s.icon}</span>
       <h3 className="font-russo text-lg mb-3 transition-colors" style={{ color: hovered ? "#fff" : G.dark }}>{s.title}</h3>
       <p className="text-sm leading-relaxed transition-colors" style={{ color: hovered ? "#d1d5db" : G.muted }}>{s.desc}</p>

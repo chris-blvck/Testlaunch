@@ -162,9 +162,9 @@ function useInView(threshold = 0.1) {
 export default function NeonNoirPage() {
   const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
-    <div className="bg-black min-h-screen" style={{ background: BG }}>
+    <div className="bg-black min-h-screen overflow-x-hidden" style={{ background: BG }}>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: ${BG}; }

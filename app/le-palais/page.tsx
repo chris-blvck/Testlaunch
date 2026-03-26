@@ -66,9 +66,9 @@ const TASTING_COURSES = [
 export default function LePalaisPage() {
   const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
-    <div className="bg-black min-h-screen text-center">
+    <div className="bg-black min-h-screen text-center overflow-x-hidden">
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #000; }
