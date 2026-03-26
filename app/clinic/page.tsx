@@ -95,6 +95,7 @@ export default function ClinicPage() {
       <Services />
       <Packages />
       <WhyUs />
+      <ClinicGallery />
       <Contact />
       <Footer />
       <StickyBook />
@@ -329,6 +330,43 @@ function WhyUs() {
                 <h4 className="font-russo text-lg mb-2" style={{ color: G.dark }}>{p.title}</h4>
                 <p className="text-sm leading-relaxed" style={{ color: G.muted }}>{p.body}</p>
               </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── gallery ───────────────────────────────────────────────────── */
+function ClinicGallery() {
+  const { ref, inView } = useInView(0.05);
+  const imgs = [
+    { src: "https://images.pexels.com/photos/7446659/pexels-photo-7446659.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Rejuvenating facial treatment", span: "col-span-2 row-span-2" },
+    { src: "https://images.pexels.com/photos/4586726/pexels-photo-4586726.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Laser skin treatment", span: "" },
+    { src: "https://images.pexels.com/photos/4586708/pexels-photo-4586708.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Cosmetic injection", span: "" },
+    { src: "https://images.pexels.com/photos/4586728/pexels-photo-4586728.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Laser facial with protection", span: "" },
+    { src: "https://images.pexels.com/photos/7446681/pexels-photo-7446681.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Lip enhancement", span: "" },
+    { src: "https://images.pexels.com/photos/7446666/pexels-photo-7446666.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Soothing skincare session", span: "col-span-2" },
+  ];
+  return (
+    <section className="py-28 md:py-36 px-6" style={{ background: "#f3f4f1" }}>
+      <div className="max-w-7xl mx-auto">
+        <SectionLabel label="Our clinic" title="See the results" />
+        <div ref={ref}
+          className={`mt-14 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
+          {imgs.map((img, i) => (
+            <div key={img.src}
+              className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+              style={{
+                borderRadius: i === 0 ? "2rem" : i % 2 === 0 ? "1.25rem" : "0.75rem 2rem 0.75rem 2rem",
+                transitionDelay: `${i * 55}ms`,
+              }}>
+              <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: `linear-gradient(to top, ${G.dark}cc, transparent)` }} />
+              <p className="absolute bottom-0 left-0 right-0 px-4 py-3 text-sm translate-y-full group-hover:translate-y-0 transition-transform duration-500"
+                style={{ color: "#fff", fontFamily: "var(--font-sans)" }}>{img.alt}</p>
             </div>
           ))}
         </div>
