@@ -307,13 +307,13 @@ function CategoryCard({ cat, delay, inView }: { cat: typeof CATEGORIES[0]; delay
 /* ─── showroom ──────────────────────────────────────────────────── */
 function Showroom() {
   const { ref, inView } = useInView(0.05);
-  const panels = [
-    { label: "Grand chandeliers hall", size: "col-span-2 row-span-2", icon: "✦" },
-    { label: "Wall sconces wall", size: "", icon: "◈" },
-    { label: "Table lamp collection", size: "", icon: "◉" },
-    { label: "Custom project display", size: "", icon: "❋" },
-    { label: "Luxury living setup", size: "", icon: "◇" },
-    { label: "Gold finish collection", size: "col-span-2", icon: "⬡" },
+  const imgs = [
+    { src: "https://images.pexels.com/photos/5768163/pexels-photo-5768163.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Grand crystal chandelier", span: "col-span-2 row-span-2" },
+    { src: "https://images.pexels.com/photos/7594230/pexels-photo-7594230.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Teardrop crystal detail", span: "" },
+    { src: "https://images.pexels.com/photos/5378420/pexels-photo-5378420.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Crystal close-up", span: "" },
+    { src: "https://images.pexels.com/photos/36242961/pexels-photo-36242961.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Luxurious chandelier interior", span: "" },
+    { src: "https://images.pexels.com/photos/2549057/pexels-photo-2549057.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Ornate lighting hall", span: "" },
+    { src: "https://images.pexels.com/photos/137572/pexels-photo-137572.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Gold crystal lamp", span: "col-span-2" },
   ];
   return (
     <section id="showroom" className="py-28 md:py-36 px-6" style={{ background: C.inkMid }}>
@@ -324,35 +324,21 @@ function Showroom() {
         </p>
         <div ref={ref}
           className={`mt-14 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-2 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
-          {panels.map((p, i) => (
-            <div key={p.label}
-              className={`relative flex items-end p-5 overflow-hidden group border transition-all duration-500 ${p.size} ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+          {imgs.map((img, i) => (
+            <div key={img.src}
+              className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
               style={{
-                background: `radial-gradient(ellipse at top, #2a1f0a, ${C.ink})`,
-                borderColor: C.border,
+                borderRadius: i === 0 ? "1.5rem" : i % 2 === 0 ? "1rem" : "0.5rem",
                 transitionDelay: `${i * 55}ms`,
               }}>
-              {/* center icon */}
-              <div className="absolute inset-0 flex items-center justify-center"
-                style={{ color: C.gold, fontSize: i === 0 ? "5rem" : "3rem", opacity: 0.12 }}>
-                {p.icon}
-              </div>
-              {/* top-right gold dot */}
-              <div className="absolute top-4 right-4 w-1.5 h-1.5 rounded-full shimmer" style={{ background: C.gold }} />
-              {/* label */}
-              <p className="relative z-10 text-xs uppercase tracking-wider translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                style={{ color: C.goldLt }}>
-                {p.label}
-              </p>
-              {/* gold bottom border on hover */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300 group-hover:opacity-100 opacity-0"
-                style={{ background: C.gold }} />
+              <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: C.gold }} />
+              <p className="absolute bottom-0 left-0 right-0 px-4 py-3 text-xs uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-500"
+                style={{ color: C.goldLt }}>{img.alt}</p>
             </div>
           ))}
         </div>
-        <p className="text-center mt-6 text-xs tracking-widest uppercase" style={{ color: C.goldDim }}>
-          Add your showroom photos to replace placeholders
-        </p>
       </div>
     </section>
   );

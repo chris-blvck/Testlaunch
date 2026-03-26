@@ -149,6 +149,7 @@ export default function BoatsPage() {
       <Stats />
       <Tours />
       <Fleet />
+      <BoatsGallery />
       <Booking />
       <Footer />
       <StickyBtn />
@@ -383,6 +384,42 @@ function Fleet() {
                 Request quote
               </a>
             </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── gallery ───────────────────────────────────────────────────── */
+function BoatsGallery() {
+  const { ref, inView } = useInView(0.05);
+  const imgs = [
+    { src: "https://images.pexels.com/photos/36661715/pexels-photo-36661715.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Speedboat at overwater villas", span: "col-span-2 row-span-2" },
+    { src: "https://images.pexels.com/photos/5940391/pexels-photo-5940391.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Clear blue ocean run", span: "" },
+    { src: "https://images.pexels.com/photos/1198835/pexels-photo-1198835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Aerial turquoise waters", span: "" },
+    { src: "https://images.pexels.com/photos/36472763/pexels-photo-36472763.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Wake trail on the ocean", span: "" },
+    { src: "https://images.pexels.com/photos/1085756/pexels-photo-1085756.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Coastline aerial view", span: "" },
+    { src: "https://images.pexels.com/photos/7753824/pexels-photo-7753824.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Sunset cruise", span: "col-span-2" },
+  ];
+  return (
+    <section className="py-28 md:py-36 px-6" style={{ background: C.navy }}>
+      <div className="max-w-7xl mx-auto">
+        <SectionLabel label="On the water" title="Every trip, a memory" light />
+        <div ref={ref}
+          className={`mt-14 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-2 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
+          {imgs.map((img, i) => (
+            <div key={img.src}
+              className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+              style={{
+                borderRadius: i === 0 ? "2rem" : i % 3 === 0 ? "2rem 0.5rem 2rem 0.5rem" : "1rem",
+                transitionDelay: `${i * 60}ms`,
+              }}>
+              <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-40 group-hover:opacity-80 transition-opacity duration-500" />
+              <div className="absolute top-3 left-3 w-6 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: C.aqua }} />
+              <p className="absolute bottom-0 left-0 right-0 px-4 py-3 text-sm text-white translate-y-full group-hover:translate-y-0 transition-transform duration-500">{img.alt}</p>
+            </div>
           ))}
         </div>
       </div>

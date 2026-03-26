@@ -84,15 +84,13 @@ const SERVICES = [
   },
 ];
 
-const GALLERY_LABELS = [
-  { label: "Chrome mirror nails", tag: "Trending" },
-  { label: "French ombre", tag: "Classic" },
-  { label: "Nail art detail", tag: "Art" },
-  { label: "Volume lashes", tag: "Lashes" },
-  { label: "Brow lamination", tag: "Brows" },
-  { label: "Gel extensions", tag: "Extensions" },
-  { label: "Natural gel set", tag: "Minimal" },
-  { label: "Salon interior", tag: "Studio" },
+const GALLERY_IMGS = [
+  { src: "https://images.pexels.com/photos/361754/pexels-photo-361754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Nail art precision", tag: "Trending", span: "col-span-2" },
+  { src: "https://images.pexels.com/photos/5484948/pexels-photo-5484948.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Manicure nail art", tag: "Art", span: "" },
+  { src: "https://images.pexels.com/photos/3736313/pexels-photo-3736313.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Colour selection", tag: "Classic", span: "" },
+  { src: "https://images.pexels.com/photos/6135681/pexels-photo-6135681.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Salon manicure", tag: "Studio", span: "" },
+  { src: "https://images.pexels.com/photos/332046/pexels-photo-332046.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Professional finish", tag: "Minimal", span: "" },
+  { src: "https://images.pexels.com/photos/6135686/pexels-photo-6135686.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Gloss red polish", tag: "Bold", span: "col-span-2" },
 ];
 
 /* ─── page ──────────────────────────────────────────────────────── */
@@ -322,46 +320,27 @@ function Gallery() {
       <div className="max-w-7xl mx-auto">
         <SectionLabel label="Our work" title="The portfolio" />
         <div ref={ref}
-          className={`mt-14 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-2 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
-          {GALLERY_LABELS.map((g, i) => {
-            const big = i === 0 || i === 5;
-            return (
-              <div key={g.label}
-                className={`relative flex items-end p-4 overflow-hidden group border transition-all duration-500 ${big ? "col-span-2" : ""} ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-                style={{
-                  background: i % 3 === 0
-                    ? `linear-gradient(135deg, #f5ddd8, #ecddd8)`
-                    : i % 3 === 1
-                    ? `linear-gradient(135deg, #f8f0ea, #f0e4dc)`
-                    : `linear-gradient(135deg, #efe5e0, #f5ede8)`,
-                  borderColor: C.border,
-                  transitionDelay: `${i * 50}ms`,
-                }}>
-                {/* decorative pattern */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-10 text-6xl select-none pointer-events-none"
-                  style={{ color: C.rose }}>
-                  {i % 3 === 0 ? "💅" : i % 3 === 1 ? "👁" : "✦"}
-                </div>
-                {/* tag */}
-                <span className="absolute top-3 right-3 text-xs px-2 py-0.5 rounded-full font-bold tracking-wider"
-                  style={{ background: C.white, color: C.rose }}>
-                  {g.tag}
-                </span>
-                {/* label */}
-                <p className="relative z-10 text-xs font-medium translate-y-3 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                  style={{ color: C.darkMid }}>
-                  {g.label}
-                </p>
-                {/* bottom line */}
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: C.rose }} />
-              </div>
-            );
-          })}
+          className={`mt-14 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
+          {GALLERY_IMGS.map((img, i) => (
+            <div key={img.src}
+              className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+              style={{
+                borderRadius: i === 0 || i === 5 ? "2rem" : i % 2 === 0 ? "1.5rem 0.5rem 1.5rem 0.5rem" : "0.75rem",
+                transitionDelay: `${i * 50}ms`,
+              }}>
+              <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="absolute top-3 right-3 text-xs px-3 py-1 font-semibold tracking-wider"
+                style={{ background: C.white, color: C.rose, borderRadius: "2rem" }}>
+                {img.tag}
+              </span>
+              <p className="absolute bottom-0 left-0 right-0 px-4 py-3 text-sm font-medium translate-y-full group-hover:translate-y-0 transition-transform duration-500"
+                style={{ color: C.white }}>
+                {img.alt}
+              </p>
+            </div>
+          ))}
         </div>
-        <p className="text-center text-xs mt-6 tracking-widest uppercase" style={{ color: C.muted }}>
-          Replace placeholders with your real nail photos
-        </p>
       </div>
     </section>
   );

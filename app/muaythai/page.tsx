@@ -358,36 +358,30 @@ function Schedule() {
 /* ─── gallery ──────────────────────────────────────────────────── */
 function Gallery() {
   const { ref, inView } = useInView(0.05);
-  const panels = [
-    { label: "Morning training", bg: "from-amber-950/50 to-black", icon: "🥊" },
-    { label: "Pad work", bg: "from-red-950/50 to-black", icon: "💥" },
-    { label: "Pool & chill", bg: "from-cyan-950/50 to-black", icon: "🏊" },
-    { label: "Lounge & co-work", bg: "from-zinc-800/50 to-black", icon: "💻" },
-    { label: "Team sparring", bg: "from-orange-950/50 to-black", icon: "🥋" },
-    { label: "Fight night", bg: "from-purple-950/50 to-black", icon: "🏆" },
+  const imgs = [
+    { src: "https://images.pexels.com/photos/5750947/pexels-photo-5750947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Muay Thai sparring bout", span: "col-span-2 row-span-2" },
+    { src: "https://images.pexels.com/photos/2628210/pexels-photo-2628210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Dynamic training session", span: "" },
+    { src: "https://images.pexels.com/photos/5750838/pexels-photo-5750838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Heavy bag work", span: "" },
+    { src: "https://images.pexels.com/photos/238636/pexels-photo-238636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Fight night in the ring", span: "" },
+    { src: "https://images.pexels.com/photos/5485616/pexels-photo-5485616.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Sparring session", span: "" },
+    { src: "https://images.pexels.com/photos/5750852/pexels-photo-5750852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", alt: "Conditioning workout", span: "col-span-2" },
   ];
   return (
     <section className="py-28 md:py-36 px-6 bg-zinc-950 border-t border-zinc-900">
       <div className="max-w-7xl mx-auto">
         <SectionLabel label="The camp" title="Your new home" />
-        <div ref={ref} className={`mt-16 grid grid-cols-2 md:grid-cols-3 gap-2 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
-          {panels.map((p, i) => (
-            <div key={p.label}
-              className={`relative aspect-square flex items-end p-6 overflow-hidden group bg-gradient-to-br ${p.bg} border border-zinc-900 transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+        <div ref={ref} className={`mt-16 grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[240px] gap-1.5 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
+          {imgs.map((img, i) => (
+            <div key={img.src}
+              className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
               style={{ transitionDelay: `${i * 60}ms` }}>
-              <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-10 group-hover:opacity-20 transition-opacity duration-500 select-none">
-                {p.icon}
-              </div>
-              <div>
-                <span className="text-2xl">{p.icon}</span>
-                <p className="text-white font-russo text-sm mt-1">{p.label}</p>
-              </div>
+              <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
+              <div className="absolute top-0 left-0 w-1 h-full bg-[#c9a84c] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <p className="absolute bottom-0 left-0 right-0 px-5 py-4 text-sm text-white font-russo uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-500">{img.alt}</p>
             </div>
           ))}
         </div>
-        <p className="text-center text-zinc-600 text-xs mt-6 tracking-widest uppercase">
-          Add your photos here — replace placeholder panels
-        </p>
       </div>
     </section>
   );

@@ -341,10 +341,13 @@ function Gallery({ locale, t }: { locale: Locale; t: CopyContent }) {
       <div className="max-w-6xl mx-auto text-center">
         <SectionLabel label={t.galleryLabel} title={t.galleryTitle} />
         <div ref={ref} className={`mt-14 grid grid-cols-2 md:grid-cols-4 auto-rows-[190px] md:auto-rows-[220px] gap-2 text-left transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
-          {GALLERY.map((img) => (
-            <div key={img.src} className={`relative overflow-hidden group ${img.span}`}>
+          {GALLERY.map((img, i) => (
+            <div key={img.src} className={`relative overflow-hidden group ${img.span} transition-all duration-500 ${inView ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+              style={{ borderRadius: i === 0 ? "1rem" : "0.25rem", transitionDelay: `${i * 50}ms` }}>
               <img src={img.src} alt={locale === "en" ? img.altEn : img.altRu} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <p className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent px-3 py-2 text-xs translate-y-full group-hover:translate-y-0 transition-transform">{locale === "en" ? img.altEn : img.altRu}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute top-0 right-0 w-0.5 h-full bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <p className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent px-3 py-3 text-xs font-russo tracking-wide uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-500">{locale === "en" ? img.altEn : img.altRu}</p>
             </div>
           ))}
         </div>
