@@ -15,6 +15,34 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
+function useMagnetic(strength = 0.38) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const radius = Math.max(r.width, r.height) * 1.6;
+      if (dist < radius) {
+        const pull = (1 - dist / radius) * strength;
+        el.style.transform = `translate(${dx * pull}px, ${dy * pull}px)`;
+      } else {
+        el.style.transform = "";
+      }
+    };
+    const onLeave = () => { el.style.transform = ""; };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    el.addEventListener("mouseleave", onLeave);
+    return () => { window.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+  }, [strength]);
+  return ref as React.RefObject<HTMLElement>;
+}
+
 const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3", "Health & Beauty", "Sports & Fitness"];
 
 const PROJECTS = [
@@ -253,6 +281,46 @@ export default function HomePage() {
         }
         .live-dot { animation: live-pulse 1.8s ease-in-out infinite; }
 
+        /* Magnetic */
+        .magnetic { transition: transform 0.35s cubic-bezier(.23,1,.32,1); will-change: transform; }
+
+        /* Quick-view */
+        @keyframes qv-in {
+          from { opacity: 0; transform: translateY(6px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .qv-in { animation: qv-in 0.18s ease-out; }
+
+        /* Image blur-load */
+        .img-unloaded { filter: blur(14px) saturate(0.7); transform: scale(1.04); transition: filter 0.5s ease, transform 0.5s ease; }
+        .img-loaded   { filter: blur(0) saturate(1); transform: scale(1); }
+
+        /* Staggered card */
+        @keyframes card-in {
+          from { opacity: 0; transform: translateY(28px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .card-in { animation: card-in 0.55s cubic-bezier(.23,1,.32,1) both; }
+
+        /* Mobile project carousel */
+        @media (max-width: 767px) {
+          .project-grid {
+            display: flex !important;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            gap: 14px;
+            padding-bottom: 4px;
+          }
+          .project-grid::-webkit-scrollbar { display: none; }
+          .project-grid > * {
+            min-width: 82vw;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+          }
+        }
+
         /* Hero */
         @keyframes orb-drift-a {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -418,6 +486,8 @@ function KabalLogo() {
 }
 
 function Hero({ mounted }: { mounted: boolean }) {
+  const magCta1 = useMagnetic(0.32);
+  const magCta2 = useMagnetic(0.32);
   const heroRef = useRef<HTMLElement>(null);
   const orbARef = useRef<HTMLDivElement>(null);
   const orbBRef = useRef<HTMLDivElement>(null);
@@ -535,14 +605,15 @@ function Hero({ mounted }: { mounted: boolean }) {
         {/* CTAs */}
         <div className="line-in flex flex-col sm:flex-row items-center justify-center gap-4"
           style={{ animationDelay: mounted ? "1.1s" : "9999s" }}>
-          <button
+          <button ref={magCta1 as React.RefObject<HTMLButtonElement>}
             onClick={() => document.getElementById("projets")?.scrollIntoView({ behavior: "smooth" })}
-            className="group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300 hover:scale-105">
+            className="magnetic group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm hover:scale-105 transition-[box-shadow,opacity] duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.25)]">
             <span className="relative z-10">View projects</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-zinc-200 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </button>
-          <a href="mailto:junglekabal@gmail.com"
-            className="group relative overflow-hidden border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
+          <a ref={magCta2 as React.RefObject<HTMLAnchorElement>}
+            href="#contact"
+            onClick={e => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+            className="magnetic group relative overflow-hidden border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
             <span className="relative z-10">Work with us</span>
             <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </a>
@@ -616,6 +687,17 @@ function Projects({ filtered, activeCategory, setActiveCategory }: {
   setActiveCategory: (c: string) => void;
 }) {
   const { ref, inView } = useInView(0.05);
+  const [prevCategory, setPrevCategory] = useState(activeCategory);
+  const [gridKey, setGridKey] = useState(0);
+
+  // Re-trigger stagger when filter changes
+  useEffect(() => {
+    if (prevCategory !== activeCategory) {
+      setPrevCategory(activeCategory);
+      setGridKey(k => k + 1);
+    }
+  }, [activeCategory, prevCategory]);
+
   return (
     <section id="projets" className="py-28 md:py-36 bg-black">
       <div className="max-w-7xl mx-auto px-6">
@@ -639,11 +721,16 @@ function Projects({ filtered, activeCategory, setActiveCategory }: {
           ))}
         </div>
 
-        <div ref={ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-5 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div ref={ref} key={gridKey} className="project-grid grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i} />
+            <ProjectCard key={p.slug} project={p} index={i} inView={inView} />
           ))}
         </div>
+
+        {/* Mobile swipe hint */}
+        <p className="md:hidden text-center text-zinc-700 text-[10px] tracking-widest uppercase mt-4">
+          Swipe to browse →
+        </p>
       </div>
     </section>
   );
@@ -689,12 +776,14 @@ function CardsHeader({ accent }: { accent: string }) {
   );
 }
 
-function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index: number }) {
+function ProjectCard({ project: p, index, inView }: { project: typeof PROJECTS[0]; index: number; inView: boolean }) {
   const isExternal = p.liveUrl.startsWith("http");
   const cardProps = isExternal
     ? { href: p.liveUrl, target: "_blank", rel: "noopener noreferrer" }
     : { href: p.liveUrl };
   const cardRef = useRef<HTMLAnchorElement>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const el = cardRef.current;
@@ -710,14 +799,22 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
     if (!el) return;
     el.style.transform = "";
     el.style.boxShadow = "";
+    setHovered(false);
   };
 
   return (
+    <div className="relative"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
     <Link {...cardProps} ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="group tilt-card block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700"
-      style={{ transitionDelay: `${index * 60}ms` }}>
+      className={`group tilt-card block relative overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700 card-in`}
+      style={{
+        animationDelay: inView ? `${index * 75}ms` : "9999s",
+        animationPlayState: inView ? "running" : "paused",
+        borderColor: hovered ? `${p.accent}55` : undefined,
+      }}>
 
       {/* Header */}
       <div className="relative h-52 overflow-hidden">
@@ -727,7 +824,8 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
           <>
             {p.photo && (
               <img src={p.photo} alt={p.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60"
+                className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 ${imgLoaded ? "img-loaded" : "img-unloaded"}`}
+                onLoad={() => setImgLoaded(true)}
                 onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
             )}
             <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} ${p.photo ? "opacity-70" : "opacity-100"}`} />
@@ -764,6 +862,28 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
         </div>
       </div>
     </Link>
+
+    {/* Quick-view overlay — desktop only */}
+    {hovered && (
+      <div className="qv-in absolute left-0 right-0 -bottom-1 z-20 pointer-events-none hidden md:block">
+        <div className="mx-1 border border-zinc-700 bg-zinc-900/95 backdrop-blur-sm p-4 shadow-2xl"
+          style={{ borderTopColor: p.accent }}>
+          <div className="flex items-center justify-between mb-2">
+            <span className={`text-[10px] font-bold tracking-[0.4em] uppercase ${p.accentText}`}>{p.category}</span>
+            <span className="text-zinc-600 text-[10px]">{p.location}</span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {p.tags.map((t) => (
+              <span key={t} className="text-[10px] px-2 py-0.5 border border-zinc-700 text-zinc-400">{t}</span>
+            ))}
+          </div>
+          <p className={`text-[10px] font-bold tracking-widest uppercase mt-3 ${p.accentText}`}>
+            Open site →
+          </p>
+        </div>
+      </div>
+    )}
+    </div>
   );
 }
 
@@ -796,36 +916,60 @@ const TESTIMONIALS = [
 
 function Testimonials() {
   const { ref, inView } = useInView();
+  const [active, setActive] = useState(0);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setFading(true);
+      setTimeout(() => {
+        setActive(a => (a + 1) % TESTIMONIALS.length);
+        setFading(false);
+      }, 350);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  const t = TESTIMONIALS[active];
+
   return (
     <section className="py-24 md:py-32 border-t border-zinc-900">
-      <div ref={ref} className={`max-w-7xl mx-auto px-6 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+      <div ref={ref} className={`max-w-4xl mx-auto px-6 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="text-center mb-16">
           <p className="text-zinc-500 text-xs font-bold tracking-[0.6em] uppercase mb-3">Social proof</p>
           <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight" style={{ letterSpacing: "-0.03em" }}>
             What clients say.
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-6">
-          {TESTIMONIALS.map((t, i) => (
-            <div key={t.name}
-              className="border border-zinc-900 bg-zinc-950 p-8 hover:border-zinc-700 transition-colors duration-300"
-              style={{ transitionDelay: `${i * 80}ms` }}>
-              <p className="text-zinc-300 text-base leading-relaxed mb-8">&ldquo;{t.quote}&rdquo;</p>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-black text-sm">{t.initial}</span>
-                </div>
-                <div>
-                  <p className="text-white font-bold text-sm">{t.name}</p>
-                  <p className="text-zinc-500 text-xs tracking-wide">{t.role}</p>
-                </div>
-                <div className="ml-auto flex gap-0.5">
-                  {[...Array(5)].map((_, s) => (
-                    <span key={s} className="text-amber-400 text-xs">★</span>
-                  ))}
-                </div>
+
+        {/* Rotating testimonial */}
+        <div className="relative border border-zinc-900 bg-zinc-950 p-8 md:p-12 text-center min-h-[220px] flex flex-col justify-between"
+          style={{ transition: "border-color 0.5s ease", borderColor: "#27272a" }}>
+          <div style={{ opacity: fading ? 0 : 1, transition: "opacity 0.35s ease", transform: fading ? "translateY(6px)" : "translateY(0)" }}>
+            <div className="flex gap-0.5 justify-center mb-6">
+              {[...Array(5)].map((_, s) => <span key={s} className="text-amber-400 text-sm">★</span>)}
+            </div>
+            <p className="text-zinc-200 text-lg md:text-xl leading-relaxed mb-8 font-light">
+              &ldquo;{t.quote}&rdquo;
+            </p>
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-10 h-10 bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0">
+                <span className="text-white font-black text-sm">{t.initial}</span>
+              </div>
+              <div className="text-left">
+                <p className="text-white font-bold text-sm">{t.name}</p>
+                <p className="text-zinc-500 text-xs tracking-wide">{t.role}</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Dots */}
+        <div className="flex items-center justify-center gap-2 mt-6">
+          {TESTIMONIALS.map((_, i) => (
+            <button key={i} onClick={() => { setFading(true); setTimeout(() => { setActive(i); setFading(false); }, 350); }}
+              className="transition-all duration-300"
+              style={{ width: i === active ? 20 : 6, height: 6, background: i === active ? "#fff" : "#3f3f46", borderRadius: 3 }} />
           ))}
         </div>
       </div>
