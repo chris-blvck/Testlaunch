@@ -3,6 +3,31 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Locale = "en" | "ru";
+type CopyContent = {
+  nav: [string, string, string, string];
+  ctaMap: string;
+  heroTop: string;
+  heroSub: string;
+  heroMeta: string;
+  heroCta1: string;
+  heroCta2: string;
+  expLabel: string;
+  expTitle: string;
+  galleryLabel: string;
+  galleryTitle: string;
+  pricingLabel: string;
+  pricingTitle: string;
+  locationLabel: string;
+  locationTitle: string;
+  certified: string;
+  openDaily: string;
+  onSite: string;
+  address: string;
+  hours: string;
+  find: string;
+  allRights: string;
+  localeButton: string;
+};
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,7 +46,7 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
-const COPY = {
+const COPY: Record<Locale, CopyContent> = {
   en: {
     nav: ["Experience", "Gallery", "Pricing", "Location"],
     ctaMap: "Find us",
@@ -72,7 +97,7 @@ const COPY = {
     allRights: "© 2026 3328 E-Sport Club · Паттайя",
     localeButton: "English",
   },
-} as const;
+};
 
 const GALLERY = [
   { src: "/egaming/exterior-neon.png", altEn: "Neon entrance", altRu: "Неоновый вход", span: "col-span-2 row-span-2" },
@@ -154,7 +179,7 @@ function Logo() {
   return <p className="font-display text-3xl tracking-tight text-center">33<span className="text-red-500">28</span></p>;
 }
 
-function Navbar({ t, locale, setLocale }: { t: typeof COPY.en; locale: Locale; setLocale: (x: Locale) => void }) {
+function Navbar({ t, locale, setLocale }: { t: CopyContent; locale: Locale; setLocale: (x: Locale) => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
@@ -186,7 +211,7 @@ function Navbar({ t, locale, setLocale }: { t: typeof COPY.en; locale: Locale; s
   );
 }
 
-function Hero({ t }: { t: typeof COPY.en }) {
+function Hero({ t }: { t: CopyContent }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center text-center px-6">
       <img src="/egaming/exterior-neon.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
@@ -209,7 +234,7 @@ function Hero({ t }: { t: typeof COPY.en }) {
   );
 }
 
-function Stats({ t }: { t: typeof COPY.en }) {
+function Stats({ t }: { t: CopyContent }) {
   const { ref, inView } = useInView();
   const items = [
     { value: "14:00–00:00", label: t.openDaily },
@@ -232,7 +257,7 @@ function Stats({ t }: { t: typeof COPY.en }) {
   );
 }
 
-function Experience({ t, experiences }: { t: typeof COPY.en; experiences: Array<{ title: string; tag: string; desc: string; details: string[]; icon: string; img: string }> }) {
+function Experience({ t, experiences }: { t: CopyContent; experiences: Array<{ title: string; tag: string; desc: string; details: string[]; icon: string; img: string }> }) {
   return (
     <section id="experience" className="py-28 px-6">
       <div className="max-w-6xl mx-auto text-center">
@@ -266,7 +291,7 @@ function ExpBlock({ exp, flip }: { exp: { title: string; tag: string; desc: stri
   );
 }
 
-function Gallery({ locale, t }: { locale: Locale; t: typeof COPY.en }) {
+function Gallery({ locale, t }: { locale: Locale; t: CopyContent }) {
   const { ref, inView } = useInView(0.05);
 
   return (
@@ -286,7 +311,7 @@ function Gallery({ locale, t }: { locale: Locale; t: typeof COPY.en }) {
   );
 }
 
-function Pricing({ t }: { t: typeof COPY.en }) {
+function Pricing({ t }: { t: CopyContent }) {
   const { ref, inView } = useInView();
   const pricingText = {
     bestDeal: t.nav[2] === "Pricing" ? "Best deal" : "Лучшее предложение",
@@ -330,7 +355,7 @@ function Pricing({ t }: { t: typeof COPY.en }) {
   );
 }
 
-function Brands({ t }: { t: typeof COPY.en }) {
+function Brands({ t }: { t: CopyContent }) {
   return (
     <section className="py-10 bg-zinc-950 border-y border-zinc-900">
       <div className="max-w-6xl mx-auto px-6 text-center">
@@ -343,7 +368,7 @@ function Brands({ t }: { t: typeof COPY.en }) {
   );
 }
 
-function Location({ t }: { t: typeof COPY.en }) {
+function Location({ t }: { t: CopyContent }) {
   return (
     <section id="location" className="py-28 px-6">
       <div className="max-w-6xl mx-auto text-center">
@@ -376,7 +401,7 @@ function SectionLabel({ label, title }: { label: string; title: string }) {
   );
 }
 
-function Footer({ t }: { t: typeof COPY.en }) {
+function Footer({ t }: { t: CopyContent }) {
   return (
     <footer className="py-10 border-t border-zinc-900 bg-zinc-950">
       <div className="max-w-6xl mx-auto px-6 text-center flex flex-col gap-5 items-center">
