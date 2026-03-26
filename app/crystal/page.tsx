@@ -160,7 +160,12 @@ function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden"
-      style={{ background: `radial-gradient(ellipse 80% 70% at 50% 30%, #2a1f0a 0%, ${C.ink} 65%)` }}>
+      style={{ background: C.ink }}>
+      {/* background photo */}
+      <img src="https://images.pexels.com/photos/695193/pexels-photo-695193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        alt="Luxury chandelier hall" className="absolute inset-0 w-full h-full object-cover"
+        style={{ filter: "brightness(0.15) saturate(0.4)" }} />
+      <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 80% 70% at 50% 30%, #2a1f0a80 0%, transparent 65%)` }} />
 
       {/* spinning faint ring */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none rotate-glow"

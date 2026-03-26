@@ -16,13 +16,13 @@ const gold = "#c9a84c";
 const dark = "#080808";
 
 const I = {
-  hero:     "https://images.pexels.com/photos/5750947/pexels-photo-5750947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  bags:     "https://images.pexels.com/photos/5750838/pexels-photo-5750838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  ring:     "https://images.pexels.com/photos/238636/pexels-photo-238636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  training: "https://images.pexels.com/photos/2628210/pexels-photo-2628210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  mono:     "https://images.pexels.com/photos/5750852/pexels-photo-5750852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  portrait: "https://images.pexels.com/photos/5750957/pexels-photo-5750957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  kick:     "https://images.pexels.com/photos/5424528/pexels-photo-5424528.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  hero:     "https://images.pexels.com/photos/4651305/pexels-photo-4651305.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",   // Muay Thai fight — Pattaya City, Thailand
+  bags:     "https://images.pexels.com/photos/2607922/pexels-photo-2607922.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",   // Bangkok boxing match with crowd
+  ring:     "https://images.pexels.com/photos/238636/pexels-photo-238636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",     // Thapae Boxing Stadium, Thailand
+  training: "https://images.pexels.com/photos/2628210/pexels-photo-2628210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",   // Muay Thai training session
+  mono:     "https://images.pexels.com/photos/5750852/pexels-photo-5750852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",   // Bag work
+  portrait: "https://images.pexels.com/photos/1394756/pexels-photo-1394756.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",   // Children Muay Thai outdoors, Thailand
+  kick:     "https://images.pexels.com/photos/5750947/pexels-photo-5750947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",   // Sparring
 };
 
 const CONTACT = {

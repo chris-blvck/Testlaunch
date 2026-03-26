@@ -39,6 +39,7 @@ const FLEET = [
     features: ["Captain included", "Fuel included", "Snorkeling gear", "Cooler & ice"],
     highlight: true,
     icon: "⚡",
+    img: "https://images.pexels.com/photos/5940391/pexels-photo-5940391.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   },
   {
     name: "Catamaran",
@@ -50,6 +51,7 @@ const FLEET = [
     features: ["Captain + crew", "Sound system", "Shaded lounge deck", "Swim platform"],
     highlight: false,
     icon: "⛵",
+    img: "https://images.pexels.com/photos/1085756/pexels-photo-1085756.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   },
   {
     name: "Luxury Yacht",
@@ -61,6 +63,7 @@ const FLEET = [
     features: ["Captain + hostess", "AC cabin & salon", "Catering available", "Champagne welcome"],
     highlight: false,
     icon: "⚓",
+    img: "https://images.pexels.com/photos/783346/pexels-photo-783346.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   },
   {
     name: "Longtail Boat",
@@ -72,6 +75,7 @@ const FLEET = [
     features: ["Local driver-guide", "Hidden spots access", "Flexible routing", "Photo stops"],
     highlight: false,
     icon: "🚤",
+    img: "https://images.pexels.com/photos/1198835/pexels-photo-1198835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   },
 ];
 
@@ -345,23 +349,28 @@ function Fleet() {
         <div ref={ref} className={`mt-16 grid md:grid-cols-2 xl:grid-cols-4 gap-5 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           {FLEET.map((f, i) => (
             <article key={f.name}
-              className={`relative flex flex-col p-7 border transition-all duration-300 hover:-translate-y-1 ${inView ? "opacity-100" : "opacity-0"}`}
+              className={`relative flex flex-col overflow-hidden border transition-all duration-300 hover:-translate-y-1 ${inView ? "opacity-100" : "opacity-0"}`}
               style={{
                 borderColor: f.highlight ? C.teal : C.border,
                 background: f.highlight ? `linear-gradient(160deg, ${C.ocean}60, ${C.navy})` : C.navy,
                 boxShadow: f.highlight ? `0 0 30px ${C.teal}20` : "none",
                 transitionDelay: `${i * 70}ms`,
               }}>
-              {f.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-black px-4 py-1 tracking-widest uppercase whitespace-nowrap"
-                  style={{ background: C.teal, color: C.white }}>
-                  {f.tag}
-                </span>
-              )}
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-3xl">{f.icon}</span>
-                {!f.highlight && <span className="text-xs tracking-widest uppercase" style={{ color: C.muted }}>{f.tag}</span>}
+              {/* top image */}
+              <div className="relative h-40 overflow-hidden">
+                <img src={f.img} alt={f.name} className="w-full h-full object-cover opacity-70 hover:opacity-90 transition-opacity duration-500" />
+                <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, transparent 30%, ${f.highlight ? C.ocean : C.navy}cc 100%)` }} />
+                {f.highlight && (
+                  <span className="absolute top-3 left-1/2 -translate-x-1/2 text-xs font-black px-4 py-1 tracking-widest uppercase whitespace-nowrap"
+                    style={{ background: C.teal, color: C.white }}>
+                    {f.tag}
+                  </span>
+                )}
+                {!f.highlight && (
+                  <span className="absolute top-3 right-3 text-xs tracking-widest uppercase" style={{ color: C.muted }}>{f.tag}</span>
+                )}
               </div>
+              <div className="p-7 flex flex-col flex-1">
               <h3 className="font-russo text-xl text-white mb-1">{f.name}</h3>
               <p className="text-xs mb-4" style={{ color: C.muted }}>{f.cap}</p>
               <p className="text-sm leading-relaxed mb-5 flex-1" style={{ color: C.muted }}>{f.desc}</p>
@@ -383,6 +392,7 @@ function Fleet() {
                   : { border: `1px solid ${C.border}`, color: C.muted }}>
                 Request quote
               </a>
+            </div>
             </article>
           ))}
         </div>
