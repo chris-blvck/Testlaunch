@@ -77,6 +77,7 @@ export default function AuraSpaPage() {
           50% { opacity: 1; }
         }
         .gold-pulse { animation: shimmer-gold 3s ease-in-out infinite; }
+        .cormorant { font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .marquee-track { animation: marquee 28s linear infinite; white-space: nowrap; display: inline-flex; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
@@ -260,25 +261,27 @@ function TreatmentBlock({ treatment: t, flip }: { treatment: typeof TREATMENTS[0
         <span className="absolute top-4 left-4 text-xs font-bold px-3 py-1 tracking-widest uppercase"
           style={{ background: ACCENT, color: "#0d0806" }}>{t.tag}</span>
       </div>
-      <div className={`flex flex-col items-start ${flip ? "md:order-1" : ""}`}>
-        <div className="flex items-center gap-4 mb-4">
+      <div className={`text-center ${flip ? "md:order-1" : ""}`}>
+        <div className="flex items-center justify-center gap-4 mb-4">
           <span className="text-xs tracking-widest uppercase" style={{ color: ACCENT }}>{t.duration}</span>
           <span className="w-1 h-1 rounded-full" style={{ background: `${ACCENT}55` }} />
           <span className="text-xs tracking-widest uppercase font-bold" style={{ color: ACCENT }}>{t.price}</span>
         </div>
         <h3 className="cormorant italic font-bold text-3xl md:text-4xl mb-4" style={{ color: "#f5f0e8" }}>{t.title}</h3>
-        <p className="leading-relaxed mb-6 max-w-md" style={{ color: "#a89078" }}>{t.desc}</p>
-        <div className="flex flex-col space-y-2 mb-8 border-l-2 pl-4" style={{ borderColor: `${ACCENT}55` }}>
+        <p className="leading-relaxed mb-6 max-w-md mx-auto" style={{ color: "#a89078" }}>{t.desc}</p>
+        <div className="inline-block text-left space-y-2 mb-8 border-l-2 pl-4" style={{ borderColor: `${ACCENT}55` }}>
           {t.details.map((d) => (
-            <span key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</span>
+            <div key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</div>
           ))}
         </div>
-        <button className="text-xs font-bold px-8 py-3 tracking-widest uppercase transition-all duration-300 border"
-          style={{ borderColor: ACCENT, color: ACCENT }}
-          onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = "#0d0806"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = ACCENT; }}>
-          Book This Treatment
-        </button>
+        <div>
+          <button className="text-xs font-bold px-8 py-3 tracking-widest uppercase transition-all duration-300 border"
+            style={{ borderColor: ACCENT, color: ACCENT }}
+            onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = "#0d0806"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = ACCENT; }}>
+            Book This Treatment
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -386,7 +389,7 @@ function Location() {
           <h2 className="cormorant italic font-bold text-4xl md:text-5xl" style={{ color: "#f5f0e8" }}>Location</h2>
         </div>
         <div ref={ref}
-          className={`grid md:grid-cols-2 gap-10 items-start transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          className={`grid md:grid-cols-2 gap-10 items-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <div>
             <div className="space-y-6 mb-10">
               <div>

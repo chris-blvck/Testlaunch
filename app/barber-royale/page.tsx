@@ -139,6 +139,7 @@ export default function BarberRoyalePage() {
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #ca8a04; }
+        .bebas { font-family: var(--font-bebas), 'Bebas Neue', Impact, sans-serif; letter-spacing: 0.04em; }
         @keyframes goldglow {
           0%, 100% { text-shadow: 0 0 20px rgba(202,138,4,.3); }
           50% { text-shadow: 0 0 70px rgba(202,138,4,.85), 0 0 120px rgba(202,138,4,.25); }

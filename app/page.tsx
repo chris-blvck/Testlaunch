@@ -238,15 +238,16 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <KabalLogo />
         <div className="hidden md:flex items-center gap-8">
-          {[{ label: "Projects", id: "projets" }, { label: "Services", id: "services" }, { label: "Contact", id: "contact" }].map((l) => (
+          {[{ label: "Projects", id: "projets" }, { label: "Contact", id: "contact" }].map((l) => (
             <button key={l.label}
               onClick={() => document.getElementById(l.id)?.scrollIntoView({ behavior: "smooth" })}
               className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
               {l.label}
             </button>
           ))}
+          <Link href="/services" className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">Services</Link>
         </div>
-        <a href="mailto:hello@kabal.website"
+        <a href="mailto:junglekabal@gmail.com"
           className="border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300">
           Get in touch
         </a>
@@ -298,7 +299,7 @@ function Hero({ mounted }: { mounted: boolean }) {
             className="group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300 hover:bg-zinc-200">
             View projects
           </button>
-          <a href="mailto:hello@kabal.website"
+          <a href="mailto:junglekabal@gmail.com"
             className="border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
             Work with us
           </a>
@@ -475,20 +476,107 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
 
 function CTA() {
   const { ref, inView } = useInView();
+  const [form, setForm] = useState({ name: "", email: "", type: "", budget: "", message: "" });
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`[Kabal] New project — ${form.type || "Website"}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nProject type: ${form.type}\nBudget: ${form.budget}\n\n${form.message}`
+    );
+    window.open(`mailto:junglekabal@gmail.com?subject=${subject}&body=${body}`);
+    setSent(true);
+  };
+
+  const inputCls = "w-full bg-zinc-900 border border-zinc-800 text-white text-sm px-4 py-3 focus:outline-none focus:border-zinc-500 placeholder:text-zinc-600 transition-colors";
+  const selectCls = inputCls + " appearance-none cursor-pointer";
+
   return (
     <section id="contact" className="py-28 md:py-36 bg-zinc-950 border-t border-zinc-900">
-      <div ref={ref} className={`max-w-4xl mx-auto px-6 text-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-4">Ready to launch?</p>
-        <h2 className="text-white font-black text-4xl md:text-6xl tracking-tight leading-none mb-6">
-          Your site in <br /><span className="text-zinc-400">48 hours.</span>
-        </h2>
-        <p className="text-zinc-500 text-lg font-light max-w-xl mx-auto mb-12 leading-relaxed">
-          Restaurant, bar, barbershop, club — we deliver fast, high-performance websites, ready to go.
-        </p>
-        <a href="mailto:hello@kabal.website"
-          className="inline-block bg-white text-black font-black px-12 py-5 tracking-widest uppercase text-sm hover:bg-zinc-200 transition-colors duration-300">
-          Start a project
-        </a>
+      <div ref={ref} className={`max-w-5xl mx-auto px-6 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+
+          {/* Left — copy */}
+          <div>
+            <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-4">Start a project</p>
+            <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight leading-none mb-6">
+              Your site in<br /><span className="text-zinc-400">48 hours.</span>
+            </h2>
+            <p className="text-zinc-500 leading-relaxed mb-10">
+              Restaurant, bar, barbershop, club, gaming — we build fast, sharp websites that convert. Tell us about your project and we'll get back to you same day.
+            </p>
+            <div className="space-y-4">
+              {[
+                { icon: "✉", label: "Email", value: "junglekabal@gmail.com", href: "mailto:junglekabal@gmail.com" },
+                { icon: "📍", label: "Based in", value: "Bangkok & Pattaya, Thailand", href: null },
+                { icon: "⚡", label: "Turnaround", value: "48h average delivery", href: null },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-4">
+                  <span className="text-lg w-6 text-center">{item.icon}</span>
+                  <div>
+                    <p className="text-zinc-600 text-xs tracking-widest uppercase">{item.label}</p>
+                    {item.href
+                      ? <a href={item.href} className="text-zinc-300 text-sm hover:text-white transition-colors">{item.value}</a>
+                      : <p className="text-zinc-300 text-sm">{item.value}</p>
+                    }
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — form */}
+          <div>
+            {sent ? (
+              <div className="border border-zinc-800 p-10 text-center">
+                <p className="text-white font-black text-2xl mb-3">Message sent ✓</p>
+                <p className="text-zinc-500 text-sm leading-relaxed mb-6">Your email client opened with the message pre-filled. We'll reply within a few hours.</p>
+                <button onClick={() => setSent(false)} className="text-xs font-bold tracking-widest uppercase text-zinc-500 hover:text-white transition-colors">
+                  Send another →
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <input required placeholder="Your name" value={form.name}
+                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                    className={inputCls} />
+                  <input required type="email" placeholder="Your email" value={form.email}
+                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                    className={inputCls} />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <select required value={form.type}
+                    onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
+                    className={selectCls}>
+                    <option value="" disabled>Project type</option>
+                    {["Restaurant / Bar", "Nightclub / Lounge", "Barbershop / Salon", "Gaming / E-sport", "Spa / Wellness", "NFT / Web3", "Other"].map(t => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                  <select value={form.budget}
+                    onChange={e => setForm(f => ({ ...f, budget: e.target.value }))}
+                    className={selectCls}>
+                    <option value="" disabled>Budget</option>
+                    {["Under 15,000 THB", "15,000 – 40,000 THB", "40,000 – 100,000 THB", "100,000+ THB", "Let's discuss"].map(b => (
+                      <option key={b} value={b}>{b}</option>
+                    ))}
+                  </select>
+                </div>
+                <textarea required rows={5} placeholder="Tell us about your project — location, style, deadline..."
+                  value={form.message}
+                  onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                  className={inputCls + " resize-none"} />
+                <button type="submit"
+                  className="w-full bg-white text-black font-black py-4 tracking-widest uppercase text-sm hover:bg-zinc-200 transition-colors duration-300">
+                  Send message →
+                </button>
+                <p className="text-zinc-700 text-xs text-center">Opens your email client · Reply within same day</p>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -500,8 +588,8 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <KabalLogo />
         <p className="text-zinc-700 text-xs tracking-widest">© 2026 Kabal Website Agency · Bangkok & Pattaya</p>
-        <a href="mailto:hello@kabal.website" className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest transition-colors">
-          hello@kabal.website
+        <a href="mailto:junglekabal@gmail.com" className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest transition-colors">
+          junglekabal@gmail.com
         </a>
       </div>
     </footer>
