@@ -252,6 +252,81 @@ export default function HomePage() {
           50% { opacity: 0.4; transform: scale(1.4); }
         }
         .live-dot { animation: live-pulse 1.8s ease-in-out infinite; }
+
+        /* Hero */
+        @keyframes orb-drift-a {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(60px, -40px) scale(1.1); }
+          66% { transform: translate(-30px, 50px) scale(0.95); }
+        }
+        @keyframes orb-drift-b {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(-70px, 30px) scale(0.9); }
+          66% { transform: translate(50px, -60px) scale(1.15); }
+        }
+        @keyframes orb-drift-c {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(40px, 40px) scale(1.08); }
+        }
+        .orb-a { animation: orb-drift-a 18s ease-in-out infinite; }
+        .orb-b { animation: orb-drift-b 22s ease-in-out infinite; }
+        .orb-c { animation: orb-drift-c 15s ease-in-out infinite; }
+
+        @keyframes char-reveal {
+          0% { opacity: 0; transform: translateY(60%) skewY(4deg); }
+          100% { opacity: 1; transform: translateY(0) skewY(0deg); }
+        }
+        .char-reveal { display: inline-block; animation: char-reveal 0.7s cubic-bezier(.23,1,.32,1) both; }
+
+        @keyframes line-in {
+          0% { opacity: 0; transform: translateY(30px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .line-in { animation: line-in 0.9s cubic-bezier(.23,1,.32,1) both; }
+
+        @keyframes badge-pop {
+          0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .badge-pop { animation: badge-pop 0.6s cubic-bezier(.34,1.56,.64,1) both; }
+
+        @keyframes float-tag {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+
+        @keyframes noise-move {
+          0% { transform: translate(0, 0); }
+          10% { transform: translate(-2%, -3%); }
+          30% { transform: translate(1%, 2%); }
+          50% { transform: translate(-1%, 1%); }
+          70% { transform: translate(2%, -2%); }
+          90% { transform: translate(-1%, 3%); }
+          100% { transform: translate(0, 0); }
+        }
+        .noise-layer {
+          position: absolute;
+          inset: -20%;
+          width: 140%;
+          height: 140%;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+          background-size: 200px 200px;
+          opacity: 0.025;
+          pointer-events: none;
+          animation: noise-move 0.5s steps(1) infinite;
+        }
+
+        @keyframes scroll-bounce {
+          0%, 100% { transform: translateY(0); opacity: 1; }
+          50% { transform: translateY(6px); opacity: 0.4; }
+        }
+        .scroll-bounce { animation: scroll-bounce 2s ease-in-out infinite; }
+
+        @keyframes marquee-slow {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .hero-marquee { animation: marquee-slow 30s linear infinite; }
       `}</style>
 
       <Navbar />
@@ -343,44 +418,146 @@ function KabalLogo() {
 }
 
 function Hero({ mounted }: { mounted: boolean }) {
+  const heroRef = useRef<HTMLElement>(null);
+  const orbARef = useRef<HTMLDivElement>(null);
+  const orbBRef = useRef<HTMLDivElement>(null);
+  const orbCRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const { innerWidth: W, innerHeight: H } = window;
+      const rx = (e.clientX / W - 0.5);
+      const ry = (e.clientY / H - 0.5);
+      if (orbARef.current) orbARef.current.style.transform = `translate(${rx * 40}px, ${ry * 30}px)`;
+      if (orbBRef.current) orbBRef.current.style.transform = `translate(${-rx * 60}px, ${-ry * 45}px)`;
+      if (orbCRef.current) orbCRef.current.style.transform = `translate(${rx * 25}px, ${ry * 50}px)`;
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
+  const word1 = "Websites".split("");
+  const word2 = "That Win.".split("");
+
+  const floatTags = [
+    { label: "Restaurant", x: "8%", y: "22%", delay: "0s", dur: "6s" },
+    { label: "Nightclub", x: "82%", y: "18%", delay: "1.5s", dur: "7s" },
+    { label: "Barbershop", x: "6%", y: "72%", delay: "0.8s", dur: "8s" },
+    { label: "Spa & Wellness", x: "78%", y: "68%", delay: "2s", dur: "5.5s" },
+    { label: "NFT & Web3", x: "50%", y: "82%", delay: "1s", dur: "9s" },
+    { label: "E-Sport", x: "72%", y: "42%", delay: "0.3s", dur: "7.5s" },
+  ];
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none"
+    <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+
+      {/* Noise texture */}
+      <div className="noise-layer z-[1]" />
+
+      {/* Grid */}
+      <div className="absolute inset-0 pointer-events-none z-[2]"
         style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px)",
-          backgroundSize: "60px 60px",
+          backgroundImage: "linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px)",
+          backgroundSize: "80px 80px",
         }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className={`relative z-10 text-center px-6 max-w-5xl mx-auto transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        <p className="text-zinc-500 text-xs font-bold tracking-[0.6em] uppercase mb-10">Website Agency · Bangkok & Pattaya</p>
+      {/* Gradient orbs */}
+      <div ref={orbARef} className="orb-a absolute top-[15%] left-[10%] w-[600px] h-[500px] rounded-full pointer-events-none z-[2]"
+        style={{ background: "radial-gradient(ellipse, rgba(255,255,255,0.055) 0%, transparent 70%)", transition: "transform 0.8s cubic-bezier(.23,1,.32,1)" }} />
+      <div ref={orbBRef} className="orb-b absolute bottom-[10%] right-[5%] w-[500px] h-[400px] rounded-full pointer-events-none z-[2]"
+        style={{ background: "radial-gradient(ellipse, rgba(120,80,255,0.07) 0%, transparent 70%)", transition: "transform 0.8s cubic-bezier(.23,1,.32,1)" }} />
+      <div ref={orbCRef} className="orb-c absolute top-[55%] left-[40%] w-[400px] h-[300px] rounded-full pointer-events-none z-[2]"
+        style={{ background: "radial-gradient(ellipse, rgba(255,180,50,0.045) 0%, transparent 70%)", transition: "transform 0.8s cubic-bezier(.23,1,.32,1)" }} />
 
-        <h1 className="font-black leading-none mb-8 select-none" style={{ fontSize: "clamp(4rem,14vw,12rem)", letterSpacing: "-0.05em" }}>
-          <span className="shimmer-text">Our</span>
-          <br />
-          <span className="text-white">Work.</span>
+      {/* Floating background tags */}
+      {floatTags.map((t) => (
+        <div key={t.label}
+          className="absolute hidden md:block pointer-events-none select-none z-[3]"
+          style={{
+            left: t.x, top: t.y,
+            animation: `float-tag ${t.dur} ease-in-out ${t.delay} infinite`,
+            opacity: mounted ? 1 : 0,
+            transition: "opacity 1.5s ease",
+            transitionDelay: "0.8s",
+          }}>
+          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/8 border border-white/8 px-3 py-1.5 backdrop-blur-sm">
+            {t.label}
+          </span>
+        </div>
+      ))}
+
+      {/* Main content */}
+      <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
+
+        {/* Badge */}
+        <div className="flex items-center justify-center mb-10"
+          style={{ opacity: mounted ? 1 : 0, animation: mounted ? "badge-pop 0.6s cubic-bezier(.34,1.56,.64,1) 0.1s both" : "none" }}>
+          <div className="flex items-center gap-2.5 border border-zinc-800 bg-zinc-950/80 backdrop-blur-sm px-4 py-2 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 live-dot" />
+            <span className="text-zinc-400 text-[10px] font-bold tracking-[0.4em] uppercase">Website Agency · Bangkok & Pattaya</span>
+          </div>
+        </div>
+
+        {/* Headline */}
+        <h1 className="font-black leading-[0.9] mb-8 select-none overflow-hidden" style={{ fontSize: "clamp(4.5rem,16vw,14rem)", letterSpacing: "-0.05em" }}>
+          {/* Line 1 — shimmer chars */}
+          <div className="overflow-hidden block">
+            <div>
+              {word1.map((ch, i) => (
+                <span key={i} className="char-reveal shimmer-text"
+                  style={{ animationDelay: mounted ? `${0.3 + i * 0.045}s` : "9999s", animationFillMode: "both" }}>
+                  {ch === " " ? "\u00A0" : ch}
+                </span>
+              ))}
+            </div>
+          </div>
+          {/* Line 2 — white chars */}
+          <div className="overflow-hidden block">
+            <div>
+              {word2.map((ch, i) => (
+                <span key={i} className="char-reveal text-white"
+                  style={{ animationDelay: mounted ? `${0.5 + i * 0.05}s` : "9999s", animationFillMode: "both" }}>
+                  {ch === " " ? "\u00A0" : ch}
+                </span>
+              ))}
+            </div>
+          </div>
         </h1>
 
-        <p className="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-14">
-          We build websites that convert — for restaurants, clubs, barbershops and local businesses across Thailand.
-        </p>
+        {/* Subtitle */}
+        <div className="line-in overflow-hidden mb-12" style={{ animationDelay: mounted ? "0.95s" : "9999s" }}>
+          <p className="text-zinc-500 text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed">
+            Restaurants, clubs, barbershops — we launch in{" "}
+            <span className="text-zinc-200 font-semibold">48 hours</span>, built to convert.
+          </p>
+        </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* CTAs */}
+        <div className="line-in flex flex-col sm:flex-row items-center justify-center gap-4"
+          style={{ animationDelay: mounted ? "1.1s" : "9999s" }}>
           <button
             onClick={() => document.getElementById("projets")?.scrollIntoView({ behavior: "smooth" })}
-            className="group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300 hover:bg-zinc-200">
-            View projects
+            className="group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300 hover:scale-105">
+            <span className="relative z-10">View projects</span>
+            <span className="absolute inset-0 bg-gradient-to-r from-zinc-200 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </button>
           <a href="mailto:junglekabal@gmail.com"
-            className="border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
-            Work with us
+            className="group relative overflow-hidden border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
+            <span className="relative z-10">Work with us</span>
+            <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </a>
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
-        <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent animate-pulse mx-auto" />
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        style={{ opacity: mounted ? 1 : 0, transition: "opacity 1s ease 1.5s" }}>
+        <span className="text-zinc-700 text-[9px] font-bold tracking-[0.4em] uppercase">Scroll</span>
+        <div className="scroll-bounce w-px h-10 bg-gradient-to-b from-zinc-500 to-transparent" />
       </div>
+
+      {/* Bottom edge fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none z-[4]" />
     </section>
   );
 }
