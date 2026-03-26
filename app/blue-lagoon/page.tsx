@@ -26,9 +26,9 @@ export default function BlueLagoonPage() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#050e12", minHeight: "100vh", color: "#e0f7fa", fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ backgroundColor: "#050e12", minHeight: "100vh", color: "#e0f7fa", fontFamily: "system-ui, sans-serif", overflowX: "hidden" }}>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #050e12; }
