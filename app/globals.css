@@ -9,5 +9,11 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-orbitron), var(--font-sans);
+  font-family: var(--font-orbitron), var(--font-russo), var(--font-sans);
+}
+.font-russo {
+  font-family: var(--font-russo), var(--font-sans);
+}
+.font-exo {
+  font-family: var(--font-exo2), var(--font-sans);
 }
