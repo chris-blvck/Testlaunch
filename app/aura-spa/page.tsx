@@ -81,11 +81,15 @@ export default function AuraSpaPage() {
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .marquee-track { animation: marquee 28s linear infinite; white-space: nowrap; display: inline-flex; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes floatA { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-18px) scale(1.08); } }
+        @keyframes floatB { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.05); } }
+        .orb-a { animation: floatA 7s ease-in-out infinite; }
+        .orb-b { animation: floatB 9s ease-in-out infinite 1.5s; }
       `}</style>
 
       <Navbar mode={mode} setMode={setMode} />
       <Hero />
-      {mode === "full" && <Marquee />}
+      <Marquee />
       <Stats />
       <Treatments />
       {mode === "full" && <Philosophy />}
@@ -99,12 +103,16 @@ export default function AuraSpaPage() {
 
 function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+  const go = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
+  const LINKS = ["Treatments", "Gallery", "Packages", "Location"];
   return (
+    <>
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md border-b" : ""}`}
       style={{ background: scrolled ? "rgba(13,8,6,0.95)" : "transparent", borderColor: `${ACCENT}33` }}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -113,9 +121,8 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
           <span className="text-[8px] tracking-[0.4em] uppercase" style={{ color: "#a09080" }}>Spa & Wellness</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          {["Treatments", "Gallery", "Packages", "Location"].map((l) => (
-            <button key={l}
-              onClick={() => document.getElementById(l.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
+          {LINKS.map((l) => (
+            <button key={l} onClick={() => go(l.toLowerCase())}
               className="text-xs font-semibold tracking-[0.2em] uppercase transition-colors"
               style={{ color: "#a09080" }}
               onMouseEnter={e => (e.currentTarget.style.color = ACCENT)}
@@ -125,7 +132,7 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center overflow-hidden border" style={{ borderColor: `${ACCENT}44` }}>
+          <div className="hidden md:flex items-center overflow-hidden border" style={{ borderColor: `${ACCENT}44` }}>
             {(["compact", "full"] as const).map((m) => (
               <button key={m} onClick={() => setMode(m)}
                 className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
@@ -134,17 +141,27 @@ function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "com
               </button>
             ))}
           </div>
-          <button
-            onClick={() => document.getElementById("packages")?.scrollIntoView({ behavior: "smooth" })}
-            className="text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300"
-            style={{ background: ACCENT, color: "#0d0806" }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
+          <button onClick={() => go("packages")}
+            className="hidden md:block text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300"
+            style={{ background: ACCENT, color: "#0d0806" }}>
             Book Now
+          </button>
+          <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+            <span className={`block w-5 h-px transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} style={{ background: ACCENT }} />
+            <span className={`block w-5 h-px transition-all duration-300 ${open ? "opacity-0" : ""}`} style={{ background: ACCENT }} />
+            <span className={`block w-5 h-px transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} style={{ background: ACCENT }} />
           </button>
         </div>
       </div>
     </nav>
+    <div className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      style={{ background: BG }}>
+      {LINKS.map((l) => (
+        <button key={l} onClick={() => go(l.toLowerCase())}
+          className="cormorant italic font-bold text-3xl" style={{ color: ACCENT }}>{l}</button>
+      ))}
+    </div>
+    </>
   );
 }
 
@@ -155,11 +172,16 @@ function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden text-center">
       <div className="absolute inset-0">
         <img src="https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1600"
-          alt="" className="w-full h-full object-cover" style={{ opacity: 0.2 }} />
-        <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${BG}60, ${BG}40, ${BG})` }} />
+          alt="" className="w-full h-full object-cover scale-105" style={{ opacity: 0.32 }} />
+        <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, transparent 20%, ${BG}99 70%), linear-gradient(to bottom, transparent 50%, ${BG})` }} />
       </div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: `${ACCENT}12` }} />
+      {/* Floating ambient orbs */}
+      <div className="orb-a absolute w-48 h-48 rounded-full blur-[80px] pointer-events-none"
+        style={{ top: "25%", left: "10%", background: `${ACCENT}14` }} />
+      <div className="orb-b absolute w-36 h-36 rounded-full blur-[60px] pointer-events-none"
+        style={{ top: "55%", right: "12%", background: `${ACCENT}10` }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full blur-[120px] pointer-events-none"
+        style={{ background: `${ACCENT}0e` }} />
 
       <div className={`relative z-10 px-6 transition-all duration-1200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <p className="text-xs font-bold tracking-[0.6em] uppercase mb-8" style={{ color: ACCENT }}>KOH SAMUI · THAILAND</p>
@@ -237,8 +259,17 @@ function Treatments() {
     <section id="treatments" className="py-28 md:py-36">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <p className="text-xs font-bold tracking-[0.45em] uppercase mb-3" style={{ color: `${ACCENT}99` }}>Our Services</p>
-          <h2 className="cormorant italic font-bold text-4xl md:text-5xl" style={{ color: "#f5f0e8" }}>Signature Treatments</h2>
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to right, transparent, ${ACCENT}88)` }} />
+            <p className="text-[10px] font-bold tracking-[0.55em] uppercase" style={{ color: `${ACCENT}99` }}>Our Services</p>
+            <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to left, transparent, ${ACCENT}88)` }} />
+          </div>
+          <h2 className="cormorant italic font-bold text-5xl md:text-6xl" style={{ color: "#f5f0e8" }}>Signature Treatments</h2>
+          <div className="flex items-center justify-center gap-3 mt-5">
+            <div className="h-px w-16" style={{ background: `linear-gradient(to right, transparent, ${ACCENT})` }} />
+            <span style={{ color: ACCENT, fontSize: "7px" }}>✦</span>
+            <div className="h-px w-16" style={{ background: `linear-gradient(to left, transparent, ${ACCENT})` }} />
+          </div>
         </div>
         <div className="space-y-28">
           {TREATMENTS.map((t, i) => <TreatmentBlock key={t.title} treatment={t} flip={i % 2 !== 0} />)}

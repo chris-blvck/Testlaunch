@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Orbitron, Russo_One, Exo_2, Playfair_Display, Bebas_Neue, Righteous, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import WhatsAppButton from "./components/WhatsAppButton";
+import ScrollProgress from "./components/ScrollProgress";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -51,14 +53,16 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: "Kabal — Website Agency · Bangkok & Pattaya",
-  description: "On construit des sites web qui convertissent — restaurants, clubs, barbershops et commerces locaux en Thaïlande.",
+  description: "We build websites that convert — for restaurants, clubs, barbershops and local businesses across Thailand. 48-hour delivery.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full">
       <body className={`${inter.variable} ${orbitron.variable} ${russoOne.variable} ${exo2.variable} ${playfair.variable} ${bebasNeue.variable} ${righteous.variable} ${cormorant.variable} min-h-full antialiased`}>
+        <ScrollProgress />
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );
