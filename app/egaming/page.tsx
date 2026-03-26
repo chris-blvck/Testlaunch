@@ -69,7 +69,7 @@ const COPY: Record<Locale, CopyContent> = {
     address: "Address",
     hours: "Hours",
     find: "Find us",
-    allRights: "© 2026 3328 E-Sport Club · Pattaya",
+    allRights: "© 2026 33X28 E-Sport Club · Pattaya",
     localeButton: "Русский",
   },
   ru: {
@@ -94,7 +94,7 @@ const COPY: Record<Locale, CopyContent> = {
     address: "Адрес",
     hours: "Часы работы",
     find: "Как найти",
-    allRights: "© 2026 3328 E-Sport Club · Паттайя",
+    allRights: "© 2026 33X28 E-Sport Club · Паттайя",
     localeButton: "English",
   },
 };
@@ -176,7 +176,11 @@ export default function EgamingPage() {
 }
 
 function Logo() {
-  return <p className="font-display text-3xl tracking-tight text-center">33<span className="text-red-500">28</span></p>;
+  return (
+    <p className="font-display text-4xl tracking-tight leading-none select-none">
+      33<span className="text-red-500">X</span>28
+    </p>
+  );
 }
 
 function Navbar({ t, locale, setLocale }: { t: CopyContent; locale: Locale; setLocale: (x: Locale) => void }) {
@@ -218,8 +222,10 @@ function Hero({ t }: { t: CopyContent }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
       <div className="relative z-10 max-w-3xl mx-auto">
         <p className="text-xs uppercase tracking-[0.45em] text-red-400 mb-8">{t.heroTop}</p>
-        <h1 className="pulse-glow font-display text-[clamp(5rem,20vw,12rem)] leading-[0.8]">33<span className="text-red-500">28</span></h1>
-        <p className="mt-5 text-zinc-300 tracking-[0.35em] uppercase text-sm">{t.heroSub}</p>
+        <h1 className="pulse-glow font-display text-[clamp(5.5rem,22vw,16rem)] leading-none tracking-tight">
+          33<span className="text-red-500">X</span>28
+        </h1>
+        <p className="mt-6 text-zinc-300 tracking-[0.35em] uppercase text-sm">{t.heroSub}</p>
         <p className="mt-2 text-zinc-500 tracking-widest text-xs uppercase">{t.heroMeta}</p>
         <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
           <button onClick={() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })} className="bg-red-600 hover:bg-red-500 px-8 py-3 text-xs uppercase tracking-[0.2em] font-bold">
@@ -377,14 +383,14 @@ function Location({ t }: { t: CopyContent }) {
           <div className="space-y-6">
             <img src="/egaming/exterior-facade.png" alt="3328 facade" className="w-full aspect-video object-cover" />
             <div className="grid grid-cols-2 gap-6">
-              <div><p className="text-zinc-500 text-xs uppercase tracking-wider mb-2">{t.address}</p><p className="text-sm">3328 E-Sport Club</p><p className="text-zinc-400 text-sm">Pattaya, Chonburi</p></div>
+              <div><p className="text-zinc-500 text-xs uppercase tracking-wider mb-2">{t.address}</p><p className="text-sm">33X28 E-Sport Club</p><p className="text-zinc-400 text-sm">Pattaya, Chonburi</p></div>
               <div><p className="text-zinc-500 text-xs uppercase tracking-wider mb-2">{t.hours}</p><p className="text-sm">14:00 – 00:00</p><p className="text-zinc-400 text-sm">{t.openDaily}</p></div>
               <div><p className="text-zinc-500 text-xs uppercase tracking-wider mb-2">{t.onSite}</p><p className="text-sm">Food · Drinks · Billiards</p><p className="text-zinc-400 text-sm">PC Gaming · PS5</p></div>
               <div><p className="text-zinc-500 text-xs uppercase tracking-wider mb-2">{t.find}</p><a href="https://maps.app.goo.gl/DQ7cxdCdAEXwXhgW8" target="_blank" rel="noopener noreferrer" className="text-red-500">Google Maps →</a></div>
             </div>
           </div>
           <div className="aspect-video border border-zinc-800 overflow-hidden">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500!2d100.8706445!3d12.9132849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310297004f5c34f9%3A0xfc2db1962da92567!2s3328+e-sport+gaming+club!5e0!3m2!1sen!2sth!4v1" width="100%" height="100%" style={{ border: 0, filter: "grayscale(100%) invert(88%) contrast(85%)" }} loading="lazy" title="3328 E-Sport Club map" />
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500!2d100.8706445!3d12.9132849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310297004f5c34f9%3A0xfc2db1962da92567!2s3328+e-sport+gaming+club!5e0!3m2!1sen!2sth!4v1" width="100%" height="100%" style={{ border: 0, filter: "grayscale(100%) invert(88%) contrast(85%)" }} loading="lazy" title="33X28 E-Sport Club map" />
           </div>
         </div>
       </div>
