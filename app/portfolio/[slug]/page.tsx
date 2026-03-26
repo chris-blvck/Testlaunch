@@ -23,11 +23,11 @@ const PROJECTS: Record<string, ProjectData> = {
     category: "Fine Dining",
     location: "Bangkok, Thailand",
     year: "2025",
-    tagline: "L'excellence française au cœur de Bangkok",
-    description: "Site vitrine haut de gamme pour Le Palais, restaurant gastronomique français installé à Bangkok. L'identité visuelle joue sur des dégradés dorés, une typographie serif élégante et des animations sobres pour refléter le raffinement de l'établissement.",
-    challenge: "Créer une présence digitale qui retranscrit l'atmosphère feutrée d'un restaurant étoilé, tout en restant performante et mobile-friendly pour la clientèle internationale.",
-    solution: "Template classique personnalisé avec palette ambre/or, menu gastronomique interactif, section chef et formulaire de réservation intégré via WhatsApp.",
-    services: ["Design UI/UX", "Développement Next.js", "Intégration WhatsApp", "SEO local"],
+    tagline: "French excellence in the heart of Bangkok",
+    description: "High-end showcase website for Le Palais, a French gastronomic restaurant in Bangkok. The visual identity plays on golden gradients, elegant serif typography and subtle animations to reflect the refinement of the establishment.",
+    challenge: "Create a digital presence that captures the intimate atmosphere of a starred restaurant, while remaining fast and mobile-friendly for an international clientele.",
+    solution: "Custom classic template with an amber/gold palette, interactive gastronomic menu, chef section and WhatsApp-integrated reservation form.",
+    services: ["UI/UX Design", "Next.js Development", "WhatsApp Integration", "Local SEO"],
     tags: ["Restaurant", "Luxury", "French", "Bangkok"],
     gradient: "from-amber-950 via-stone-950 to-black",
     gradientLight: "from-amber-900/30 to-transparent",
@@ -41,10 +41,10 @@ const PROJECTS: Record<string, ProjectData> = {
       { w: 200, h: 200, x: "10%", y: "60%", blur: 60, opacity: 0.1 },
     ],
     mockupLines: [
-      "MENU DÉGUSTATION · 7 SERVICES",
-      "Foie Gras Poêlé · Homard Breton",
-      "Filet de Bœuf Wagyu · Tartuffo",
-      "Réservations: +66 2 xxx xxxx",
+      "TASTING MENU · 7 COURSES",
+      "Foie Gras Poêlé · Breton Lobster",
+      "Wagyu Beef Fillet · Tartuffo",
+      "Reservations: +66 2 xxx xxxx",
     ],
     status: "Preview",
   },
@@ -53,11 +53,11 @@ const PROJECTS: Record<string, ProjectData> = {
     category: "Luxury Barbershop",
     location: "Phuket, Thailand",
     year: "2025",
-    tagline: "L'art du rasage, sublimé",
-    description: "Identité web prestige pour Barber Royale, salon de coiffure & barbershop de luxe à Phuket. Un design sombre aux accents dorés, galerie photos plein écran et prise de rendez-vous instantanée via WhatsApp.",
-    challenge: "Se démarquer dans un marché très compétitif en transmettant immédiatement un sentiment de prestige et de confiance dès la première visite du site.",
-    solution: "Template barber sur mesure avec animations au scroll, galerie avant/après, grille tarifaire claire et CTA WhatsApp floating pour maximiser les conversions.",
-    services: ["Design UI/UX", "Développement Next.js", "Galerie photos", "WhatsApp CTA"],
+    tagline: "The art of the shave, elevated",
+    description: "Prestige web identity for Barber Royale, a luxury barbershop in Phuket. A dark design with gold accents, full-screen photo gallery and instant WhatsApp booking.",
+    challenge: "Stand out in a highly competitive market by immediately conveying a sense of prestige and trust from the very first visit.",
+    solution: "Custom barber template with scroll animations, before/after gallery, clear pricing grid and floating WhatsApp CTA to maximise conversions.",
+    services: ["UI/UX Design", "Next.js Development", "Photo Gallery", "WhatsApp CTA"],
     tags: ["Barbershop", "Gold", "Premium", "Phuket"],
     gradient: "from-yellow-950 via-zinc-900 to-black",
     gradientLight: "from-yellow-900/30 to-transparent",
@@ -83,11 +83,11 @@ const PROJECTS: Record<string, ProjectData> = {
     category: "Beach Bar & Restaurant",
     location: "Koh Samui, Thailand",
     year: "2026",
-    tagline: "Cocktails, couchers de soleil, Koh Samui",
-    description: "Site one-page pour Blue Lagoon, beach bar & restaurant les pieds dans l'eau à Koh Samui. Design frais et tropical avec dégradés cyan/bleu, galerie ambiance et menu cocktails illustré.",
-    challenge: "Capturer l'énergie d'un lieu de vie tourné vers l'extérieur et le transmettre à des touristes qui cherchent LE spot depuis leur téléphone sous le soleil.",
-    solution: "Design immersif mobile-first, photos full-bleed, menu cocktails scrollable, section événements et widget localisation Google Maps avec style cartoon.",
-    services: ["Design UI/UX", "Mobile-first", "Google Maps", "Menu cocktails"],
+    tagline: "Cocktails, sunsets & Koh Samui vibes",
+    description: "One-page site for Blue Lagoon, a beachfront bar & restaurant on Koh Samui. Fresh tropical design with cyan/blue gradients, atmosphere gallery and illustrated cocktail menu.",
+    challenge: "Capture the energy of an outdoor-focused venue and translate it to tourists searching for THE spot on their phones under the sun.",
+    solution: "Immersive mobile-first design, full-bleed photos, scrollable cocktail menu, events section and Google Maps location widget.",
+    services: ["UI/UX Design", "Mobile-first", "Google Maps", "Cocktail Menu"],
     tags: ["Beach Bar", "Tropical", "Cocktails", "Koh Samui"],
     gradient: "from-cyan-950 via-blue-950 to-black",
     gradientLight: "from-cyan-900/30 to-transparent",
@@ -114,10 +114,10 @@ const PROJECTS: Record<string, ProjectData> = {
     location: "Chiang Mai, Thailand",
     year: "2026",
     tagline: "Omakase · Silence · Perfection",
-    description: "Expérience web minimaliste pour Zen Garden, restaurant japonais authentique à Chiang Mai. Design épuré blanc/noir avec touches lime discrètes, menu omakase et réservation exclusive à places limitées.",
-    challenge: "Traduire la philosophie du restaurant — moins c'est plus — en une interface digitale qui soit à la fois sobre, raffinée et fonctionnelle.",
-    solution: "Template minimal avec larges espaces blancs, typographie fine, animations au scroll très légères et formulaire de réservation exclusif avec confirmation manuelle.",
-    services: ["Design UI/UX", "Minimal Design", "Réservation sur mesure", "SEO"],
+    description: "Minimalist web experience for Zen Garden, an authentic Japanese restaurant in Chiang Mai. Clean black/white design with subtle lime accents, omakase menu and exclusive limited-seat reservations.",
+    challenge: "Translate the restaurant's philosophy — less is more — into a digital interface that is both understated, refined and fully functional.",
+    solution: "Minimal template with wide whitespace, fine typography, very light scroll animations and an exclusive reservation form with manual confirmation.",
+    services: ["UI/UX Design", "Minimal Design", "Custom Reservation", "SEO"],
     tags: ["Japanese", "Minimal", "Omakase", "Chiang Mai"],
     gradient: "from-stone-900 via-zinc-900 to-black",
     gradientLight: "from-lime-900/20 to-transparent",
@@ -132,9 +132,9 @@ const PROJECTS: Record<string, ProjectData> = {
     ],
     mockupLines: [
       "ZEN GARDEN · CHIANG MAI",
-      "Omakase 12 services · 2 800 THB",
-      "Sake Pairing disponible",
-      "Réservation: 7 jours à l'avance",
+      "Omakase 12 courses · 2 800 THB",
+      "Sake Pairing available",
+      "Reservation: 7 days in advance",
     ],
     status: "Preview",
   },
@@ -203,17 +203,17 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
 
           <div className="flex flex-wrap items-center gap-6 mt-10">
             <div>
-              <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Localisation</p>
+              <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Location</p>
               <p className="text-white font-semibold text-sm">{project.location}</p>
             </div>
             <div className="w-px h-8 bg-zinc-800" />
             <div>
-              <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Année</p>
+              <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Year</p>
               <p className="text-white font-semibold text-sm">{project.year}</p>
             </div>
             <div className="w-px h-8 bg-zinc-800" />
             <div>
-              <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Statut</p>
+              <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Status</p>
               <span className={`text-xs font-bold px-3 py-1 tracking-widest uppercase ${project.status === "Live" ? "bg-green-500/20 text-green-400 border border-green-500/30" : `${project.accentBgLight} ${project.accentText} border ${project.accentBorder}`}`}>
                 {project.status}
               </span>
@@ -284,7 +284,7 @@ function Details({ project }: { project: ProjectData }) {
     <section ref={ref} className={`py-28 bg-black transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-start">
         <div>
-          <p className={`text-xs font-bold tracking-[0.45em] uppercase mb-3 ${project.accentText}`}>Le projet</p>
+          <p className={`text-xs font-bold tracking-[0.45em] uppercase mb-3 ${project.accentText}`}>The project</p>
           <h2 className="text-white font-black text-3xl md:text-4xl tracking-tight leading-tight mb-6">{project.description}</h2>
           <div className="flex flex-wrap gap-2 mt-8">
             {project.tags.map((t) => (
@@ -294,11 +294,11 @@ function Details({ project }: { project: ProjectData }) {
         </div>
         <div className="space-y-10">
           <div>
-            <p className="text-zinc-500 text-xs font-bold tracking-[0.35em] uppercase mb-3">Le défi</p>
+            <p className="text-zinc-500 text-xs font-bold tracking-[0.35em] uppercase mb-3">The challenge</p>
             <p className="text-zinc-300 leading-relaxed">{project.challenge}</p>
           </div>
           <div className={`border-l-2 pl-6`} style={{ borderColor: project.accent }}>
-            <p className="text-zinc-500 text-xs font-bold tracking-[0.35em] uppercase mb-3">Notre approche</p>
+            <p className="text-zinc-500 text-xs font-bold tracking-[0.35em] uppercase mb-3">Our approach</p>
             <p className="text-zinc-300 leading-relaxed">{project.solution}</p>
           </div>
         </div>
@@ -312,7 +312,7 @@ function Services({ project }: { project: ProjectData }) {
   return (
     <section ref={ref} className={`py-16 bg-zinc-950 border-y border-zinc-900 transition-all duration-700 ${inView ? "opacity-100" : "opacity-0"}`}>
       <div className="max-w-7xl mx-auto px-6">
-        <p className="text-zinc-600 text-xs tracking-widest uppercase text-center mb-8">Services délivrés</p>
+        <p className="text-zinc-600 text-xs tracking-widest uppercase text-center mb-8">Services delivered</p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           {project.services.map((s, i) => (
             <div key={s} className="flex items-center gap-4"
@@ -337,7 +337,7 @@ function NextProject({ current }: { current: string }) {
   return (
     <section ref={ref} className={`py-28 bg-black transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
       <div className="max-w-7xl mx-auto px-6">
-        <p className="text-zinc-600 text-xs tracking-widest uppercase mb-8 text-center">Projet suivant</p>
+        <p className="text-zinc-600 text-xs tracking-widest uppercase mb-8 text-center">Next project</p>
         <Link href={`/portfolio/${nextSlug}`}
           className={`group block relative overflow-hidden border border-zinc-900 hover:border-zinc-700 transition-all duration-300 bg-gradient-to-r ${next.gradient} p-12 md:p-16`}>
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -351,7 +351,7 @@ function NextProject({ current }: { current: string }) {
         </Link>
         <div className="mt-8 text-center">
           <Link href="/" className="text-zinc-600 hover:text-zinc-400 text-xs font-bold tracking-widest uppercase transition-colors">
-            ← Tous les projets
+            ← All projects
           </Link>
         </div>
       </div>

@@ -22,7 +22,7 @@ const PROJECTS = [
     category: "Gaming & Entertainment",
     location: "Pattaya, Thailand",
     year: "2025",
-    desc: "Landing page premium pour un e-sport gaming club — PC gaming, PS5 lounge, billard & bar. Design dark avec effets néon et animations scroll.",
+    desc: "Premium landing page for an e-sport gaming club — PC gaming, PS5 lounge, billiards & bar. Dark design with neon effects and scroll animations.",
     tags: ["Gaming", "Dark UI", "Animations"],
     gradient: "from-red-950 via-zinc-950 to-black",
     accent: "#dc2626",
@@ -36,7 +36,7 @@ const PROJECTS = [
     category: "Fine Dining",
     location: "Bangkok, Thailand",
     year: "2025",
-    desc: "Site vitrine élégant pour un restaurant français haut de gamme. Template classique avec palette dorée, menu gastronomique et réservation en ligne.",
+    desc: "Elegant showcase website for a high-end French restaurant. Classic template with a gold palette, gastronomic menu and online reservation.",
     tags: ["Restaurant", "Luxury", "French"],
     gradient: "from-amber-950 via-stone-950 to-black",
     accent: "#d97706",
@@ -50,7 +50,7 @@ const PROJECTS = [
     category: "Luxury Barbershop",
     location: "Phuket, Thailand",
     year: "2025",
-    desc: "Identité web prestige pour un barbershop de luxe. Template sombre avec accents or, galerie photos, tarifs et prise de RDV WhatsApp.",
+    desc: "Prestige web identity for a luxury barbershop. Dark template with gold accents, photo gallery, pricing and WhatsApp booking.",
     tags: ["Barbershop", "Gold", "Premium"],
     gradient: "from-yellow-950 via-zinc-900 to-black",
     accent: "#ca8a04",
@@ -64,7 +64,7 @@ const PROJECTS = [
     category: "Beach Bar & Restaurant",
     location: "Koh Samui, Thailand",
     year: "2026",
-    desc: "Site one-page pour un beach bar tropical. Design frais avec dégradés bleu-turquoise, menu cocktails, galerie coucher de soleil et carte Google Maps.",
+    desc: "One-page site for a tropical beach bar. Fresh design with blue-turquoise gradients, cocktail menu, sunset gallery and Google Maps.",
     tags: ["Beach Bar", "Tropical", "Cocktails"],
     gradient: "from-cyan-950 via-blue-950 to-black",
     accent: "#0891b2",
@@ -78,7 +78,7 @@ const PROJECTS = [
     category: "Japanese Restaurant",
     location: "Chiang Mai, Thailand",
     year: "2026",
-    desc: "Expérience web minimaliste pour un restaurant japonais authentique. Design épuré, menu omakase, ambiance sereine avec typographie premium.",
+    desc: "Minimalist web experience for an authentic Japanese restaurant. Clean design, omakase menu, serene atmosphere with premium typography.",
     tags: ["Japanese", "Minimal", "Omakase"],
     gradient: "from-stone-900 via-zinc-900 to-black",
     accent: "#84cc16",
@@ -138,17 +138,17 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <KabalLogo />
         <div className="hidden md:flex items-center gap-8">
-          {["Projets", "Services", "Contact"].map((l) => (
-            <button key={l}
-              onClick={() => document.getElementById(l.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}
+          {[{ label: "Projects", id: "projets" }, { label: "Services", id: "services" }, { label: "Contact", id: "contact" }].map((l) => (
+            <button key={l.label}
+              onClick={() => document.getElementById(l.id)?.scrollIntoView({ behavior: "smooth" })}
               className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
-              {l}
+              {l.label}
             </button>
           ))}
         </div>
         <a href="mailto:hello@kabal.website"
           className="border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300">
-          Nous contacter
+          Get in touch
         </a>
       </div>
     </nav>
@@ -183,24 +183,24 @@ function Hero({ mounted }: { mounted: boolean }) {
         <p className="text-zinc-500 text-xs font-bold tracking-[0.6em] uppercase mb-10">Website Agency · Bangkok & Pattaya</p>
 
         <h1 className="font-black leading-none mb-8 select-none" style={{ fontSize: "clamp(4rem,14vw,12rem)", letterSpacing: "-0.05em" }}>
-          <span className="shimmer-text">Notre</span>
+          <span className="shimmer-text">Our</span>
           <br />
-          <span className="text-white">Travail.</span>
+          <span className="text-white">Work.</span>
         </h1>
 
         <p className="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-14">
-          On construit des sites web qui convertissent — pour les restaurants, clubs, barbershops et commerces locaux en Thaïlande.
+          We build websites that convert — for restaurants, clubs, barbershops and local businesses across Thailand.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => document.getElementById("projets")?.scrollIntoView({ behavior: "smooth" })}
             className="group relative overflow-hidden bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300 hover:bg-zinc-200">
-            Voir les projets
+            View projects
           </button>
           <a href="mailto:hello@kabal.website"
             className="border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
-            Travailler ensemble
+            Work with us
           </a>
         </div>
       </div>
@@ -215,10 +215,10 @@ function Hero({ mounted }: { mounted: boolean }) {
 function Stats() {
   const { ref, inView } = useInView();
   const items = [
-    { v: "5+", l: "Sites livrés" },
-    { v: "100%", l: "Clients satisfaits" },
-    { v: "48h", l: "Délai moyen" },
-    { v: "TH", l: "Basé en Thaïlande" },
+    { v: "5+", l: "Sites delivered" },
+    { v: "100%", l: "Happy clients" },
+    { v: "48h", l: "Average turnaround" },
+    { v: "TH", l: "Based in Thailand" },
   ];
   return (
     <section ref={ref} className="border-y border-zinc-900 bg-zinc-950">
@@ -243,7 +243,7 @@ function Projects() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-3">Portfolio</p>
-          <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight leading-none">Nos réalisations</h2>
+          <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight leading-none">Our work</h2>
         </div>
 
         <div ref={ref} className={`grid md:grid-cols-2 lg:grid-cols-3 gap-5 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
@@ -291,7 +291,7 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
           ))}
         </div>
         <div className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase ${p.accentText} group-hover:gap-3 transition-all duration-300`}>
-          <span>Voir le projet</span>
+          <span>View project</span>
           <span>→</span>
         </div>
       </div>
@@ -304,16 +304,16 @@ function CTA() {
   return (
     <section id="contact" className="py-28 md:py-36 bg-zinc-950 border-t border-zinc-900">
       <div ref={ref} className={`max-w-4xl mx-auto px-6 text-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-4">Prêt à lancer ?</p>
+        <p className="text-zinc-500 text-xs font-bold tracking-[0.45em] uppercase mb-4">Ready to launch?</p>
         <h2 className="text-white font-black text-4xl md:text-6xl tracking-tight leading-none mb-6">
-          Votre site en <br /><span className="text-zinc-400">48 heures.</span>
+          Your site in <br /><span className="text-zinc-400">48 hours.</span>
         </h2>
         <p className="text-zinc-500 text-lg font-light max-w-xl mx-auto mb-12 leading-relaxed">
-          Restaurant, bar, barbershop, club — on livre des sites performants, rapides et clé en main.
+          Restaurant, bar, barbershop, club — we deliver fast, high-performance websites, ready to go.
         </p>
         <a href="mailto:hello@kabal.website"
           className="inline-block bg-white text-black font-black px-12 py-5 tracking-widest uppercase text-sm hover:bg-zinc-200 transition-colors duration-300">
-          Démarrer un projet
+          Start a project
         </a>
       </div>
     </section>
@@ -326,6 +326,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <KabalLogo />
         <p className="text-zinc-700 text-xs tracking-widest">© 2026 Kabal Website Agency · Bangkok & Pattaya</p>
+
         <a href="mailto:hello@kabal.website" className="text-zinc-600 hover:text-zinc-400 text-xs tracking-widest transition-colors">
           hello@kabal.website
         </a>
