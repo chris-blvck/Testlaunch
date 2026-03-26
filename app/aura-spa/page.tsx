@@ -63,6 +63,7 @@ const PACKAGES = [
 ];
 
 export default function AuraSpaPage() {
+  const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
     <div style={{ backgroundColor: BG, minHeight: "100vh", color: "#f5f0e8" }}>
       <style>{`
@@ -81,13 +82,13 @@ export default function AuraSpaPage() {
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
 
-      <Navbar />
+      <Navbar mode={mode} setMode={setMode} />
       <Hero />
-      <Marquee />
+      {mode === "full" && <Marquee />}
       <Stats />
       <Treatments />
-      <Philosophy />
-      <Gallery />
+      {mode === "full" && <Philosophy />}
+      {mode === "full" && <Gallery />}
       <Packages />
       <Location />
       <Footer />
@@ -95,7 +96,7 @@ export default function AuraSpaPage() {
   );
 }
 
-function Navbar() {
+function Navbar({ mode, setMode }: { mode: "compact" | "full"; setMode: (m: "compact" | "full") => void }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -122,14 +123,25 @@ function Navbar() {
             </button>
           ))}
         </div>
-        <button
-          onClick={() => document.getElementById("packages")?.scrollIntoView({ behavior: "smooth" })}
-          className="text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300"
-          style={{ background: ACCENT, color: "#0d0806" }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-          onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
-          Book Now
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center overflow-hidden border" style={{ borderColor: `${ACCENT}44` }}>
+            {(["compact", "full"] as const).map((m) => (
+              <button key={m} onClick={() => setMode(m)}
+                className="text-[9px] font-bold px-2.5 py-1.5 tracking-widest uppercase transition-all duration-200"
+                style={{ background: mode === m ? ACCENT : "transparent", color: mode === m ? "#0d0806" : `${ACCENT}66` }}>
+                {m}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => document.getElementById("packages")?.scrollIntoView({ behavior: "smooth" })}
+            className="text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300"
+            style={{ background: ACCENT, color: "#0d0806" }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
+            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
+            Book Now
+          </button>
+        </div>
       </div>
     </nav>
   );
