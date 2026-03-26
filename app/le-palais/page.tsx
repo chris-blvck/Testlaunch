@@ -245,14 +245,14 @@ function DishBlock({ dish, flip }: { dish: typeof DISHES[0]; flip: boolean }) {
         <span className="absolute top-4 left-4 text-black text-xs font-bold px-3 py-1 tracking-widest uppercase"
           style={{ background: "#d97706" }}>{dish.tag}</span>
       </div>
-      <div className={`flex flex-col items-center text-center ${flip ? "md:order-1" : ""}`}>
+      <div className={`text-center ${flip ? "md:order-1" : ""}`}>
         <h3 className="playfair text-white font-bold text-3xl md:text-4xl mb-1" style={{ fontStyle: "italic" }}>{dish.title}</h3>
         {dish.subtitle && (
           <p className="text-amber-600/70 text-xs tracking-widest uppercase mb-5">{dish.subtitle}</p>
         )}
         {!dish.subtitle && <div className="mb-5" />}
-        <p className="text-zinc-400 leading-relaxed mb-8 max-w-md">{dish.desc}</p>
-        <div className="w-full flex flex-col items-start space-y-3 border-l-2 pl-5 text-left" style={{ borderColor: "#d97706" }}>
+        <p className="text-zinc-400 leading-relaxed mb-8 max-w-md mx-auto">{dish.desc}</p>
+        <div className="inline-block text-left space-y-3 border-l-2 pl-5" style={{ borderColor: "#d97706" }}>
           {dish.details.map((d) => (
             <div key={d} className="flex items-center gap-3">
               <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#d97706" }} />

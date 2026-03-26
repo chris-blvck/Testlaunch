@@ -261,25 +261,27 @@ function TreatmentBlock({ treatment: t, flip }: { treatment: typeof TREATMENTS[0
         <span className="absolute top-4 left-4 text-xs font-bold px-3 py-1 tracking-widest uppercase"
           style={{ background: ACCENT, color: "#0d0806" }}>{t.tag}</span>
       </div>
-      <div className={`flex flex-col items-center text-center ${flip ? "md:order-1" : ""}`}>
-        <div className="flex items-center gap-4 mb-4">
+      <div className={`text-center ${flip ? "md:order-1" : ""}`}>
+        <div className="flex items-center justify-center gap-4 mb-4">
           <span className="text-xs tracking-widest uppercase" style={{ color: ACCENT }}>{t.duration}</span>
           <span className="w-1 h-1 rounded-full" style={{ background: `${ACCENT}55` }} />
           <span className="text-xs tracking-widest uppercase font-bold" style={{ color: ACCENT }}>{t.price}</span>
         </div>
         <h3 className="cormorant italic font-bold text-3xl md:text-4xl mb-4" style={{ color: "#f5f0e8" }}>{t.title}</h3>
-        <p className="leading-relaxed mb-6 max-w-md" style={{ color: "#a89078" }}>{t.desc}</p>
-        <div className="w-full flex flex-col items-start space-y-2 mb-8 border-l-2 pl-4 text-left" style={{ borderColor: `${ACCENT}55` }}>
+        <p className="leading-relaxed mb-6 max-w-md mx-auto" style={{ color: "#a89078" }}>{t.desc}</p>
+        <div className="inline-block text-left space-y-2 mb-8 border-l-2 pl-4" style={{ borderColor: `${ACCENT}55` }}>
           {t.details.map((d) => (
-            <span key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</span>
+            <div key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</div>
           ))}
         </div>
-        <button className="text-xs font-bold px-8 py-3 tracking-widest uppercase transition-all duration-300 border"
-          style={{ borderColor: ACCENT, color: ACCENT }}
-          onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = "#0d0806"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = ACCENT; }}>
-          Book This Treatment
-        </button>
+        <div>
+          <button className="text-xs font-bold px-8 py-3 tracking-widest uppercase transition-all duration-300 border"
+            style={{ borderColor: ACCENT, color: ACCENT }}
+            onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = "#0d0806"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = ACCENT; }}>
+            Book This Treatment
+          </button>
+        </div>
       </div>
     </div>
   );
