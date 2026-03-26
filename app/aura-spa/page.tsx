@@ -269,7 +269,7 @@ function TreatmentBlock({ treatment: t, flip }: { treatment: typeof TREATMENTS[0
         </div>
         <h3 className="cormorant italic font-bold text-3xl md:text-4xl mb-4" style={{ color: "#f5f0e8" }}>{t.title}</h3>
         <p className="leading-relaxed mb-6 max-w-md" style={{ color: "#a89078" }}>{t.desc}</p>
-        <div className="flex flex-col items-start space-y-2 mb-8 border-l-2 pl-4" style={{ borderColor: `${ACCENT}55` }}>
+        <div className="w-full flex flex-col items-start space-y-2 mb-8 border-l-2 pl-4 text-left" style={{ borderColor: `${ACCENT}55` }}>
           {t.details.map((d) => (
             <span key={d} className="text-sm" style={{ color: "#c8b09a" }}>{d}</span>
           ))}

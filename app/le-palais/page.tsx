@@ -252,7 +252,7 @@ function DishBlock({ dish, flip }: { dish: typeof DISHES[0]; flip: boolean }) {
         )}
         {!dish.subtitle && <div className="mb-5" />}
         <p className="text-zinc-400 leading-relaxed mb-8 max-w-md">{dish.desc}</p>
-        <div className="flex flex-col items-start space-y-3 border-l-2 pl-5" style={{ borderColor: "#d97706" }}>
+        <div className="w-full flex flex-col items-start space-y-3 border-l-2 pl-5 text-left" style={{ borderColor: "#d97706" }}>
           {dish.details.map((d) => (
             <div key={d} className="flex items-center gap-3">
               <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#d97706" }} />
