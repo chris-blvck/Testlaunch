@@ -220,6 +220,7 @@ export default function HomePage() {
       <Hero mounted={mounted} />
       <Stats />
       <Projects filtered={filtered} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+      <Testimonials />
       <CTA />
       <Footer />
     </div>
@@ -228,31 +229,64 @@ export default function HomePage() {
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const navLinks = [{ label: "Projects", id: "projets" }, { label: "Contact", id: "contact" }];
+  const scrollTo = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        <KabalLogo />
-        <div className="hidden md:flex items-center gap-8">
-          {[{ label: "Projects", id: "projets" }, { label: "Contact", id: "contact" }].map((l) => (
-            <button key={l.label}
-              onClick={() => document.getElementById(l.id)?.scrollIntoView({ behavior: "smooth" })}
-              className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
-              {l.label}
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-black/95 backdrop-blur-md border-b border-zinc-900" : ""}`}>
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+          <KabalLogo />
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((l) => (
+              <button key={l.label}
+                onClick={() => scrollTo(l.id)}
+                className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">
+                {l.label}
+              </button>
+            ))}
+            <Link href="/services" className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">Services</Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="mailto:junglekabal@gmail.com"
+              className="hidden md:block border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300">
+              Get in touch
+            </a>
+            {/* Hamburger */}
+            <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "opacity-0" : ""}`} />
+              <span className={`block w-5 h-px bg-white transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
             </button>
-          ))}
-          <Link href="/services" className="text-zinc-500 hover:text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors">Services</Link>
+          </div>
         </div>
+      </nav>
+
+      {/* Mobile menu */}
+      <div className={`fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+        {navLinks.map((l) => (
+          <button key={l.label} onClick={() => scrollTo(l.id)}
+            className="text-white font-black text-3xl tracking-[0.2em] uppercase">
+            {l.label}
+          </button>
+        ))}
+        <Link href="/services" onClick={() => setOpen(false)}
+          className="text-white font-black text-3xl tracking-[0.2em] uppercase">
+          Services
+        </Link>
         <a href="mailto:junglekabal@gmail.com"
-          className="border border-zinc-700 hover:border-white text-zinc-300 hover:text-white text-xs font-bold px-5 py-2.5 tracking-widest uppercase transition-all duration-300">
+          className="mt-4 border border-zinc-700 text-zinc-400 text-xs font-bold px-8 py-4 tracking-widest uppercase">
           Get in touch
         </a>
       </div>
-    </nav>
+    </>
   );
 }
 
@@ -471,6 +505,72 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
         </div>
       </div>
     </Link>
+  );
+}
+
+const TESTIMONIALS = [
+  {
+    quote: "They delivered our entire restaurant website in 36 hours. The design is incredible — our reservations went up 40% in the first month.",
+    name: "Marc Lefebvre",
+    role: "Owner, Le Palais Bangkok",
+    initial: "M",
+  },
+  {
+    quote: "I showed them one photo of my barbershop and they built exactly the vibe I had in my head. Professional, fast, no back-and-forth.",
+    name: "James Okonkwo",
+    role: "Founder, Barber Royale Phuket",
+    initial: "J",
+  },
+  {
+    quote: "Our nightclub needed something dark and cinematic. Kabal nailed it. Every DJ we book asks who made the site.",
+    name: "Krit Tansakul",
+    role: "Director, Neon Noir Bangkok",
+    initial: "K",
+  },
+  {
+    quote: "Simple brief, fast delivery, zero headaches. They even handled our domain and hosting setup. Worth every baht.",
+    name: "Nadia Petrov",
+    role: "Manager, Aura Spa Koh Samui",
+    initial: "N",
+  },
+];
+
+function Testimonials() {
+  const { ref, inView } = useInView();
+  return (
+    <section className="py-24 md:py-32 border-t border-zinc-900">
+      <div ref={ref} className={`max-w-7xl mx-auto px-6 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className="text-center mb-16">
+          <p className="text-zinc-500 text-xs font-bold tracking-[0.6em] uppercase mb-3">Social proof</p>
+          <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight" style={{ letterSpacing: "-0.03em" }}>
+            What clients say.
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {TESTIMONIALS.map((t, i) => (
+            <div key={t.name}
+              className="border border-zinc-900 bg-zinc-950 p-8 hover:border-zinc-700 transition-colors duration-300"
+              style={{ transitionDelay: `${i * 80}ms` }}>
+              <p className="text-zinc-300 text-base leading-relaxed mb-8">&ldquo;{t.quote}&rdquo;</p>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-black text-sm">{t.initial}</span>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm">{t.name}</p>
+                  <p className="text-zinc-500 text-xs tracking-wide">{t.role}</p>
+                </div>
+                <div className="ml-auto flex gap-0.5">
+                  {[...Array(5)].map((_, s) => (
+                    <span key={s} className="text-amber-400 text-xs">★</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
