@@ -14,16 +14,16 @@ function useInView(threshold = 0.1) {
 
 /* ─── palette ───────────────────────────────────────────────────── */
 const S = {
-  void:    "#030505",
-  dark:    "#070d07",
-  green:   "#39ff14",
-  greenDim:"#1faa0a",
+  void:    "#030a0d",
+  dark:    "#071218",
+  green:   "#00e5c8",   // turquoise / teal
+  greenDim:"#00a89a",
   teal:    "#00e5c8",
   pink:    "#ff2d78",
-  white:   "#f0fff0",
-  smoke:   "#2a3a2a",
-  muted:   "#4a6a4a",
-  border:  "#0f1f0f",
+  white:   "#f0fffe",
+  smoke:   "#1a3038",
+  muted:   "#3a7080",
+  border:  "#0a2028",
 };
 
 /* ─── real data ─────────────────────────────────────────────────── */
@@ -93,6 +93,7 @@ export default function SweedPage() {
       <Hero />
       <Ticker />
       <Vibe />
+      <PhotoStrip />
       <Strains />
       <Reviews />
       <NightBreak />
@@ -112,9 +113,9 @@ function Navbar() {
   }, []);
   return (
     <nav className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
-      style={{ background: scrolled ? `rgba(3,5,5,.95)` : "transparent", borderBottom: scrolled ? `1px solid ${S.border}` : "none", backdropFilter: scrolled ? "blur(20px)" : "none" }}>
+      style={{ background: scrolled ? `rgba(3,10,13,.95)` : "transparent", borderBottom: scrolled ? `1px solid ${S.border}` : "none", backdropFilter: scrolled ? "blur(20px)" : "none" }}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <span className="font-righteous text-xl tracking-widest uppercase neon-text" style={{ color: S.green }}>
+        <span className="righteous text-xl tracking-widest uppercase neon-text" style={{ color: S.green }}>
           SWEED
         </span>
         <div className="hidden md:flex items-center gap-8">
@@ -147,11 +148,11 @@ function Hero() {
 
       {/* green neon glow rising from bottom — matches the actual floor lights */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 100% 50% at 50% 100%, rgba(57,255,20,.25) 0%, transparent 65%)" }} />
+        style={{ background: "radial-gradient(ellipse 100% 50% at 50% 100%, rgba(0,229,200,.25) 0%, transparent 65%)" }} />
 
       {/* left dark fade for text */}
       <div className="absolute inset-0"
-        style={{ background: "linear-gradient(to right, rgba(3,5,5,.95) 25%, rgba(3,5,5,.4) 60%, transparent)" }} />
+        style={{ background: "linear-gradient(to right, rgba(3,10,13,.95) 25%, rgba(3,10,13,.4) 60%, transparent)" }} />
       <div className="absolute bottom-0 left-0 right-0 h-40"
         style={{ background: `linear-gradient(to top, ${S.void}, transparent)` }} />
 
@@ -167,18 +168,18 @@ function Hero() {
         </div>
 
         {/* giant title */}
-        <h1 className="font-righteous leading-none neon-text"
+        <h1 className="righteous leading-none neon-text"
           style={{ fontSize: "clamp(5.5rem,20vw,18rem)", color: S.green, letterSpacing: "-0.01em" }}>
           SWEED
         </h1>
 
         {/* outline subtitle */}
-        <h2 className="font-righteous leading-none mb-8"
-          style={{ fontSize: "clamp(1.2rem,4vw,3.5rem)", color: "transparent", WebkitTextStroke: `1px rgba(240,255,240,.4)`, letterSpacing: "0.08em" }}>
+        <h2 className="righteous leading-none mb-8"
+          style={{ fontSize: "clamp(1.2rem,4vw,3.5rem)", color: "transparent", WebkitTextStroke: `1px rgba(240,255,254,.4)`, letterSpacing: "0.08em" }}>
           CANNABIS DISPENSARY
         </h2>
 
-        <p className="text-base md:text-lg mb-12 max-w-md leading-relaxed" style={{ color: "rgba(240,255,240,.6)" }}>
+        <p className="text-base md:text-lg mb-12 max-w-md leading-relaxed" style={{ color: "rgba(240,255,254,.6)" }}>
           Premium strains. PS5 inside. Football on the big screen. Accepts crypto. Opens every night — closes 3AM.
         </p>
 
@@ -190,7 +191,7 @@ function Hero() {
           </button>
           <a href={`tel:${INFO.phone}`}
             className="font-bold px-10 py-4 text-sm tracking-widest uppercase border transition-all hover:border-green-400"
-            style={{ borderColor: "rgba(57,255,20,.3)", color: "rgba(240,255,240,.6)", borderRadius: "9999px" }}>
+            style={{ borderColor: "rgba(0,229,200,.3)", color: "rgba(240,255,254,.6)", borderRadius: "9999px" }}>
             {INFO.phone}
           </a>
         </div>
@@ -198,8 +199,8 @@ function Hero() {
 
       {/* big "3AM" floating top right */}
       <div className={`absolute top-20 right-8 text-right hidden md:block transition-all duration-1000 delay-300 ${mounted ? "opacity-100" : "opacity-0"}`}>
-        <p className="font-righteous leading-none" style={{ fontSize: "clamp(4rem,8vw,7rem)", color: "rgba(57,255,20,.15)" }}>CLOSES</p>
-        <p className="font-righteous leading-none" style={{ fontSize: "clamp(5rem,10vw,9rem)", color: "rgba(57,255,20,.25)" }}>3AM</p>
+        <p className="righteous leading-none" style={{ fontSize: "clamp(4rem,8vw,7rem)", color: "rgba(0,229,200,.15)" }}>CLOSES</p>
+        <p className="righteous leading-none" style={{ fontSize: "clamp(5rem,10vw,9rem)", color: "rgba(0,229,200,.25)" }}>3AM</p>
       </div>
     </section>
   );
@@ -211,11 +212,11 @@ function Ticker() {
   const b = [...a, ...a];
   return (
     <>
-      <div className="overflow-hidden py-3.5 border-y" style={{ borderColor: S.border, background: "#060c06" }}>
+      <div className="overflow-hidden py-3.5 border-y" style={{ borderColor: S.border, background: "#060c12" }}>
         <div className="flex whitespace-nowrap marquee-track">
           {b.map((item, i) => (
             <span key={i} className="inline-flex items-center gap-5 px-5">
-              <span className="font-righteous text-xs tracking-[0.3em] uppercase" style={{ color: S.green }}>{item}</span>
+              <span className="righteous text-xs tracking-[0.3em] uppercase" style={{ color: S.green }}>{item}</span>
               <span style={{ color: S.muted, fontSize: "5px" }}>◆</span>
             </span>
           ))}
@@ -225,7 +226,7 @@ function Ticker() {
         <div className="flex whitespace-nowrap marquee-slow" style={{ animationDirection: "reverse" }}>
           {b.map((item, i) => (
             <span key={i} className="inline-flex items-center gap-5 px-5">
-              <span className="font-righteous text-xs tracking-[0.3em] uppercase" style={{ color: S.smoke }}>{item}</span>
+              <span className="righteous text-xs tracking-[0.3em] uppercase" style={{ color: S.smoke }}>{item}</span>
               <span style={{ color: S.border, fontSize: "5px" }}>◆</span>
             </span>
           ))}
@@ -246,7 +247,7 @@ function Vibe() {
           <img src="/sweed/ps5_screen.jpg" alt="PS5 at Sweed"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
           <div className="absolute inset-0"
-            style={{ background: "linear-gradient(to right, transparent 50%, rgba(3,5,5,.98))" }} />
+            style={{ background: "linear-gradient(to right, transparent 50%, rgba(3,10,13,.98))" }} />
           {/* neon open sign glow */}
           <div className="absolute top-0 left-0 right-0 h-24"
             style={{ background: "linear-gradient(to bottom, rgba(255,45,120,.08), transparent)" }} />
@@ -254,8 +255,8 @@ function Vibe() {
         <div ref={ref}
           className={`flex flex-col justify-center px-10 md:px-14 py-20 transition-all duration-1000 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
           style={{ background: S.void }}>
-          <p className="font-righteous text-xs tracking-[0.5em] uppercase mb-5" style={{ color: S.green }}>The vibe</p>
-          <h2 className="font-righteous leading-[0.88] mb-8"
+          <p className="righteous text-xs tracking-[0.5em] uppercase mb-5" style={{ color: S.green }}>The vibe</p>
+          <h2 className="righteous leading-[0.88] mb-8"
             style={{ fontSize: "clamp(3rem,6vw,5rem)", color: S.white }}>
             ROLL UP.<br />
             <span className="neon-text" style={{ color: S.green }}>PLUG IN.</span><br />
@@ -266,7 +267,7 @@ function Vibe() {
           </p>
           <ul className="space-y-3 mb-10">
             {["PlayStation 5 in-store", "Big screen football", "CBD drinks & refreshments", "Solana · USDT · BTC · ETH", "Air-conditioned · Walk-ins welcome"].map((t) => (
-              <li key={t} className="flex items-center gap-3 text-sm" style={{ color: "rgba(240,255,240,.75)" }}>
+              <li key={t} className="flex items-center gap-3 text-sm" style={{ color: "rgba(240,255,254,.75)" }}>
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: S.green }} />
                 {t}
               </li>
@@ -282,8 +283,8 @@ function Vibe() {
       {/* Football row — flipped */}
       <div className="grid md:grid-cols-[2fr_3fr]" style={{ minHeight: "50vh" }}>
         <div className="flex flex-col justify-center px-10 md:px-14 py-16"
-          style={{ background: "#060d06" }}>
-          <h3 className="font-righteous leading-none mb-4"
+          style={{ background: "#060d12" }}>
+          <h3 className="righteous leading-none mb-4"
             style={{ fontSize: "clamp(2rem,5vw,4rem)", color: "transparent", WebkitTextStroke: `1.5px ${S.green}` }}>
             WATCH THE<br />GAME.
           </h3>
@@ -295,11 +296,38 @@ function Vibe() {
           <img src="/sweed/football_tv.jpg" alt="Football at Sweed"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
           <div className="absolute inset-0"
-            style={{ background: "linear-gradient(to left, transparent 60%, rgba(6,13,6,.98))" }} />
+            style={{ background: "linear-gradient(to left, transparent 60%, rgba(6,13,18,.98))" }} />
           {/* pink neon glow from OPEN sign */}
           <div className="absolute top-0 left-0 right-0 h-20"
             style={{ background: "linear-gradient(to bottom, rgba(255,45,120,.12), transparent)" }} />
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── PHOTO STRIP ───────────────────────────────────────────────── */
+function PhotoStrip() {
+  const photos = [
+    { src: "/sweed/interior_blue.jpg", label: "The interior" },
+    { src: "/sweed/lounge.jpg",        label: "Lounge area" },
+    { src: "/sweed/sign.jpg",          label: "Neon sign" },
+    { src: "/sweed/counter.jpg",       label: "At the counter" },
+    { src: "/sweed/exterior.jpg",      label: "Street view" },
+  ];
+  return (
+    <section className="py-6 px-6 md:px-8" style={{ background: S.void }}>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        {photos.map((p) => (
+          <div key={p.src} className="relative overflow-hidden group" style={{ height: "220px", borderRadius: "1.5rem" }}>
+            <img src={p.src} alt={p.label}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+              style={{ background: `linear-gradient(to top, rgba(3,10,13,.85), transparent)`, borderRadius: "1.5rem" }}>
+              <span className="righteous text-xs tracking-widest uppercase" style={{ color: S.green }}>{p.label}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -315,11 +343,11 @@ function Strains() {
         <img src="/sweed/counter2.jpg" alt="Sweed strain display"
           className="w-full h-full object-cover" style={{ objectPosition: "center 35%" }} />
         <div className="absolute inset-0"
-          style={{ background: "linear-gradient(to bottom, transparent 20%, rgba(3,5,5,.9))" }} />
+          style={{ background: "linear-gradient(to bottom, transparent 20%, rgba(3,10,13,.9))" }} />
         <div className="absolute inset-0"
-          style={{ background: "linear-gradient(to right, rgba(57,255,20,.06), transparent 60%)" }} />
+          style={{ background: "linear-gradient(to right, rgba(0,229,200,.06), transparent 60%)" }} />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-8">
-          <h2 className="font-righteous leading-none"
+          <h2 className="righteous leading-none"
             style={{ fontSize: "clamp(3rem,10vw,9rem)", color: "transparent", WebkitTextStroke: `2px ${S.green}` }}>
             THE MENU
           </h2>
@@ -333,13 +361,13 @@ function Strains() {
           {STRAINS.map((s, i) => (
             <div key={s.name}
               className={`px-7 py-7 group hover:brightness-110 transition-all duration-300 cursor-default ${inView ? "opacity-100" : "opacity-0"}`}
-              style={{ background: i % 2 === 0 ? S.dark : "#060d06", borderRadius: "1.5rem", transitionDelay: `${i * 60}ms`, border: `1px solid ${S.border}` }}>
+              style={{ background: i % 2 === 0 ? S.dark : "#060d12", borderRadius: "1.5rem", transitionDelay: `${i * 60}ms`, border: `1px solid ${S.border}` }}>
               <div className="flex items-start justify-between mb-3">
                 <span className="text-[9px] font-black px-2.5 py-1 tracking-[0.3em] uppercase"
                   style={{ background: s.color + "22", color: s.color, borderRadius: "9999px" }}>{s.type}</span>
-                <span className="font-righteous text-2xl" style={{ color: s.color }}>{s.thc}</span>
+                <span className="righteous text-2xl" style={{ color: s.color }}>{s.thc}</span>
               </div>
-              <h3 className="font-righteous text-lg text-white mb-2">{s.name}</h3>
+              <h3 className="righteous text-lg text-white mb-2">{s.name}</h3>
               <div className="w-6 h-0.5 mt-3 transition-all duration-300 group-hover:w-12" style={{ background: s.color }} />
             </div>
           ))}
@@ -351,12 +379,12 @@ function Strains() {
             <img src="/sweed/shelves.png" alt="Accessories"
               className="w-full h-full object-cover" />
             <div className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, rgba(3,5,5,.8), transparent)", borderRadius: "1.5rem" }} />
-            <p className="absolute bottom-5 left-6 font-righteous text-xl" style={{ color: S.green }}>Accessories & gear</p>
+              style={{ background: "linear-gradient(to top, rgba(3,10,13,.8), transparent)", borderRadius: "1.5rem" }} />
+            <p className="absolute bottom-5 left-6 righteous text-xl" style={{ color: S.green }}>Accessories & gear</p>
           </div>
           <div className="flex flex-col justify-between p-10" style={{ background: S.dark, borderRadius: "1.5rem", border: `1px solid ${S.border}` }}>
             <div>
-              <p className="font-righteous text-xs tracking-[0.4em] uppercase mb-4" style={{ color: S.green }}>Also available</p>
+              <p className="righteous text-xs tracking-[0.4em] uppercase mb-4" style={{ color: S.green }}>Also available</p>
               <ul className="space-y-3">
                 {["Sativa · Hybrid · Indica", "Pre-rolled joints", "CBD drinks", "Coke · Fanta", "Coffee · Tea", "Accessories"].map((t) => (
                   <li key={t} className="flex items-center gap-3 text-sm" style={{ color: S.muted }}>
@@ -367,7 +395,7 @@ function Strains() {
             </div>
             <div className="pt-8 border-t" style={{ borderColor: S.border }}>
               <p className="text-xs tracking-widest uppercase mb-2" style={{ color: S.muted }}>Price per person</p>
-              <p className="font-righteous text-4xl" style={{ color: S.white }}>{INFO.price}</p>
+              <p className="righteous text-4xl" style={{ color: S.white }}>{INFO.price}</p>
             </div>
           </div>
         </div>
@@ -380,21 +408,21 @@ function Strains() {
 function Reviews() {
   const { ref, inView } = useInView(0.2);
   return (
-    <section style={{ background: "#f4fff4" }}>
+    <section style={{ background: "#f0fffe" }}>
       <div ref={ref} className={`max-w-7xl mx-auto px-6 md:px-16 py-28 md:py-40 transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="grid md:grid-cols-[auto_1fr] gap-16 items-start">
 
           {/* giant rating */}
           <div>
-            <p className="font-righteous leading-none" style={{ fontSize: "clamp(7rem,18vw,15rem)", color: "#070d07" }}>
+            <p className="righteous leading-none" style={{ fontSize: "clamp(7rem,18vw,15rem)", color: "#071218" }}>
               {INFO.rating}
             </p>
             <div className="flex gap-1 -mt-4 mb-2">
               {[...Array(5)].map((_, i) => (
-                <span key={i} style={{ color: "#39ff14", fontSize: "2rem" }}>★</span>
+                <span key={i} style={{ color: "#00e5c8", fontSize: "2rem" }}>★</span>
               ))}
             </div>
-            <p className="font-righteous text-sm tracking-widest uppercase" style={{ color: "#4a6a4a" }}>{INFO.reviews} · Google Maps</p>
+            <p className="righteous text-sm tracking-widest uppercase" style={{ color: "#3a7080" }}>{INFO.reviews} · Google Maps</p>
           </div>
 
           {/* review quotes */}
@@ -402,16 +430,16 @@ function Reviews() {
             {REVIEWS.map((r, i) => (
               <div key={i}
                 className={`pl-6 py-5 pr-6 transition-all duration-700 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
-                style={{ borderLeft: "4px solid #39ff14", background: "rgba(57,255,20,.04)", borderRadius: "0 1.25rem 1.25rem 0", transitionDelay: `${i * 120 + 200}ms` }}>
-                <p className="font-righteous text-xl md:text-2xl leading-tight mb-2" style={{ color: "#070d07" }}>
+                style={{ borderLeft: "4px solid #00e5c8", background: "rgba(0,229,200,.05)", borderRadius: "0 1.25rem 1.25rem 0", transitionDelay: `${i * 120 + 200}ms` }}>
+                <p className="righteous text-xl md:text-2xl leading-tight mb-2" style={{ color: "#071218" }}>
                   "{r.text}"
                 </p>
-                <p className="text-sm" style={{ color: "#4a6a4a" }}>{r.sub}</p>
+                <p className="text-sm" style={{ color: "#3a7080" }}>{r.sub}</p>
               </div>
             ))}
             <a href="https://g.co/kgs/sweed" target="_blank" rel="noopener noreferrer"
               className="inline-block mt-4 text-xs font-black px-8 py-3 tracking-widest uppercase transition-all hover:opacity-80"
-              style={{ background: "#070d07", color: "#39ff14", borderRadius: "9999px" }}>
+              style={{ background: "#071218", color: "#00e5c8", borderRadius: "9999px" }}>
               Leave a review →
             </a>
           </div>
@@ -430,24 +458,24 @@ function NightBreak() {
         className="absolute inset-0 w-full h-full object-cover"
         style={{ filter: "brightness(0.5) saturate(1.8) contrast(1.15)", objectPosition: "center 30%" }} />
       <div className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 100% 60% at 50% 100%, rgba(57,255,20,.2) 0%, transparent 70%)" }} />
+        style={{ background: "radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,229,200,.2) 0%, transparent 70%)" }} />
       <div className="absolute inset-0"
-        style={{ background: "rgba(3,5,5,.45)" }} />
+        style={{ background: "rgba(3,10,13,.45)" }} />
 
       <div className={`relative z-10 flex flex-col items-center justify-center min-h-[70vh] px-6 text-center transition-all duration-1200 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-        <p className="font-righteous text-xs tracking-[0.8em] uppercase mb-8" style={{ color: S.green }}>
+        <p className="righteous text-xs tracking-[0.8em] uppercase mb-8" style={{ color: S.green }}>
           Every night · Pattaya City
         </p>
-        <h2 className="font-righteous leading-none mb-6 neon-text"
+        <h2 className="righteous leading-none mb-6 neon-text"
           style={{ fontSize: "clamp(4rem,14vw,12rem)", color: S.green }}>
           CLOSES
         </h2>
-        <h2 className="font-righteous leading-none mb-10"
-          style={{ fontSize: "clamp(4rem,14vw,12rem)", color: "transparent", WebkitTextStroke: "2px rgba(240,255,240,.8)" }}>
+        <h2 className="righteous leading-none mb-10"
+          style={{ fontSize: "clamp(4rem,14vw,12rem)", color: "transparent", WebkitTextStroke: "2px rgba(240,255,254,.8)" }}>
           3AM
         </h2>
         <div className="w-14 h-px" style={{ background: S.green }} />
-        <p className="mt-8 text-base max-w-sm leading-relaxed" style={{ color: "rgba(240,255,240,.5)" }}>
+        <p className="mt-8 text-base max-w-sm leading-relaxed" style={{ color: "rgba(240,255,254,.5)" }}>
           The last good place still open. Roll in anytime.
         </p>
       </div>
@@ -466,7 +494,7 @@ function Contact() {
 
           <div>
             <p className="text-xs tracking-[0.5em] uppercase mb-4" style={{ color: S.green }}>Find us</p>
-            <h2 className="font-righteous leading-none mb-12"
+            <h2 className="righteous leading-none mb-12"
               style={{ fontSize: "clamp(4rem,12vw,10rem)", color: S.white }}>
               COME<br />
               <span className="neon-text" style={{ color: S.green }}>IN.</span>
@@ -475,15 +503,15 @@ function Contact() {
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <p className="text-xs uppercase tracking-widest mb-2" style={{ color: S.green }}>Address</p>
-                <p className="font-righteous text-lg text-white mb-1">Sweed Cannabis Dispensary</p>
+                <p className="righteous text-lg text-white mb-1">Sweed Cannabis Dispensary</p>
                 <p className="text-sm leading-relaxed" style={{ color: S.muted }}>{INFO.address}</p>
                 <p className="text-sm" style={{ color: S.muted }}>{INFO.district}</p>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-widest mb-2" style={{ color: S.green }}>Hours & Phone</p>
-                <p className="font-righteous text-3xl" style={{ color: S.green }}>Closes 3AM</p>
+                <p className="righteous text-3xl" style={{ color: S.green }}>Closes 3AM</p>
                 <p className="text-sm mt-1 mb-3" style={{ color: S.muted }}>Open every day · Walk-ins welcome</p>
-                <a href={INFO.tel} className="font-righteous text-xl text-white hover:opacity-80 transition-opacity">{INFO.phone}</a>
+                <a href={INFO.tel} className="righteous text-xl text-white hover:opacity-80 transition-opacity">{INFO.phone}</a>
               </div>
               <div className="md:col-span-2">
                 <p className="text-xs uppercase tracking-widest mb-3" style={{ color: S.green }}>Payments</p>
@@ -525,13 +553,13 @@ function Contact() {
 /* ─── FOOTER ────────────────────────────────────────────────────── */
 function Footer() {
   return (
-    <footer className="py-8 border-t" style={{ background: "#020404", borderColor: S.border }}>
+    <footer className="py-8 border-t" style={{ background: "#020810", borderColor: S.border }}>
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
-          <span className="font-righteous text-2xl tracking-widest uppercase neon-text" style={{ color: S.green }}>SWEED</span>
+          <span className="righteous text-2xl tracking-widest uppercase neon-text" style={{ color: S.green }}>SWEED</span>
           <span className="text-[9px] tracking-[0.4em] uppercase ml-4" style={{ color: S.muted }}>Cannabis Dispensary · Pattaya</span>
         </div>
-        <p className="text-xs" style={{ color: "#1a2e1a" }}>© 2026 Sweed · Pattaya · Thailand</p>
+        <p className="text-xs" style={{ color: "#1a2e38" }}>© 2026 Sweed · Pattaya · Thailand</p>
       </div>
     </footer>
   );
