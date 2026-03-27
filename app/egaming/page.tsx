@@ -181,7 +181,7 @@ export default function EgamingPage() {
   ]), [locale]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <style>{`
         html { scroll-behavior: smooth; }
         @keyframes pulse-glow { 0%,100% { text-shadow: 0 0 20px rgba(239,68,68,.4);} 50% {text-shadow:0 0 70px rgba(239,68,68,.9);} }

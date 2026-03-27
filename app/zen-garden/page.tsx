@@ -61,9 +61,9 @@ export default function ZenGardenPage() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#000", minHeight: "100vh", color: "#e7e5e4", fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ backgroundColor: "#000", minHeight: "100vh", color: "#e7e5e4", fontFamily: "system-ui, sans-serif", overflowX: "hidden" }}>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 2px; }
         ::-webkit-scrollbar-track { background: #000; }

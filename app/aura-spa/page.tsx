@@ -65,9 +65,9 @@ const PACKAGES = [
 export default function AuraSpaPage() {
   const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
-    <div style={{ backgroundColor: BG, minHeight: "100vh", color: "#f5f0e8" }}>
+    <div style={{ backgroundColor: BG, minHeight: "100vh", color: "#f5f0e8", overflowX: "hidden" }}>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 2px; }
         ::-webkit-scrollbar-track { background: ${BG}; }

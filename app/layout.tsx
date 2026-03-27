@@ -3,6 +3,11 @@ import { Inter, Orbitron, Russo_One, Exo_2, Playfair_Display, Bebas_Neue, Righte
 import "./globals.css";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollProgress from "./components/ScrollProgress";
+import CustomCursor from "./components/CustomCursor";
+import BackButton from "./components/BackButton";
+import LoadingScreen from "./components/LoadingScreen";
+import PageTransition from "./components/PageTransition";
+import SmoothScroll from "./components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -60,8 +65,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="h-full">
       <body className={`${inter.variable} ${orbitron.variable} ${russoOne.variable} ${exo2.variable} ${playfair.variable} ${bebasNeue.variable} ${righteous.variable} ${cormorant.variable} min-h-full antialiased`}>
+        <LoadingScreen />
+        <SmoothScroll />
+        <CustomCursor />
         <ScrollProgress />
-        {children}
+        <BackButton />
+        <PageTransition>{children}</PageTransition>
         <WhatsAppButton />
       </body>
     </html>

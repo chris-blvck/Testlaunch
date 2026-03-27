@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
@@ -65,9 +66,9 @@ const TASTING_COURSES = [
 export default function LePalaisPage() {
   const [mode, setMode] = useState<"compact" | "full">("compact");
   return (
-    <div className="bg-black min-h-screen text-center">
+    <div className="bg-black min-h-screen text-center overflow-x-hidden">
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #000; }
@@ -478,7 +479,12 @@ function Footer() {
             </button>
           ))}
         </div>
-        <p className="text-zinc-700 text-xs">© 2026 Le Palais · Bangkok, Thailand</p>
+        <div className="flex items-center gap-4">
+          <Link href="/le-palais/story" className="text-zinc-600 hover:text-amber-400 text-xs tracking-widest uppercase transition-colors">
+            Case Study
+          </Link>
+          <p className="text-zinc-700 text-xs">© 2026 Le Palais · Bangkok, Thailand</p>
+        </div>
       </div>
     </footer>
   );
