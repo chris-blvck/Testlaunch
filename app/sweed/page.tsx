@@ -141,17 +141,17 @@ function Hero() {
   useEffect(() => { setTimeout(() => setMounted(true), 80); }, []);
   return (
     <section className="relative min-h-screen overflow-hidden" style={{ background: S.void }}>
-      {/* full bleed lounge photo — moody teal */}
-      <img src="/sweed/lounge.jpg" alt="Sweed lounge"
+      {/* LEFT — exterior night with green LED floor lights */}
+      <img src="/sweed/exterior_led.jpg" alt="Sweed exterior"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: "brightness(0.5) saturate(2) contrast(1.15)", objectPosition: "center 35%" }} />
+        style={{ filter: "brightness(0.55) saturate(1.9) contrast(1.1)", objectPosition: "center 40%" }} />
 
-      {/* second photo pinned right — interior blue glow */}
-      <div className="absolute inset-y-0 right-0 w-[42%] overflow-hidden hidden md:block">
-        <img src="/sweed/interior_blue.jpg" alt="Sweed interior"
+      {/* RIGHT panel — interior TV / teal ceiling vibe */}
+      <div className="absolute inset-y-0 right-0 w-[45%] overflow-hidden hidden md:block">
+        <img src="/sweed/interior_tv.jpg" alt="Sweed interior vibe"
           className="w-full h-full object-cover"
-          style={{ filter: "brightness(0.6) saturate(2) contrast(1.1)", objectPosition: "center" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(3,10,13,1) 0%, transparent 40%)" }} />
+          style={{ filter: "brightness(0.65) saturate(1.8) contrast(1.1)", objectPosition: "center" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(3,10,13,1) 0%, transparent 35%)" }} />
       </div>
 
       {/* teal neon glow rising from bottom */}
@@ -252,7 +252,7 @@ function Vibe() {
       {/* PS5 row */}
       <div className="grid md:grid-cols-[3fr_2fr]" style={{ minHeight: "70vh" }}>
         <div className="relative overflow-hidden min-h-[55vw] md:min-h-full">
-          <img src="/sweed/ps5_screen.jpg" alt="PS5 at Sweed"
+          <img src="/sweed/interior_tv.jpg" alt="Gaming vibe at Sweed"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
           <div className="absolute inset-0"
             style={{ background: "linear-gradient(to right, transparent 50%, rgba(3,10,13,.98))" }} />
@@ -317,11 +317,11 @@ function Vibe() {
 /* ─── PHOTO STRIP ───────────────────────────────────────────────── */
 function PhotoStrip() {
   const photos = [
-    { src: "/sweed/interior_blue.jpg", label: "The interior" },
-    { src: "/sweed/lounge.jpg",        label: "Lounge area" },
-    { src: "/sweed/sign.jpg",          label: "Neon sign" },
-    { src: "/sweed/counter.jpg",       label: "At the counter" },
-    { src: "/sweed/exterior.jpg",      label: "Street view" },
+    { src: "/sweed/interior_tv.jpg",   label: "The vibe" },
+    { src: "/sweed/strains_hand.jpg",  label: "Premium strains" },
+    { src: "/sweed/products.jpg",      label: "Sweed products" },
+    { src: "/sweed/snacks.jpg",        label: "Snacks & games" },
+    { src: "/sweed/interior_blue.jpg", label: "Blue lounge" },
   ];
   return (
     <section className="py-6 px-6 md:px-8" style={{ background: S.void }}>
@@ -348,7 +348,7 @@ function Strains() {
     <section id="strains" style={{ background: S.void }}>
       {/* counter full-width strip */}
       <div className="relative overflow-hidden" style={{ height: "min(50vh, 400px)" }}>
-        <img src="/sweed/counter2.jpg" alt="Sweed strain display"
+        <img src="/sweed/strains_hand.jpg" alt="Sweed strain display"
           className="w-full h-full object-cover" style={{ objectPosition: "center 35%" }} />
         <div className="absolute inset-0"
           style={{ background: "linear-gradient(to bottom, transparent 20%, rgba(3,10,13,.9))" }} />
