@@ -500,10 +500,32 @@ export default function HomePage() {
         }
         .glitch::before { animation: glitch-a 7s step-end infinite; }
         .glitch::after  { animation: glitch-b 7s step-end .4s infinite; }
+
+        /* Second fast scan line */
+        .scan-line-fast {
+          position:absolute; left:0; right:0; height:1px; pointer-events:none;
+          background: linear-gradient(90deg,transparent 0%,rgba(180,220,255,.5) 20%,rgba(220,240,255,.8) 50%,rgba(180,220,255,.5) 80%,transparent 100%);
+          animation: scan 3.2s linear 5.5s infinite;
+        }
+
+        /* Marquee strip */
+        @keyframes marquee-strip {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-strip { animation: marquee-strip 22s linear infinite; }
+
+        /* Corner brackets */
+        .corner { position:absolute; width:32px; height:32px; pointer-events:none; }
+        .corner-tl { top:18px; left:18px; border-top:1px solid rgba(255,255,255,.2); border-left:1px solid rgba(255,255,255,.2); }
+        .corner-tr { top:18px; right:18px; border-top:1px solid rgba(255,255,255,.2); border-right:1px solid rgba(255,255,255,.2); }
+        .corner-bl { bottom:60px; left:18px; border-bottom:1px solid rgba(255,255,255,.2); border-left:1px solid rgba(255,255,255,.2); }
+        .corner-br { bottom:60px; right:18px; border-bottom:1px solid rgba(255,255,255,.2); border-right:1px solid rgba(255,255,255,.2); }
       `}</style>
 
       <Navbar />
       <Hero mounted={mounted} />
+      <MarqueeStrip />
       <Stats />
       <Projects filtered={filtered} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       <Testimonials />
@@ -576,6 +598,22 @@ function Navbar() {
   );
 }
 
+function MarqueeStrip() {
+  const words = ["Built in 48h","Restaurants","Nightclubs","Barbershops","Gaming & E-Sport","NFT & Web3","Spas & Wellness","Clinics","Beach Bars","Gyms"];
+  const all = [...words,...words];
+  return (
+    <div className="overflow-hidden border-y border-zinc-900 bg-zinc-950/60 py-3.5 backdrop-blur-sm">
+      <div className="flex gap-0 whitespace-nowrap marquee-strip">
+        {all.map((w,i) => (
+          <span key={i} className="text-zinc-600 text-[10px] font-bold tracking-[0.45em] uppercase flex-shrink-0 px-6">
+            {w}<span className="text-zinc-800 ml-6">·</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function KabalLogo() {
   return (
     <Link href="/" className="flex items-center gap-3">
@@ -606,8 +644,8 @@ function AtmosphereCanvas() {
     const mkS = (sy?: number): SP => {
       const g = 50 + (Math.random() * 90 | 0);
       return { x:Math.random()*W, y:sy??H+80, vx:(Math.random()-.5)*.45, vy:-(0.2+Math.random()*.65),
-        w:100+Math.random()*220, h:70+Math.random()*130, rot:Math.random()*Math.PI*2,
-        vrot:(Math.random()-.5)*.004, maxA:0.02+Math.random()*.065, g };
+        w:120+Math.random()*250, h:80+Math.random()*160, rot:Math.random()*Math.PI*2,
+        vrot:(Math.random()-.5)*.004, maxA:0.035+Math.random()*.09, g };
     };
     const mkE = (sy?: number): EP => ({
       x:W*.1+Math.random()*W*.8, y:sy??(H*.4+Math.random()*H*.6),
@@ -615,8 +653,8 @@ function AtmosphereCanvas() {
       r:0.8+Math.random()*2.2, a:0.5+Math.random()*.5, hue:12+Math.random()*35,
     });
 
-    const smokes: SP[] = Array.from({length:45}, (_,i) => mkS(Math.random()*H));
-    const embers: EP[] = Array.from({length:30}, () => mkE());
+    const smokes: SP[] = Array.from({length:65}, () => mkS(Math.random()*H));
+    const embers: EP[] = Array.from({length:45}, () => mkE());
 
     let raf = 0, wind = 0;
     const frame = (now: number) => {
@@ -731,8 +769,20 @@ function Hero({ mounted }: { mounted: boolean }) {
       <div className="absolute inset-0 pointer-events-none" style={{zIndex:5,
         background:"radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.75) 100%)"}} />
 
-      {/* Scan line */}
+      {/* Scan lines */}
       <div className="scan-line" style={{zIndex:6}} />
+      <div className="scan-line-fast" style={{zIndex:6}} />
+
+      {/* Camera corner brackets */}
+      <div className="corner corner-tl" style={{zIndex:15}} />
+      <div className="corner corner-tr" style={{zIndex:15}} />
+      <div className="corner corner-bl" style={{zIndex:15}} />
+      <div className="corner corner-br" style={{zIndex:15}} />
+
+      {/* Ghost background text */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden" style={{zIndex:2}}>
+        <span className="bebas text-white select-none" style={{fontSize:"clamp(10rem,45vw,46rem)",letterSpacing:"-0.04em",opacity:0.018,lineHeight:1}}>KABAL</span>
+      </div>
 
       {/* ── Content ── */}
       <div className="relative text-center px-6 w-full max-w-7xl mx-auto" style={{zIndex:10}}>
