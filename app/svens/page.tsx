@@ -212,7 +212,7 @@ function Hero() {
             style={{ background: S.yellow, color: S.black, borderRadius: "9999px" }}>
             See collection
           </button>
-          <a href={INFO.maps} target="_blank" rel="noopener noreferrer"
+          <a href={INFO.mapsMain} target="_blank" rel="noopener noreferrer"
             className="righteous whitespace-nowrap px-8 py-3.5 text-sm tracking-wider border transition-all"
             style={{ borderColor: `${S.yellow}50`, color: `${S.yellow}90`, borderRadius: "9999px" }}>
             Get directions
