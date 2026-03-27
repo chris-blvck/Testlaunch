@@ -140,23 +140,31 @@ function Hero() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setTimeout(() => setMounted(true), 80); }, []);
   return (
-    <section className="relative min-h-screen flex items-end overflow-hidden" style={{ background: S.void }}>
-      {/* night exterior — the money shot */}
-      <img src="/sweed/exterior_night.jpg" alt="Sweed at night"
+    <section className="relative min-h-screen overflow-hidden" style={{ background: S.void }}>
+      {/* full bleed lounge photo — moody teal */}
+      <img src="/sweed/lounge.jpg" alt="Sweed lounge"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: "brightness(0.6) saturate(1.6) contrast(1.1)", objectPosition: "center 30%" }} />
+        style={{ filter: "brightness(0.5) saturate(2) contrast(1.15)", objectPosition: "center 35%" }} />
 
-      {/* green neon glow rising from bottom — matches the actual floor lights */}
+      {/* second photo pinned right — interior blue glow */}
+      <div className="absolute inset-y-0 right-0 w-[42%] overflow-hidden hidden md:block">
+        <img src="/sweed/interior_blue.jpg" alt="Sweed interior"
+          className="w-full h-full object-cover"
+          style={{ filter: "brightness(0.6) saturate(2) contrast(1.1)", objectPosition: "center" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(3,10,13,1) 0%, transparent 40%)" }} />
+      </div>
+
+      {/* teal neon glow rising from bottom */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 100% 50% at 50% 100%, rgba(0,229,200,.25) 0%, transparent 65%)" }} />
+        style={{ background: "radial-gradient(ellipse 80% 45% at 50% 100%, rgba(0,229,200,.28) 0%, transparent 70%)" }} />
 
       {/* left dark fade for text */}
       <div className="absolute inset-0"
-        style={{ background: "linear-gradient(to right, rgba(3,10,13,.95) 25%, rgba(3,10,13,.4) 60%, transparent)" }} />
+        style={{ background: "linear-gradient(to right, rgba(3,10,13,.9) 30%, rgba(3,10,13,.3) 65%, transparent)" }} />
       <div className="absolute bottom-0 left-0 right-0 h-40"
         style={{ background: `linear-gradient(to top, ${S.void}, transparent)` }} />
 
-      <div className={`relative z-10 px-8 md:px-16 pb-20 max-w-5xl w-full transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+      <div className={`relative z-10 flex items-end min-h-screen px-8 md:px-16 pb-20 max-w-5xl w-full transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
 
         {/* rating badge */}
         <div className="flex items-center gap-3 mb-8">
