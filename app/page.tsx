@@ -431,9 +431,12 @@ export default function HomePage() {
       <Stats />
       <Process />
       <Gallery />
+      <Pricing />
       <Testimonials />
+      <FAQ />
       <CTA />
       <Footer />
+      <StickyMobileCTA />
     </div>
   );
 }
@@ -870,6 +873,112 @@ function Testimonials() {
   );
 }
 
+function Pricing() {
+  const {ref,inView}=useInView(0.15);
+  const plans=[
+    {
+      name:"Starter",price:"15 000",currency:"THB",
+      tag:"Perfect for small businesses",
+      features:["1-page site (landing)","Mobile responsive","WhatsApp booking button","Domain + hosting setup","Delivered in 48h"],
+      accent:"border-zinc-700",cta:"Get started",highlight:false,
+    },
+    {
+      name:"Pro",price:"35 000",currency:"THB",
+      tag:"Most popular",
+      features:["Up to 5 pages","Custom animations & effects","Photo gallery / menu","SEO optimisation","Google Analytics","Delivered in 48h"],
+      accent:"border-white",cta:"Start now",highlight:true,
+    },
+    {
+      name:"Premium",price:"Custom",currency:"",
+      tag:"Full brand experience",
+      features:["Unlimited pages","Advanced interactions","Booking / reservation system","CMS integration","Priority support","Ongoing maintenance"],
+      accent:"border-zinc-700",cta:"Let's talk",highlight:false,
+    },
+  ];
+  return (
+    <section className="py-24 md:py-32 border-t border-zinc-900 bg-zinc-950/40">
+      <div ref={ref} className={`max-w-7xl mx-auto px-6 transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-8"}`}>
+        <div className="text-center mb-14">
+          <p className="text-zinc-600 text-xs font-bold tracking-[0.45em] uppercase mb-3">Pricing</p>
+          <h2 className="text-white font-black text-4xl md:text-5xl tracking-tight leading-none mb-4">
+            Transparent.<br/><span className="text-zinc-500">No surprises.</span>
+          </h2>
+          <p className="text-zinc-600 text-sm max-w-md mx-auto">Fixed price, fixed deadline. What you see is what you pay.</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {plans.map((p,i)=>(
+            <div key={p.name}
+              className={`relative border ${p.accent} p-8 flex flex-col transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-6"} ${p.highlight?"bg-white/[0.03]":""}`}
+              style={{transitionDelay:`${i*100}ms`}}>
+              {p.highlight&&<div className="absolute -top-px left-1/2 -translate-x-1/2 bg-white text-black text-[9px] font-black px-4 py-1 tracking-widest uppercase">Most popular</div>}
+              <div className="mb-8">
+                <p className="text-zinc-500 text-xs font-bold tracking-widest uppercase mb-2">{p.name}</p>
+                <div className="flex items-end gap-2 mb-1">
+                  <span className="text-white font-black text-4xl tracking-tight">{p.price}</span>
+                  {p.currency&&<span className="text-zinc-500 text-sm mb-1">{p.currency}</span>}
+                </div>
+                <p className="text-zinc-600 text-xs">{p.tag}</p>
+              </div>
+              <ul className="space-y-3 flex-1 mb-8">
+                {p.features.map(f=>(
+                  <li key={f} className="flex items-start gap-3 text-sm text-zinc-400">
+                    <span className="text-white mt-0.5 flex-shrink-0">✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={()=>document.getElementById("contact")?.scrollIntoView({behavior:"smooth"})}
+                className={`w-full py-3 text-xs font-black tracking-widest uppercase transition-all duration-300 ${p.highlight?"bg-white text-black hover:bg-zinc-200":"border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"}`}>
+                {p.cta} →
+              </button>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-zinc-700 text-xs mt-8 tracking-wide">All plans include domain setup, hosting config, and post-launch support for 30 days.</p>
+      </div>
+    </section>
+  );
+}
+
+function FAQ() {
+  const {ref,inView}=useInView(0.1);
+  const [open,setOpen]=useState<number|null>(null);
+  const items=[
+    {q:"Who do you work with?",a:"Restaurants, bars, nightclubs, barbershops, spas, gyms, gaming venues, NFT/Web3 projects — any local business or brand that needs a sharp website fast."},
+    {q:"What's included in the delivery?",a:"Design, development, mobile optimisation, domain setup, hosting configuration, Google Analytics, and a 30-day post-launch support window."},
+    {q:"Really 48 hours?",a:"Yes. Once we have your brief and content (logo, photos, text), the site is live within 48 hours. Complex Premium builds may take up to 72h."},
+    {q:"What do you need from me?",a:"A brief (concept, references, vibe), your logo if you have one, and any photos. No photos? We source professional stock images at no extra cost."},
+    {q:"How does payment work?",a:"50% upfront to start, 50% on delivery. We accept bank transfer, PromptPay, and crypto. No hidden fees."},
+    {q:"What happens after launch?",a:"30 days of free support included. After that, we offer monthly maintenance packages for updates, backups, and performance monitoring."},
+    {q:"Can you update the site later?",a:"Yes. We can make content updates, add pages, or redesign sections. We quote per request — most small updates are done same day."},
+  ];
+  return (
+    <section className="py-24 border-t border-zinc-900 bg-black">
+      <div ref={ref} className={`max-w-3xl mx-auto px-6 transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-8"}`}>
+        <div className="mb-12">
+          <p className="text-zinc-600 text-xs font-bold tracking-[0.45em] uppercase mb-3">FAQ</p>
+          <h2 className="text-white font-black text-4xl tracking-tight leading-none">Common questions.</h2>
+        </div>
+        <div className="space-y-0">
+          {items.map((item,i)=>(
+            <div key={i} className="border-b border-zinc-900">
+              <button
+                onClick={()=>setOpen(open===i?null:i)}
+                className="w-full flex items-center justify-between py-5 text-left gap-4 group">
+                <span className={`text-sm font-bold transition-colors duration-200 ${open===i?"text-white":"text-zinc-400 group-hover:text-white"}`}>{item.q}</span>
+                <span className={`text-zinc-600 flex-shrink-0 transition-transform duration-300 text-lg leading-none ${open===i?"rotate-45 text-white":""}`}>+</span>
+              </button>
+              <div className={`overflow-hidden transition-all duration-300 ${open===i?"max-h-40 pb-5":"max-h-0"}`}>
+                <p className="text-zinc-500 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CTA() {
   const { ref, inView } = useInView();
   const [form, setForm] = useState({ name: "", email: "", type: "", budget: "", message: "" });
@@ -975,6 +1084,30 @@ function CTA() {
         </div>
       </div>
     </section>
+  );
+}
+
+function StickyMobileCTA() {
+  const [visible, setVisible] = useState(false);
+  const [contactInView, setContactInView] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const contact = document.getElementById("contact");
+    if (!contact) return () => window.removeEventListener("scroll", onScroll);
+    const obs = new IntersectionObserver(([e]) => setContactInView(e.isIntersecting), { threshold: 0.1 });
+    obs.observe(contact);
+    return () => { window.removeEventListener("scroll", onScroll); obs.disconnect(); };
+  }, []);
+  if (contactInView) return null;
+  return (
+    <div className={`md:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-black via-black/95 to-transparent transition-all duration-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}>
+      <button
+        onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+        className="w-full bg-white text-black font-black py-4 tracking-widest uppercase text-sm">
+        Start a project →
+      </button>
+    </div>
   );
 }
 
