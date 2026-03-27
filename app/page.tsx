@@ -224,7 +224,7 @@ const PROJECTS = [
   {
     slug: "die-jungle",
     name: "Die Jungle",
-    category: "Gaming & Entertainment",
+    category: "NFT & Web3",
     location: "Online",
     year: "2026",
     desc: "Addictive browser mini game with jungle theme, global leaderboards and daily challenges. Built for speed and engagement.",
@@ -350,6 +350,22 @@ const PROJECTS = [
     cardType: "photo",
   },
   {
+    slug: "svens",
+    name: "Svens.",
+    category: "Health & Beauty",
+    location: "Pattaya, Thailand",
+    year: "2026",
+    desc: "Landing page for Pattaya's top snus shop. Yellow/blue Scandinavian brand identity, 2 locations, 200+ flavors, ice cream section.",
+    tags: ["Snus", "Retail", "Pattaya"],
+    gradient: "from-yellow-950 via-yellow-900 to-black",
+    accent: "#FFD800",
+    accentText: "text-yellow-400",
+    photo: "https://images.pexels.com/photos/3735218/pexels-photo-3735218.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/svens",
+    status: "Live",
+    cardType: "photo",
+  },
+  {
     slug: "sweed",
     name: "Sweed Cannabis",
     category: "Cannabis & Wellness",
@@ -362,21 +378,6 @@ const PROJECTS = [
     liveUrl: "/sweed",
     status: "Preview",
     cardType: "photo",
-  },
-  {
-    slug: "svens",
-    name: "Svens Snus",
-    category: "Snus & Nicotine Pouches",
-    location: "Pattaya, Thailand",
-    year: "2026",
-    desc: "Landing page for Pattaya's top snus shop. Yellow/blue Scandinavian brand identity, 2 locations, 200+ flavors, ice cream section.",
-    tags: ["Retail", "Snus", "Pattaya"],
-    gradient: "from-yellow-950 via-yellow-900 to-black",
-    accent: "#FFD800",
-    accentText: "text-yellow-400",
-    photo: "https://images.pexels.com/photos/3735218/pexels-photo-3735218.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
-    liveUrl: "/svens",
-    status: "Live",
   },
 ];
 
@@ -702,9 +703,14 @@ function Stats() {
 function Gallery() {
   const [cat, setCat] = useState("All");
   const {ref,inView} = useInView(0.05);
-  const cats = ["All", ...Array.from(new Set(PROJECTS.map(p=>p.category)))];
+  const allCats = Array.from(new Set(PROJECTS.map(p=>p.category)));
+  const sortedCats = [
+    ...allCats.filter(c=>c!=="NFT & Web3").sort((a,b)=>PROJECTS.filter(p=>p.category===b).length - PROJECTS.filter(p=>p.category===a).length),
+    ...(allCats.includes("NFT & Web3") ? ["NFT & Web3"] : []),
+  ];
+  const cats = ["All", ...sortedCats];
   const groups = cat === "All"
-    ? cats.filter(c=>c!=="All").map(c=>({c, items:PROJECTS.filter(p=>p.category===c)})).filter(g=>g.items.length>0)
+    ? sortedCats.map(c=>({c, items:PROJECTS.filter(p=>p.category===c)})).filter(g=>g.items.length>0)
     : [{c:cat, items:PROJECTS.filter(p=>p.category===cat)}];
   return (
     <section id="projets" className="py-24 md:py-32 bg-black">
@@ -733,7 +739,7 @@ function Gallery() {
                   <span className="text-zinc-700 text-[10px]">{items.length}</span>
                 </div>
               )}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                 {items.map((p,i)=><CompactCard key={p.slug} project={p} index={i}/>)}
               </div>
             </div>
@@ -789,7 +795,7 @@ function CompactCard({ project: p, index }: { project: typeof PROJECTS[0]; index
   const cardProps = isExternal ? { href:p.liveUrl, target:"_blank", rel:"noopener noreferrer" } : { href:p.liveUrl };
   return (
     <Link {...cardProps} className="group relative block overflow-hidden bg-zinc-950 border border-zinc-900 hover:border-zinc-700 transition-colors duration-300" style={{transitionDelay:`${index*40}ms`}}>
-      <div className="relative h-40 overflow-hidden">
+      <div className="relative h-28 overflow-hidden">
         {p.cardType==="cards" ? <CardsHeader accent={p.accent}/> : (
           <>
             {p.photo && <img src={p.photo} alt={p.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70" onError={e=>{(e.target as HTMLImageElement).style.display="none"}}/>}
@@ -797,21 +803,21 @@ function CompactCard({ project: p, index }: { project: typeof PROJECTS[0]; index
           </>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"/>
-        <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
-          <p className="text-white font-black text-sm leading-tight">{p.name}</p>
+        <div className="absolute bottom-0 left-0 right-0 p-2 z-10">
+          <p className="text-white font-black text-xs leading-tight truncate">{p.name}</p>
         </div>
         {p.status==="Live" && (
-          <div className="absolute top-2 right-2 z-10 flex items-center gap-1 bg-black/60 backdrop-blur-sm px-2 py-0.5 border border-green-500/30">
-            <span className="w-1 h-1 rounded-full bg-green-400 live-dot"/><span className="text-green-400 text-[9px] font-bold tracking-widest uppercase">Live</span>
+          <div className="absolute top-1.5 right-1.5 z-10 flex items-center gap-1 bg-black/60 backdrop-blur-sm px-1.5 py-0.5 border border-green-500/30">
+            <span className="w-1 h-1 rounded-full bg-green-400 live-dot"/><span className="text-green-400 text-[8px] font-bold tracking-widest uppercase">Live</span>
           </div>
         )}
-        <div className="ccard-overlay absolute inset-0 bg-black/92 backdrop-blur-sm p-4 flex flex-col justify-between z-20">
+        <div className="ccard-overlay absolute inset-0 bg-black/92 backdrop-blur-sm p-3 flex flex-col justify-between z-20">
           <div>
-            <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${p.accentText}`}>{p.category}</span>
-            <p className="text-white font-black text-sm mt-1 leading-tight">{p.name}</p>
-            <p className="text-zinc-400 text-xs mt-2 leading-relaxed" style={{display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{p.desc}</p>
+            <span className={`text-[8px] font-bold tracking-[0.25em] uppercase ${p.accentText}`}>{p.category}</span>
+            <p className="text-white font-black text-xs mt-0.5 leading-tight">{p.name}</p>
+            <p className="text-zinc-400 text-[10px] mt-1 leading-relaxed" style={{display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{p.desc}</p>
           </div>
-          <span className={`text-[10px] font-bold tracking-widest uppercase ${p.accentText}`}>View site →</span>
+          <span className={`text-[9px] font-bold tracking-widest uppercase ${p.accentText}`}>View →</span>
         </div>
       </div>
     </Link>

@@ -134,14 +134,16 @@ function Navbar() {
   }, []);
   return (
     <nav className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
-      style={{ background: scrolled ? "rgba(10,10,0,.95)" : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: scrolled ? `1px solid ${S.border}` : "none" }}>
+      style={{ background: scrolled ? "rgba(255,255,255,0.97)" : "#ffffff", backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: `1px solid ${scrolled ? "#e5e5e5" : "#f0f0f0"}` }}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <span className="righteous text-2xl tracking-tight shimmer-text">Svens.</span>
+        <span className="righteous text-2xl tracking-tight" style={{ color: S.black }}>Svens.</span>
         <div className="hidden md:flex items-center gap-8">
           {[["Collection", "collection"], ["Brands", "brands"], ["Visit", "visit"]].map(([l, id]) => (
             <button key={id} onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-              className="text-xs uppercase tracking-[0.25em] transition-colors hover:text-white"
-              style={{ color: S.muted }}>{l}</button>
+              className="text-xs uppercase tracking-[0.25em] transition-colors"
+              style={{ color: "#555", fontWeight: 600 }}
+              onMouseEnter={e=>(e.currentTarget.style.color=S.black)}
+              onMouseLeave={e=>(e.currentTarget.style.color="#555")}>{l}</button>
           ))}
         </div>
         <a href={INFO.whatsapp} target="_blank" rel="noopener noreferrer"
