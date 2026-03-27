@@ -785,7 +785,7 @@ function Hero({ mounted }: { mounted: boolean }) {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative text-center px-6 w-full max-w-7xl mx-auto" style={{zIndex:10}}>
+      <div className="relative text-center px-6 w-full max-w-7xl mx-auto pt-24" style={{zIndex:10}}>
 
         {/* Badge */}
         <div className="flex justify-center mb-8"
