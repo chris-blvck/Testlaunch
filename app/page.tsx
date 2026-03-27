@@ -366,6 +366,22 @@ const PROJECTS = [
     cardType: "photo",
   },
   {
+    slug: "kookai",
+    name: "Kookai Clean Food",
+    category: "Health & Beauty",
+    location: "Bangkok, Thailand",
+    year: "2026",
+    desc: "Fresh clean food brand for Instagram & Grab delivery. Rounded, vibrant design with daily menu, calorie counts, and Bangkok delivery zones.",
+    tags: ["Clean Food", "Grab", "Instagram"],
+    gradient: "from-green-900 via-emerald-950 to-black",
+    accent: "#16a34a",
+    accentText: "text-green-500",
+    photo: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/kookai",
+    status: "Live",
+    cardType: "photo",
+  },
+  {
     slug: "sweed",
     name: "Sweed Cannabis",
     category: "Cannabis & Wellness",
@@ -620,16 +636,16 @@ function Hero({ mounted }: { mounted: boolean }) {
           <HeroEye/>
         </div>
         <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
-          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.65s":"9999s"}}>WE TURN YOUR</div>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(3rem,14vw,13rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.65s":"9999s"}}>WE TURN YOUR</div>
         </div>
         <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
-          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.75s":"9999s"}}>GOOGLE MAPS</div>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(3rem,14vw,13rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.75s":"9999s"}}>GOOGLE MAPS</div>
         </div>
         <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
-          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.85s":"9999s"}}>TRAFFIC INTO</div>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(3rem,14vw,13rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.85s":"9999s"}}>TRAFFIC INTO</div>
         </div>
         <div className="overflow-hidden select-none mb-8 md:mb-10" style={{lineHeight:.88}}>
-          <div className="bebas crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.95s":"9999s",background:"linear-gradient(95deg,#fff 0%,#ff9940 45%,#fff 85%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>PAYING CUSTOMERS IN 48H.</div>
+          <div className="bebas crash-in" style={{fontSize:"clamp(3rem,14vw,13rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.95s":"9999s",background:"linear-gradient(95deg,#fff 0%,#ff9940 45%,#fff 85%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>$$$.</div>
         </div>
         <div className="line-in mb-12" style={{animationDelay:mounted?"1.15s":"9999s"}}>
           <p className="text-zinc-500 text-base md:text-lg font-light max-w-lg mx-auto leading-relaxed">
