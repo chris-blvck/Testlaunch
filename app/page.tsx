@@ -363,6 +363,21 @@ const PROJECTS = [
     status: "Preview",
     cardType: "photo",
   },
+  {
+    slug: "svens",
+    name: "Svens Snus",
+    category: "Snus & Nicotine Pouches",
+    location: "Pattaya, Thailand",
+    year: "2026",
+    desc: "Landing page for Pattaya's top snus shop. Yellow/blue Scandinavian brand identity, 2 locations, 200+ flavors, ice cream section.",
+    tags: ["Retail", "Snus", "Pattaya"],
+    gradient: "from-yellow-950 via-yellow-900 to-black",
+    accent: "#FFD800",
+    accentText: "text-yellow-400",
+    photo: "https://images.pexels.com/photos/3735218/pexels-photo-3735218.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/svens",
+    status: "Live",
+  },
 ];
 
 export default function HomePage() {
