@@ -877,6 +877,12 @@ function Pricing() {
   const {ref,inView}=useInView(0.15);
   const plans=[
     {
+      name:"Flash",price:"7 500",currency:"THB",
+      tag:"Simple & fast",
+      features:["1-page site (ultra simple)","Mobile responsive","WhatsApp button","Delivered in 24h"],
+      accent:"border-zinc-700",cta:"Get started",highlight:false,
+    },
+    {
       name:"Starter",price:"15 000",currency:"THB",
       tag:"Perfect for small businesses",
       features:["1-page site (landing)","Mobile responsive","WhatsApp booking button","Domain + hosting setup","Delivered in 48h"],
@@ -905,7 +911,7 @@ function Pricing() {
           </h2>
           <p className="text-zinc-600 text-sm max-w-md mx-auto">Fixed price, fixed deadline. What you see is what you pay.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {plans.map((p,i)=>(
             <div key={p.name}
               className={`relative border ${p.accent} p-8 flex flex-col transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-6"} ${p.highlight?"bg-white/[0.03]":""}`}
