@@ -186,9 +186,9 @@ function Hero() {
         <div className="flex items-center gap-3 mb-8">
           <span className="font-black text-xs px-3 py-1.5 tracking-widest uppercase whitespace-nowrap"
             style={{ background: S.yellow, color: S.black, borderRadius: "9999px" }}>
-            {INFO.rating} ★ · {INFO.reviews}
+            2 Locations · Pattaya
           </span>
-          <span className="text-xs tracking-[0.4em] uppercase" style={{ color: S.muted }}>Pattaya, Thailand</span>
+          <span className="text-xs tracking-[0.4em] uppercase" style={{ color: S.muted }}>Thailand</span>
         </div>
 
         <h1 className="righteous leading-none mb-2 shimmer-text"
