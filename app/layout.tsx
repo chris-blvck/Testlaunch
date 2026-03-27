@@ -7,7 +7,6 @@ import CustomCursor from "./components/CustomCursor";
 import BackButton from "./components/BackButton";
 import LoadingScreen from "./components/LoadingScreen";
 import PageTransition from "./components/PageTransition";
-import SmoothScroll from "./components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -66,7 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="h-full">
       <body className={`${inter.variable} ${orbitron.variable} ${russoOne.variable} ${exo2.variable} ${playfair.variable} ${bebasNeue.variable} ${righteous.variable} ${cormorant.variable} min-h-full antialiased`}>
         <LoadingScreen />
-        <SmoothScroll />
         <CustomCursor />
         <ScrollProgress />
         <BackButton />
