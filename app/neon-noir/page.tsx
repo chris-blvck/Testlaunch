@@ -654,7 +654,7 @@ function Location() {
         <SectionLabel label={c.label} title={c.title} />
         <div className="mt-16 grid md:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
           {/* Info */}
-          <div className="space-y-8 text-left">
+          <div className="space-y-8 text-center md:text-left">
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <p

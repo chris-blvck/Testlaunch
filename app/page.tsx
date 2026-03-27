@@ -15,35 +15,7 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
-function useMagnetic(strength = 0.38) {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const radius = Math.max(r.width, r.height) * 1.6;
-      if (dist < radius) {
-        const pull = (1 - dist / radius) * strength;
-        el.style.transform = `translate(${dx * pull}px, ${dy * pull}px)`;
-      } else {
-        el.style.transform = "";
-      }
-    };
-    const onLeave = () => { el.style.transform = ""; };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    el.addEventListener("mouseleave", onLeave);
-    return () => { window.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
-  }, [strength]);
-  return ref as React.RefObject<HTMLElement>;
-}
-
-const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3", "Health & Beauty", "Sports & Fitness"];
+const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3", "Health & Beauty", "Sports & Fitness", "Travel & Leisure", "Home & Lifestyle"];
 
 const PROJECTS = [
   {
@@ -235,6 +207,54 @@ const PROJECTS = [
     accentText: "text-yellow-400",
     photo: "https://images.pexels.com/photos/4754146/pexels-photo-4754146.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
     liveUrl: "/muaythai",
+    status: "Preview",
+    cardType: "photo",
+  },
+  {
+    slug: "boats",
+    name: "Blue Horizon Boats",
+    category: "Travel & Leisure",
+    location: "Pattaya, Thailand",
+    year: "2026",
+    desc: "Boat rental & island tour website. Navy & teal palette, fleet showcase, 4 tour packages, gallery and WhatsApp booking.",
+    tags: ["Boats", "Tours", "Ocean"],
+    gradient: "from-cyan-950 via-blue-950 to-black",
+    accent: "#0094b8",
+    accentText: "text-cyan-400",
+    photo: "https://images.pexels.com/photos/7753824/pexels-photo-7753824.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/boats",
+    status: "Preview",
+    cardType: "photo",
+  },
+  {
+    slug: "crystal",
+    name: "Crystal Design",
+    category: "Home & Lifestyle",
+    location: "Pattaya, Thailand",
+    year: "2026",
+    desc: "Luxury crystal chandelier showroom. Dark warm palette with gold accents, 500+ models, bespoke installation service.",
+    tags: ["Chandeliers", "Luxury", "Interior"],
+    gradient: "from-amber-950 via-stone-950 to-black",
+    accent: "#c8a84b",
+    accentText: "text-amber-400",
+    photo: "https://images.pexels.com/photos/5768163/pexels-photo-5768163.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/crystal",
+    status: "Preview",
+    cardType: "photo",
+  },
+  {
+    slug: "nails",
+    name: "Luxury Collection",
+    category: "Health & Beauty",
+    location: "Pattaya, Thailand",
+    year: "2026",
+    desc: "Premium nail salon website. Blush rose & cream palette, service pricing, portfolio gallery, booking. Rated 4.9★ on Google.",
+    tags: ["Nails", "Beauty", "Salon"],
+    gradient: "from-rose-950 via-stone-950 to-black",
+    accent: "#c9887a",
+    accentText: "text-rose-400",
+    photo: "https://images.pexels.com/photos/6135681/pexels-photo-6135681.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    liveUrl: "/nails",
     status: "Preview",
     cardType: "photo",
   },

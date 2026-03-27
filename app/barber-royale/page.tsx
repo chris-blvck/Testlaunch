@@ -475,16 +475,18 @@ function ServiceBlock({
         <p className="text-zinc-400 leading-relaxed mb-8 max-w-md mx-auto">
           {svc.desc}
         </p>
-        <div className="inline-block text-left space-y-3 mb-8">
-          {svc.details.map((d) => (
-            <div key={d} className="flex items-center gap-3">
-              <div
-                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                style={{ background: "#ca8a04" }}
-              />
-              <span className="text-zinc-300 text-sm">{d}</span>
-            </div>
-          ))}
+        <div className="flex justify-center mb-8">
+          <div className="inline-block text-left space-y-3">
+            {svc.details.map((d) => (
+              <div key={d} className="flex items-center gap-3">
+                <div
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: "#ca8a04" }}
+                />
+                <span className="text-zinc-300 text-sm">{d}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="text-center">
           <a

@@ -151,8 +151,12 @@ function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden"
       style={{ background: G.dark }}>
+      {/* background photo */}
+      <img src="https://images.pexels.com/photos/4974567/pexels-photo-4974567.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        alt="Clinic interior" className="absolute inset-0 w-full h-full object-cover"
+        style={{ filter: "brightness(0.18) saturate(0.6)" }} />
       {/* texture overlay */}
-      <div className="absolute inset-0 opacity-30" style={{
+      <div className="absolute inset-0 opacity-40" style={{
         backgroundImage: `radial-gradient(ellipse 70% 60% at 50% 40%, ${G.greenMid}55 0%, transparent 70%)`,
       }} />
       {/* decorative arc */}

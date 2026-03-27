@@ -117,6 +117,7 @@ export default function NailsPage() {
       <Hero />
       <Trust />
       <Services />
+      <StudioPhoto />
       <Gallery />
       <Booking />
       <Footer />
@@ -307,6 +308,51 @@ function Services() {
         <p className="text-center text-xs mt-8" style={{ color: C.muted }}>
           Prices are indicative. Final price confirmed at appointment. Consultations are free.
         </p>
+      </div>
+    </section>
+  );
+}
+
+/* ─── studio photo ──────────────────────────────────────────────── */
+function StudioPhoto() {
+  const { ref, inView } = useInView(0.15);
+  return (
+    <section className="grid md:grid-cols-2 min-h-[70vh] overflow-hidden">
+      {/* LEFT — full photo */}
+      <div className="relative min-h-[50vh] md:min-h-full overflow-hidden">
+        <img
+          src="https://images.pexels.com/photos/36328527/pexels-photo-36328527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          alt="Luxury Collection salon interior"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, transparent 60%, #fdfaf7 100%)" }} />
+      </div>
+      {/* RIGHT — text */}
+      <div ref={ref}
+        className={`flex flex-col justify-center px-10 md:px-16 py-20 transition-all duration-700 ${inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+        style={{ background: C.bg }}>
+        <p className="text-xs tracking-[0.45em] uppercase mb-5" style={{ color: C.rose }}>The studio</p>
+        <h2 className="font-russo leading-[0.95] mb-6" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: C.dark }}>
+          Where detail<br />
+          <span style={{ color: C.rose }}>is everything.</span>
+        </h2>
+        <p className="text-sm leading-relaxed mb-8 max-w-xs" style={{ color: C.muted }}>
+          At Luxury Collection Pattaya, every appointment is a private experience. Clean, calm, and curated — no rush, no compromise.
+        </p>
+        <ul className="space-y-3 mb-10">
+          {["Premium gel & chrome products", "Individual sterilised tools", "Certified technicians", "Air-conditioned private booths"].map(t => (
+            <li key={t} className="flex items-center gap-3 text-sm" style={{ color: C.dark }}>
+              <span className="w-1 h-1 rounded-full shrink-0" style={{ background: C.rose }} />
+              {t}
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center gap-3">
+          <div className="h-px flex-1 max-w-[3rem]" style={{ background: C.rose }} />
+          <p className="text-xs tracking-widest uppercase" style={{ color: C.rose }}>
+            {SALON.hours}
+          </p>
+        </div>
       </div>
     </section>
   );
