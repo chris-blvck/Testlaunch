@@ -140,35 +140,34 @@ function Hero() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setTimeout(() => setMounted(true), 80); }, []);
   return (
-    <section className="relative min-h-screen overflow-hidden" style={{ background: S.void }}>
-      {/* LEFT — exterior night with green LED floor lights */}
-      <img src="/sweed/exterior_led.jpg" alt="Sweed exterior"
+    <section className="relative min-h-screen flex items-end overflow-hidden" style={{ background: S.void }}>
+      {/* LEFT full-bleed — blue lounge */}
+      <img src="/sweed/interior_blue.jpg" alt="Sweed blue lounge"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: "brightness(0.55) saturate(1.9) contrast(1.1)", objectPosition: "center 40%" }} />
+        style={{ filter: "brightness(0.6) saturate(2) contrast(1.1)", objectPosition: "center 30%" }} />
 
-      {/* RIGHT panel — interior TV / teal ceiling vibe */}
-      <div className="absolute inset-y-0 right-0 w-[45%] overflow-hidden hidden md:block">
-        <img src="/sweed/interior_tv.jpg" alt="Sweed interior vibe"
+      {/* RIGHT panel — exterior LED at night */}
+      <div className="absolute inset-y-0 right-0 w-[42%] overflow-hidden hidden md:block">
+        <img src="/sweed/exterior_led.jpg" alt="Sweed exterior"
           className="w-full h-full object-cover"
-          style={{ filter: "brightness(0.65) saturate(1.8) contrast(1.1)", objectPosition: "center" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(3,10,13,1) 0%, transparent 35%)" }} />
+          style={{ filter: "brightness(0.6) saturate(1.8) contrast(1.1)", objectPosition: "center 40%" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(3,10,13,1) 0%, transparent 40%)" }} />
       </div>
 
-      {/* teal neon glow rising from bottom */}
+      {/* teal glow bottom */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 80% 45% at 50% 100%, rgba(0,229,200,.28) 0%, transparent 70%)" }} />
-
-      {/* left dark fade for text */}
+        style={{ background: "radial-gradient(ellipse 80% 45% at 50% 100%, rgba(0,229,200,.3) 0%, transparent 70%)" }} />
+      {/* left dark fade */}
       <div className="absolute inset-0"
-        style={{ background: "linear-gradient(to right, rgba(3,10,13,.9) 30%, rgba(3,10,13,.3) 65%, transparent)" }} />
+        style={{ background: "linear-gradient(to right, rgba(3,10,13,.92) 30%, rgba(3,10,13,.25) 65%, transparent)" }} />
       <div className="absolute bottom-0 left-0 right-0 h-40"
         style={{ background: `linear-gradient(to top, ${S.void}, transparent)` }} />
 
-      <div className={`relative z-10 flex items-end min-h-screen px-8 md:px-16 pb-20 max-w-5xl w-full transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+      <div className={`relative z-10 px-8 md:px-16 pb-20 max-w-2xl transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
 
         {/* rating badge */}
         <div className="flex items-center gap-3 mb-8">
-          <span className="font-black text-xs px-3 py-1.5 tracking-widest uppercase"
+          <span className="font-black text-xs px-3 py-1.5 tracking-widest uppercase whitespace-nowrap"
             style={{ background: S.green, color: S.void, borderRadius: "9999px" }}>
             {INFO.rating} ★ · {INFO.reviews}
           </span>
@@ -177,29 +176,29 @@ function Hero() {
 
         {/* giant title */}
         <h1 className="righteous leading-none neon-text"
-          style={{ fontSize: "clamp(5.5rem,20vw,18rem)", color: S.green, letterSpacing: "-0.01em" }}>
+          style={{ fontSize: "clamp(5rem,18vw,14rem)", color: S.green, letterSpacing: "-0.01em" }}>
           SWEED
         </h1>
 
-        {/* outline subtitle */}
+        {/* subtitle — solid muted, no serif outline effect */}
         <h2 className="righteous leading-none mb-8"
-          style={{ fontSize: "clamp(1.2rem,4vw,3.5rem)", color: "transparent", WebkitTextStroke: `1px rgba(240,255,254,.4)`, letterSpacing: "0.08em" }}>
+          style={{ fontSize: "clamp(1rem,3.5vw,2.8rem)", color: "rgba(0,229,200,.45)", letterSpacing: "0.12em" }}>
           CANNABIS DISPENSARY
         </h2>
 
-        <p className="text-base md:text-lg mb-12 max-w-md leading-relaxed" style={{ color: "rgba(240,255,254,.6)" }}>
-          Premium strains. PS5 inside. Football on the big screen. Accepts crypto. Opens every night — closes 3AM.
+        <p className="font-exo text-sm md:text-base mb-10 leading-relaxed" style={{ color: "rgba(240,255,254,.55)", maxWidth: "26rem" }}>
+          Premium strains · PS5 inside · Football on the big screen · Crypto accepted · Open every night until 3AM
         </p>
 
         <div className="flex flex-wrap gap-4">
           <button onClick={() => document.getElementById("strains")?.scrollIntoView({ behavior: "smooth" })}
-            className="font-black px-10 py-4 text-sm tracking-widest uppercase transition-all green-glow"
+            className="righteous whitespace-nowrap px-8 py-3.5 text-sm tracking-widest uppercase transition-all green-glow"
             style={{ background: S.green, color: S.void, borderRadius: "9999px" }}>
             See the menu
           </button>
           <a href={`tel:${INFO.phone}`}
-            className="font-bold px-10 py-4 text-sm tracking-widest uppercase border transition-all hover:border-green-400"
-            style={{ borderColor: "rgba(0,229,200,.3)", color: "rgba(240,255,254,.6)", borderRadius: "9999px" }}>
+            className="righteous whitespace-nowrap px-8 py-3.5 text-sm tracking-wider border transition-all"
+            style={{ borderColor: "rgba(0,229,200,.35)", color: "rgba(0,229,200,.7)", borderRadius: "9999px" }}>
             {INFO.phone}
           </a>
         </div>
@@ -252,7 +251,7 @@ function Vibe() {
       {/* PS5 row */}
       <div className="grid md:grid-cols-[3fr_2fr]" style={{ minHeight: "70vh" }}>
         <div className="relative overflow-hidden min-h-[55vw] md:min-h-full">
-          <img src="/sweed/interior_tv.jpg" alt="Gaming vibe at Sweed"
+          <img src="/sweed/lounge.jpg" alt="Sweed lounge vibe"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
           <div className="absolute inset-0"
             style={{ background: "linear-gradient(to right, transparent 50%, rgba(3,10,13,.98))" }} />
@@ -317,11 +316,11 @@ function Vibe() {
 /* ─── PHOTO STRIP ───────────────────────────────────────────────── */
 function PhotoStrip() {
   const photos = [
-    { src: "/sweed/interior_tv.jpg",   label: "The vibe" },
-    { src: "/sweed/strains_hand.jpg",  label: "Premium strains" },
-    { src: "/sweed/products.jpg",      label: "Sweed products" },
-    { src: "/sweed/snacks.jpg",        label: "Snacks & games" },
-    { src: "/sweed/interior_blue.jpg", label: "Blue lounge" },
+    { src: "/sweed/interior_tv.jpg",  label: "Gaming vibe" },
+    { src: "/sweed/exterior_led.jpg", label: "The entrance" },
+    { src: "/sweed/strains_hand.jpg", label: "Premium strains" },
+    { src: "/sweed/products.jpg",     label: "Sweed products" },
+    { src: "/sweed/snacks.jpg",       label: "Snacks & games" },
   ];
   return (
     <section className="py-6 px-6 md:px-8" style={{ background: S.void }}>
@@ -384,11 +383,11 @@ function Strains() {
         {/* shelves photo + accessories */}
         <div className="grid md:grid-cols-2 gap-3 mt-3 mb-6">
           <div className="relative overflow-hidden" style={{ minHeight: "280px", borderRadius: "1.5rem" }}>
-            <img src="/sweed/shelves.png" alt="Accessories"
-              className="w-full h-full object-cover" />
+            <img src="/sweed/snacks.jpg" alt="Snacks & games"
+              className="w-full h-full object-cover" style={{ objectPosition: "center 30%" }} />
             <div className="absolute inset-0"
               style={{ background: "linear-gradient(to top, rgba(3,10,13,.8), transparent)", borderRadius: "1.5rem" }} />
-            <p className="absolute bottom-5 left-6 righteous text-xl" style={{ color: S.green }}>Accessories & gear</p>
+            <p className="absolute bottom-5 left-6 righteous text-xl" style={{ color: S.green }}>Snacks & games</p>
           </div>
           <div className="flex flex-col justify-between p-10" style={{ background: S.dark, borderRadius: "1.5rem", border: `1px solid ${S.border}` }}>
             <div>
