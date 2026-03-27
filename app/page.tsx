@@ -613,7 +613,7 @@ function ProjectCard({ project: p, index }: { project: typeof PROJECTS[0]; index
         </div>
         <p className="text-zinc-400 text-sm leading-relaxed mb-4">{p.desc}</p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {p.tags.map((t) => (
+          {(p.tags ?? []).map((t) => (
             <span key={t} className="text-xs px-2 py-1 border border-zinc-800 text-zinc-500 tracking-wide">{t}</span>
           ))}
         </div>
