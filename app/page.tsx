@@ -15,6 +15,30 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
+function useMagnetic(strength = 0.38) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const dx = e.clientX - cx, dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const radius = Math.max(r.width, r.height) * 1.6;
+      if (dist < radius) {
+        const pull = (1 - dist / radius) * strength;
+        el.style.transform = `translate(${dx * pull}px, ${dy * pull}px)`;
+      } else { el.style.transform = ""; }
+    };
+    const onLeave = () => { el.style.transform = ""; };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    el.addEventListener("mouseleave", onLeave);
+    return () => { window.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+  }, [strength]);
+  return ref as React.RefObject<HTMLElement>;
+}
+
 const CATEGORIES = ["All", "Restaurant & Dining", "Gaming & Entertainment", "NFT & Web3", "Health & Beauty", "Sports & Fitness", "Travel & Leisure", "Home & Lifestyle"];
 
 const PROJECTS = [
