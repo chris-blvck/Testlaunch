@@ -620,14 +620,20 @@ function Hero({ mounted }: { mounted: boolean }) {
           <HeroEye/>
         </div>
         <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
-          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(3.2rem,18vw,17rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.65s":"9999s"}}>WEBSITES</div>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.65s":"9999s"}}>WE TURN YOUR</div>
+        </div>
+        <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.75s":"9999s"}}>GOOGLE MAPS</div>
+        </div>
+        <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.85s":"9999s"}}>TRAFFIC INTO</div>
         </div>
         <div className="overflow-hidden select-none mb-8 md:mb-10" style={{lineHeight:.88}}>
-          <div className="bebas crash-in" style={{fontSize:"clamp(3.2rem,18vw,17rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.82s":"9999s",background:"linear-gradient(95deg,#fff 0%,#ff9940 45%,#fff 85%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>THAT WIN.</div>
+          <div className="bebas crash-in" style={{fontSize:"clamp(2.2rem,12vw,11rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.95s":"9999s",background:"linear-gradient(95deg,#fff 0%,#ff9940 45%,#fff 85%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>PAYING CUSTOMERS IN 48H.</div>
         </div>
         <div className="line-in mb-12" style={{animationDelay:mounted?"1.15s":"9999s"}}>
           <p className="text-zinc-500 text-base md:text-lg font-light max-w-lg mx-auto leading-relaxed">
-            Restaurants, clubs, barbershops — launched in <span className="text-zinc-200 font-semibold">48 hours</span>, built to convert.
+            Restaurants, clubs, barbershops — a website that converts visitors into customers. Launched in <span className="text-zinc-200 font-semibold">48 hours</span>.
           </p>
         </div>
         <div className="line-in flex flex-col sm:flex-row items-center justify-center gap-4" style={{animationDelay:mounted?"1.3s":"9999s"}}>
