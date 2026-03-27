@@ -82,7 +82,7 @@ function AtmosphereCanvas() {
 
 function HeroEye() {
   return (
-    <svg viewBox="0 0 300 210" width="200" height="140" xmlns="http://www.w3.org/2000/svg" className="eye-hero" style={{overflow:"visible"}}>
+    <svg viewBox="0 0 300 210" width="160" height="112" xmlns="http://www.w3.org/2000/svg" className="eye-hero sm:w-[200px] sm:h-[140px]" style={{overflow:"visible"}}>
       <defs>
         <radialGradient id="holo-h" cx="44%" cy="38%" r="68%">
           <stop offset="0%" stopColor="#d8c820"/><stop offset="18%" stopColor="#7cd028"/><stop offset="36%" stopColor="#28c898"/>
@@ -538,7 +538,7 @@ function Process() {
         </div>
         <div className="grid md:grid-cols-3 gap-0">
           {steps.map((s,i)=>(
-            <div key={s.n} className={`p-8 border border-zinc-900 transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-6"}`}
+            <div key={s.n} className={`p-6 md:p-8 border border-zinc-900 transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-6"}`}
               style={{transitionDelay:`${i*150}ms`}}>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 border border-zinc-700 flex items-center justify-center bg-zinc-950">
@@ -604,10 +604,10 @@ function Hero({ mounted }: { mounted: boolean }) {
           <HeroEye/>
         </div>
         <div className="overflow-hidden select-none" style={{lineHeight:.88}}>
-          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(4rem,18vw,17rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.65s":"9999s"}}>WEBSITES</div>
+          <div className="bebas chroma text-white crash-in" style={{fontSize:"clamp(3.2rem,18vw,17rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.65s":"9999s"}}>WEBSITES</div>
         </div>
-        <div className="overflow-hidden select-none mb-10" style={{lineHeight:.88}}>
-          <div className="bebas crash-in" style={{fontSize:"clamp(4rem,18vw,17rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.82s":"9999s",background:"linear-gradient(95deg,#fff 0%,#ff9940 45%,#fff 85%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>THAT WIN.</div>
+        <div className="overflow-hidden select-none mb-8 md:mb-10" style={{lineHeight:.88}}>
+          <div className="bebas crash-in" style={{fontSize:"clamp(3.2rem,18vw,17rem)",letterSpacing:"-.02em",animationDelay:mounted?"0.82s":"9999s",background:"linear-gradient(95deg,#fff 0%,#ff9940 45%,#fff 85%)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>THAT WIN.</div>
         </div>
         <div className="line-in mb-12" style={{animationDelay:mounted?"1.15s":"9999s"}}>
           <p className="text-zinc-500 text-base md:text-lg font-light max-w-lg mx-auto leading-relaxed">
@@ -617,12 +617,12 @@ function Hero({ mounted }: { mounted: boolean }) {
         <div className="line-in flex flex-col sm:flex-row items-center justify-center gap-4" style={{animationDelay:mounted?"1.3s":"9999s"}}>
           <button ref={magCta1 as React.RefObject<HTMLButtonElement>}
             onClick={()=>document.getElementById("projets")?.scrollIntoView({behavior:"smooth"})}
-            className="magnetic bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm hover:shadow-[0_0_50px_rgba(255,140,40,.4)] transition-shadow duration-300">
+            className="magnetic w-full sm:w-auto bg-white text-black font-black px-10 py-4 tracking-widest uppercase text-sm hover:shadow-[0_0_50px_rgba(255,140,40,.4)] transition-shadow duration-300">
             View projects
           </button>
           <a ref={magCta2 as React.RefObject<HTMLAnchorElement>}
             href="#contact" onClick={e=>{e.preventDefault();document.getElementById("contact")?.scrollIntoView({behavior:"smooth"});}}
-            className="magnetic border border-zinc-700 hover:border-orange-700/60 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
+            className="magnetic w-full sm:w-auto border border-zinc-700 hover:border-orange-700/60 text-zinc-400 hover:text-white font-bold px-10 py-4 tracking-widest uppercase text-sm transition-all duration-300">
             Work with us
           </a>
         </div>
@@ -914,7 +914,7 @@ function Pricing() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {plans.map((p,i)=>(
             <div key={p.name}
-              className={`relative border ${p.accent} p-8 flex flex-col transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-6"} ${p.highlight?"bg-white/[0.03]":""}`}
+              className={`relative border ${p.accent} p-6 md:p-8 flex flex-col transition-all duration-700 ${inView?"opacity-100 translate-y-0":"opacity-0 translate-y-6"} ${p.highlight?"bg-white/[0.03]":""}`}
               style={{transitionDelay:`${i*100}ms`}}>
               {p.highlight&&<div className="absolute -top-px left-1/2 -translate-x-1/2 bg-white text-black text-[9px] font-black px-4 py-1 tracking-widest uppercase">Most popular</div>}
               <div className="mb-8">
@@ -1049,7 +1049,7 @@ function CTA() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input required placeholder="Your name" value={form.name}
                     onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                     className={inputCls} />
@@ -1057,7 +1057,7 @@ function CTA() {
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                     className={inputCls} />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <select required value={form.type}
                     onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
                     className={selectCls}>
