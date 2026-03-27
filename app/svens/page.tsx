@@ -29,29 +29,46 @@ const S = {
 /* ─── info ───────────────────────────────────────────────────────── */
 const INFO = {
   name:     "Svens.",
-  full:     "Svens Snus Pratamnak",
   tagline:  "Snus & Nicotine Pouches",
-  rating:   "4.8",
-  reviews:  "13 reviews",
-  address:  "338, 340 Pattaya City",
-  district: "Amphoe Bang Lamung, Chon Buri 20150",
-  hours:    "9AM – 9PM · Daily",
-  phone:    "065 036 3949",
+  phone:    "+66 98 855 1333",
+  tel:      "tel:+66988551333",
+  whatsapp: "https://wa.me/66988551333",
+  line:     "@svensthailand",
+  email:    "shop@svenssnus.com",
   website:  "svenssnus.com",
-  tel:      "tel:+66650363949",
-  whatsapp: "https://wa.me/66650363949",
-  maps:     "https://maps.app.goo.gl/sXaP24QRD1eu5r7K6",
+  mapsMain: "https://maps.app.goo.gl/sXaP24QRD1eu5r7K6",
+  locations: [
+    {
+      name:    "Soi Buakhao",
+      address: "Svens Snus Soi Buakhao 15",
+      hours:   "9AM – 9PM · Daily",
+      maps:    "https://maps.app.goo.gl/sXaP24QRD1eu5r7K6",
+    },
+    {
+      name:    "Soi Pornprapanimit",
+      address: "Unit 53/16, Soi Pornprapanimit",
+      hours:   "Mon–Sat 10AM–8PM · Sun 11AM–7PM",
+      maps:    "https://maps.app.goo.gl/sXaP24QRD1eu5r7K6",
+    },
+  ],
 };
 
 const BRANDS = [
-  { name: "ZYN",      flavor: "15+ flavors", color: "#0066CC" },
-  { name: "LOOP",     flavor: "12+ flavors", color: "#FF6B00" },
-  { name: "77",       flavor: "20+ flavors", color: "#CC0000" },
-  { name: "LYFT",     flavor: "10+ flavors", color: "#1a9e3f" },
-  { name: "VELO",     flavor: "8+ flavors",  color: "#7B2D8B" },
-  { name: "SKRUF",    flavor: "6+ flavors",  color: "#1A3F6F" },
-  { name: "GÖTEBORGS","flavor": "8+ flavors", color: "#B8860B" },
-  { name: "GARANT",   flavor: "6+ flavors",  color: "#2F4F4F" },
+  { name: "ZYN",   flavor: "15+ flavors", color: "#0066CC" },
+  { name: "LOOP",  flavor: "12+ flavors", color: "#FF6B00" },
+  { name: "ACE",   flavor: "8+ flavors",  color: "#2d7a3a" },
+  { name: "GRITT", flavor: "6+ flavors",  color: "#a0112a" },
+  { name: "ICE",   flavor: "8+ flavors",  color: "#4DB6E8" },
+  { name: "LYFT",  flavor: "10+ flavors", color: "#1a9e3f" },
+  { name: "VELO",  flavor: "8+ flavors",  color: "#7B2D8B" },
+  { name: "SKRUF", flavor: "6+ flavors",  color: "#1A3F6F" },
+];
+
+const ICE_CREAMS = [
+  { name: "Honey Nut Crush",    desc: "Honey & nuts — a timeless classic turned refreshingly gourmet.", color: "#E8A020" },
+  { name: "Mocca Chip",         desc: "Rich, creamy Mocca Chip for the coffee enthusiast.", color: "#6B3A2A" },
+  { name: "Yoghurt Blueberry",  desc: "Smooth blueberry yoghurt — low-carb & delicious.", color: "#6B4BC8" },
+  { name: "Banana Strawberry",  desc: "Bananas & strawberries — the ultimate summer delight.", color: "#E85A8A" },
 ];
 
 const STRENGTHS = [
@@ -99,6 +116,7 @@ export default function SvensPage() {
       <Collection />
       <Brands />
       <Strengths />
+      <IceCream />
       <MascotBreak />
       <Visit />
       <Footer />
@@ -185,7 +203,7 @@ function Hero() {
 
         <p className="font-exo text-sm md:text-base mb-10 leading-relaxed"
           style={{ color: "rgba(255,255,255,.55)", maxWidth: "26rem" }}>
-          Pattaya's widest selection of snus & nicotine pouches. 200+ flavors from the best Scandinavian brands. Open every day 9AM – 9PM.
+          Pattaya's widest selection of snus & nicotine pouches. 200+ flavors from ZYN, LOOP, ACE, GRITT, ICE and more. Two locations — Soi Buakhao & Soi Pornprapanimit.
         </p>
 
         <div className="flex flex-wrap gap-4">
@@ -202,11 +220,14 @@ function Hero() {
         </div>
       </div>
 
-      {/* floating "9AM–9PM" badge */}
+      {/* floating locations badge */}
       <div className={`absolute top-24 right-8 hidden md:block transition-all duration-1000 delay-500 ${mounted ? "opacity-100" : "opacity-0"}`}>
         <div className="float-anim text-right">
-          <p className="righteous leading-none" style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: `${S.yellow}25` }}>EVERY DAY</p>
-          <p className="righteous leading-none" style={{ fontSize: "clamp(2.5rem,5vw,4.5rem)", color: `${S.yellow}35` }}>9AM–9PM</p>
+          <p className="righteous leading-none" style={{ fontSize: "clamp(1.2rem,2.5vw,2rem)", color: `${S.yellow}30` }}>SOI BUAKHAO</p>
+          <p className="righteous leading-none" style={{ fontSize: "clamp(1rem,2vw,1.6rem)", color: `${S.yellow}20` }}>9AM–9PM DAILY</p>
+          <div className="my-2" style={{ height: "1px", background: `${S.yellow}15` }} />
+          <p className="righteous leading-none" style={{ fontSize: "clamp(1.2rem,2.5vw,2rem)", color: `${S.yellow}30` }}>SOI PORNPRAPANIMIT</p>
+          <p className="righteous leading-none" style={{ fontSize: "clamp(1rem,2vw,1.6rem)", color: `${S.yellow}20` }}>MON–SUN · 10AM–8PM</p>
         </div>
       </div>
     </section>
@@ -215,7 +236,7 @@ function Hero() {
 
 /* ─── TICKER ────────────────────────────────────────────────────── */
 function Ticker() {
-  const items = ["ZYN", "LOOP", "77", "LYFT", "VELO", "SKRUF", "200+ FLAVORS", "PATTAYA", "9AM–9PM DAILY", "FREE DELIVERY", "MINI · NORMAL · STRONG · X-STRONG", "SCANDINAVIAN QUALITY"];
+  const items = ["ZYN", "LOOP", "ACE", "GRITT", "ICE", "LYFT", "VELO", "200+ FLAVORS", "PATTAYA", "SOI BUAKHAO", "SOI PORNPRAPANIMIT", "SNUS & NICOTINE POUCHES", "SVENS ICE CREAM", "SCANDINAVIAN QUALITY"];
   const doubled = [...items, ...items];
   return (
     <>
@@ -268,7 +289,7 @@ function Collection() {
       <div ref={ref} className={`max-w-7xl mx-auto px-6 md:px-8 pb-20 pt-8 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="grid md:grid-cols-3 gap-4 mb-16">
           {[
-            { img: "/svens/storefront.jpg",   label: "The shop",      sub: "Pratamnak, Pattaya" },
+            { img: "/svens/storefront.jpg",   label: "The shop",      sub: "2 locations in Pattaya" },
             { img: "/svens/storefront2.jpg",  label: "Wide selection", sub: "200+ products" },
             { img: "/svens/shelf.jpg",        label: "Every flavor",   sub: "Always in stock" },
           ].map((p) => (
@@ -286,7 +307,7 @@ function Collection() {
 
         {/* stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[["200+", "Flavors in stock"], ["8+", "Top brands"], ["4.8★", "Google rating"], ["9AM–9PM", "Every day"]].map(([v, l]) => (
+          {[["200+", "Flavors in stock"], ["8+", "Top brands"], ["60฿", "Ice cream scoops"], ["2", "Locations in Pattaya"]].map(([v, l]) => (
             <div key={l} className="text-center py-8 px-4" style={{ background: "#14120a", borderRadius: "1.5rem", border: `1px solid ${S.border}` }}>
               <p className="righteous text-3xl md:text-4xl mb-2" style={{ color: S.yellow }}>{v}</p>
               <p className="text-xs tracking-widest uppercase" style={{ color: S.muted }}>{l}</p>
@@ -362,6 +383,43 @@ function Strengths() {
   );
 }
 
+/* ─── ICE CREAM ──────────────────────────────────────────────────── */
+function IceCream() {
+  const { ref, inView } = useInView(0.1);
+  return (
+    <section className="py-24 md:py-36" style={{ background: S.darkBg }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+          <div>
+            <p className="righteous text-xs tracking-[0.5em] uppercase mb-3" style={{ color: S.yellow }}>Also available</p>
+            <h2 className="righteous leading-[0.9]" style={{ fontSize: "clamp(3rem,8vw,7rem)", color: S.white }}>
+              Svens<br />
+              <span style={{ color: S.yellow }}>Ice Cream.</span>
+            </h2>
+          </div>
+          <p className="font-exo text-sm max-w-xs leading-relaxed" style={{ color: S.muted }}>
+            Homemade ice cream scoops — rich, creamy, and irresistible. Only 60฿ a cup.
+          </p>
+        </div>
+        <div ref={ref} className={`grid grid-cols-2 md:grid-cols-4 gap-3 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          {ICE_CREAMS.map((ic, i) => (
+            <div key={ic.name}
+              className={`group relative overflow-hidden py-8 px-6 cursor-default transition-all duration-500 hover:scale-[1.03] ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+              style={{ background: "#14120a", borderRadius: "2rem", border: `1px solid ${S.border}`, transitionDelay: `${i * 60}ms` }}>
+              <div className="absolute top-0 right-0 w-24 h-24 rounded-bl-full opacity-10 transition-opacity group-hover:opacity-20"
+                style={{ background: ic.color, transform: "translate(30%, -30%)" }} />
+              <div className="w-3 h-3 rounded-full mb-4" style={{ background: ic.color }} />
+              <p className="righteous text-base md:text-lg text-white mb-2 leading-tight">{ic.name}</p>
+              <p className="font-exo text-xs leading-relaxed mb-4" style={{ color: S.muted }}>{ic.desc}</p>
+              <p className="righteous text-2xl" style={{ color: S.yellow }}>60฿</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── MASCOT BREAK ───────────────────────────────────────────────── */
 function MascotBreak() {
   const { ref, inView } = useInView(0.2);
@@ -391,7 +449,7 @@ function MascotBreak() {
           <div className="flex items-center gap-3">
             <div className="h-px w-8" style={{ background: S.yellow }} />
             <p className="righteous text-xs tracking-widest uppercase" style={{ color: S.yellow }}>
-              Open every day · 9AM – 9PM
+              2 locations · Pattaya
             </p>
           </div>
         </div>
@@ -406,52 +464,65 @@ function Visit() {
   return (
     <section id="visit" className="py-28 md:py-40" style={{ background: S.darkBg }}>
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-        <div ref={ref}
-          className={`grid md:grid-cols-[1fr_auto] gap-16 items-start transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <div>
-            <p className="righteous text-xs tracking-[0.5em] uppercase mb-4" style={{ color: S.yellow }}>Find us</p>
-            <h2 className="righteous leading-none mb-12"
-              style={{ fontSize: "clamp(4rem,12vw,10rem)", color: S.white }}>
-              COME<br />
-              <span style={{ color: S.yellow }}>IN.</span>
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <p className="righteous text-xs uppercase tracking-widest mb-2" style={{ color: S.yellow }}>Address</p>
-                <p className="righteous text-lg text-white mb-1">Svens Snus Pratamnak</p>
-                <p className="font-exo text-sm leading-relaxed" style={{ color: S.muted }}>{INFO.address}</p>
-                <p className="font-exo text-sm" style={{ color: S.muted }}>{INFO.district}</p>
-              </div>
-              <div>
-                <p className="righteous text-xs uppercase tracking-widest mb-2" style={{ color: S.yellow }}>Hours & Phone</p>
-                <p className="righteous text-3xl" style={{ color: S.yellow }}>9AM – 9PM</p>
-                <p className="font-exo text-sm mt-1 mb-3" style={{ color: S.muted }}>Open every day · Walk-ins welcome</p>
-                <a href={INFO.tel} className="righteous text-xl text-white hover:opacity-80 transition-opacity">{INFO.phone}</a>
-              </div>
-              <div>
-                <p className="righteous text-xs uppercase tracking-widest mb-2" style={{ color: S.yellow }}>Website</p>
-                <a href={`https://${INFO.website}`} target="_blank" rel="noopener noreferrer"
-                  className="righteous text-lg hover:opacity-80 transition-opacity" style={{ color: S.blue }}>
-                  {INFO.website}
+        <div ref={ref} className={`transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <p className="righteous text-xs tracking-[0.5em] uppercase mb-4" style={{ color: S.yellow }}>Find us</p>
+          <h2 className="righteous leading-none mb-14"
+            style={{ fontSize: "clamp(4rem,12vw,10rem)", color: S.white }}>
+            COME<br />
+            <span style={{ color: S.yellow }}>IN.</span>
+          </h2>
+
+          {/* two locations */}
+          <div className="grid md:grid-cols-2 gap-4 mb-12">
+            {INFO.locations.map((loc) => (
+              <div key={loc.name} className="p-8" style={{ background: "#14120a", borderRadius: "2rem", border: `1px solid ${S.border}` }}>
+                <p className="righteous text-xs tracking-widest uppercase mb-3" style={{ color: S.yellow }}>{loc.name}</p>
+                <p className="righteous text-xl text-white mb-1">{loc.address}</p>
+                <p className="font-exo text-sm mb-4" style={{ color: S.muted }}>{loc.hours}</p>
+                <a href={loc.maps} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 righteous text-xs tracking-widest uppercase py-2.5 px-5 transition-opacity hover:opacity-80"
+                  style={{ background: S.blue, color: S.white, borderRadius: "9999px" }}>
+                  Get directions
                 </a>
               </div>
+            ))}
+          </div>
+
+          {/* contact row */}
+          <div className="grid md:grid-cols-3 gap-4 mb-10">
+            <div className="p-6" style={{ background: "#14120a", borderRadius: "1.5rem", border: `1px solid ${S.border}` }}>
+              <p className="righteous text-xs uppercase tracking-widest mb-3" style={{ color: S.yellow }}>Phone & WhatsApp</p>
+              <a href={INFO.tel} className="righteous text-2xl text-white hover:opacity-80 transition-opacity block">{INFO.phone}</a>
+            </div>
+            <div className="p-6" style={{ background: "#14120a", borderRadius: "1.5rem", border: `1px solid ${S.border}` }}>
+              <p className="righteous text-xs uppercase tracking-widest mb-3" style={{ color: S.yellow }}>Line & Email</p>
+              <p className="righteous text-xl text-white">{INFO.line}</p>
+              <a href={`mailto:${INFO.email}`} className="font-exo text-sm hover:opacity-80 transition-opacity mt-1 block" style={{ color: S.muted }}>{INFO.email}</a>
+            </div>
+            <div className="p-6" style={{ background: "#14120a", borderRadius: "1.5rem", border: `1px solid ${S.border}` }}>
+              <p className="righteous text-xs uppercase tracking-widest mb-3" style={{ color: S.yellow }}>Website</p>
+              <a href={`https://${INFO.website}`} target="_blank" rel="noopener noreferrer"
+                className="righteous text-xl hover:opacity-80 transition-opacity" style={{ color: S.blue }}>
+                {INFO.website}
+              </a>
             </div>
           </div>
+
           {/* CTA buttons */}
-          <div className="flex flex-col gap-3 min-w-[220px]">
+          <div className="flex flex-wrap gap-3">
             <a href={INFO.whatsapp} target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center py-5 px-8 righteous tracking-widest uppercase text-sm transition-all glow-btn hover:opacity-80"
-              style={{ background: S.yellow, color: S.black, borderRadius: "1.5rem" }}>
-              WhatsApp
+              className="righteous whitespace-nowrap px-8 py-4 text-sm tracking-widest uppercase transition-all glow-btn"
+              style={{ background: S.yellow, color: S.black, borderRadius: "9999px" }}>
+              WhatsApp order
             </a>
-            <a href={INFO.maps} target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center py-5 px-8 righteous tracking-widest uppercase text-sm transition-opacity hover:opacity-80"
-              style={{ background: S.blue, color: S.white, borderRadius: "1.5rem" }}>
+            <a href={INFO.mapsMain} target="_blank" rel="noopener noreferrer"
+              className="righteous whitespace-nowrap px-8 py-4 text-sm tracking-widest uppercase transition-opacity hover:opacity-80"
+              style={{ background: S.blue, color: S.white, borderRadius: "9999px" }}>
               Google Maps
             </a>
             <a href={INFO.tel}
-              className="flex items-center justify-center py-5 px-8 righteous tracking-widest uppercase text-sm border transition-all hover:border-yellow-400"
-              style={{ border: `1px solid ${S.yellow}50`, color: S.yellow, borderRadius: "1.5rem" }}>
+              className="righteous whitespace-nowrap px-8 py-4 text-sm tracking-widest uppercase border transition-all hover:border-yellow-400"
+              style={{ border: `1px solid ${S.yellow}50`, color: S.yellow, borderRadius: "9999px" }}>
               {INFO.phone}
             </a>
           </div>
@@ -469,7 +540,7 @@ function Footer() {
         <div>
           <span className="righteous text-2xl tracking-tight shimmer-text">Svens.</span>
           <span className="font-exo text-[9px] tracking-[0.4em] uppercase ml-4" style={{ color: S.muted }}>
-            Snus & Nicotine Pouches · Pattaya
+            Snus & Nicotine Pouches · 2 Locations · Pattaya
           </span>
         </div>
         <p className="font-exo text-xs" style={{ color: "#2a2208" }}>© 2026 Svens · Pratamnak · Thailand</p>
